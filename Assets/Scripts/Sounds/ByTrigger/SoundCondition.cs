@@ -1,60 +1,54 @@
 ﻿using UnityEngine;
+using UnityEngine.Audio;
+
 public class SoundCondition : MonoBehaviour
 {
-    [Header("🔊 Связанный AudioSource")]
-    [Tooltip("Перетащите сюда AudioSource, который будет воспроизводить звук")]
+    [Header("🔊 Связанный AudioSource")] [Tooltip("Перетащите сюда AudioSource, который будет воспроизводить звук")]
     public AudioSource audioSource;
 
-    [Header("📋 Режим воспроизведения")]
-    [Tooltip("Когда запускать звук")]
+    public AudioResource audioResource;
+
+    [Header("📋 Режим воспроизведения")] [Tooltip("Когда запускать звук")]
     public PlaybackMode playbackMode = PlaybackMode.OnEnter;
 
-    [Header("🔁 Настройки зацикливания")]
-    [Tooltip("Зациклить звук")]
+    [Header("🔁 Настройки зацикливания")] [Tooltip("Зациклить звук")]
     public bool loop = false;
-    
-    [Header("🎯 Ограничения воспроизведения")]
-    [Tooltip("Сработать только один раз за всю игру")]
+
+    [Header("🎯 Ограничения воспроизведения")] [Tooltip("Сработать только один раз за всю игру")]
     public bool triggerOnce = false;
-    
+
     [Tooltip("Проигрывать только пока объект в зоне")]
     public bool playWhileInZone = false;
-    
-    [Tooltip("Время задержки перед воспроизведением (секунды)")]
-    [Range(0f, 10f)]
+
+    [Tooltip("Время задержки перед воспроизведением (секунды)")] [Range(0f, 10f)]
     public float delayBeforePlay = 0f;
-    
+
     [Header("⏱️ Cooldown (перезарядка)")]
     [Tooltip("Минимальное время между воспроизведениями (секунды)")]
     [Range(0f, 60f)]
     public float cooldownTime = 0f;
-    
-    [Header("🔊 Настройки громкости")]
-    [Tooltip("Плавное нарастание звука при входе")]
+
+    [Header("🔊 Настройки громкости")] [Tooltip("Плавное нарастание звука при входе")]
     public bool fadeIn = false;
-    
+
     [Tooltip("Плавное затухание при выходе")]
     public bool fadeOut = false;
-    
-    [Tooltip("Время fade эффекта (секунды)")]
-    [Range(0.1f, 5f)]
+
+    [Tooltip("Время fade эффекта (секунды)")] [Range(0.1f, 5f)]
     public float fadeDuration = 1f;
-    
-    [Header("🎲 Случайность")]
-    [Tooltip("Шанс воспроизведения (0-100%)")]
-    [Range(0f, 100f)]
+
+    [Header("🎲 Случайность")] [Tooltip("Шанс воспроизведения (0-100%)")] [Range(0f, 100f)]
     public float playChance = 100f;
-    
-    [Tooltip("Случайная вариация громкости")]
-    [Range(0f, 1f)]
+
+    [Tooltip("Случайная вариация громкости")] [Range(0f, 1f)]
     public float volumeVariation = 0f;
-    
-    [Tooltip("Случайная вариация высоты тона")]
-    [Range(0f, 0.5f)]
+
+    [Tooltip("Случайная вариация высоты тона")] [Range(0f, 0.5f)]
     public float pitchVariation = 0f;
 
-    [Header("📊 Отладка (только для чтения)")]
-    [SerializeField] private bool isTriggered = false;
+    [Header("📊 Отладка (только для чтения)")] [SerializeField]
+    private bool isTriggered = false;
+
     [SerializeField] private bool isInCooldown = false;
     [SerializeField] private int triggerCount = 0;
 
@@ -70,13 +64,13 @@ public class SoundCondition : MonoBehaviour
     {
         [Tooltip("Воспроизвести при входе в зону")]
         OnEnter,
-        
+
         [Tooltip("Воспроизвести при выходе из зоны")]
         OnExit,
-        
+
         [Tooltip("Воспроизвести и при входе, и при выходе")]
         OnEnterAndExit,
-        
+
         [Tooltip("Постоянное воспроизведение пока в зоне")]
         WhileInZone
     }
@@ -84,11 +78,17 @@ public class SoundCondition : MonoBehaviour
     private void Start()
     {
         ValidateComponents();
-        
+
         if (audioSource != null)
         {
             targetVolume = audioSource.volume;
             audioSource.loop = loop;
+
+            // Применяем AudioResource если назначен
+            if (audioResource != null)
+            {
+                audioSource.resource = audioResource;
+            }
         }
     }
 
@@ -98,9 +98,10 @@ public class SoundCondition : MonoBehaviour
         {
             Debug.LogError($"❌ AudioSource не назначен в {gameObject.name}! Перетащите AudioSource в инспекторе.");
         }
-        else if (audioSource.clip == null)
+        else if (audioResource == null && audioSource.clip == null)
         {
-            Debug.LogWarning($"⚠️ AudioSource на {audioSource.gameObject.name} не имеет AudioClip!");
+            Debug.LogWarning(
+                $"⚠️ AudioSource на {audioSource.gameObject.name} не имеет AudioClip и AudioResource не назначен!");
         }
     }
 
@@ -169,6 +170,7 @@ public class SoundCondition : MonoBehaviour
             isInCooldown = true;
             return;
         }
+
         isInCooldown = false;
 
         // Проверка шанса воспроизведения
@@ -208,7 +210,7 @@ public class SoundCondition : MonoBehaviour
         }
 
         audioSource.Play();
-        
+
         hasPlayedOnce = true;
         lastPlayTime = Time.time;
     }
@@ -236,6 +238,7 @@ public class SoundCondition : MonoBehaviour
         {
             StopCoroutine(fadeCoroutine);
         }
+
         fadeCoroutine = StartCoroutine(FadeVolume(targetVol));
     }
 
@@ -253,13 +256,13 @@ public class SoundCondition : MonoBehaviour
         }
 
         audioSource.volume = targetVol;
-        
+
         // Если fade out завершен и громкость 0, останавливаем
         if (targetVol == 0f)
         {
             audioSource.Stop();
         }
-        
+
         isFading = false;
     }
 
