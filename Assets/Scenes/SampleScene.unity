@@ -2145,8 +2145,8 @@ MonoBehaviour:
     \u0434\u043E\u0432\u0435\u0440\u044F\u044E \u043C\u0443\u0436\u0438\u043A\u0430\u043C
     \u0441 \u0443\u0441\u0430\u043C\u0438"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8c792e9da3d3c9a49b6852f961a546bb, type: 2}
+  m_sharedMaterial: {fileID: 6835954152270015847, guid: 8c792e9da3d3c9a49b6852f961a546bb, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2564,7 +2564,7 @@ MonoBehaviour:
     objectsToEnable: []
     objectsToDisable:
     - {fileID: 214324493}
-  currentMode: 0
+  _currentMode: 0
 --- !u!4 &1339683602
 Transform:
   m_ObjectHideFlags: 0
@@ -3093,8 +3093,8 @@ MonoBehaviour:
     \u0441 \u0443\u0441\u0430\u043C\u0438. \u041D\u0435 \u0434\u043E\u0432\u0435\u0440\u044F\u044E
     \u043C\u0443\u0436\u0438\u043A\u0430\u043C \u0441 \u0443\u0441\u0430\u043C\u0438. "
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8c792e9da3d3c9a49b6852f961a546bb, type: 2}
+  m_sharedMaterial: {fileID: 6835954152270015847, guid: 8c792e9da3d3c9a49b6852f961a546bb, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
