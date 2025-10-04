@@ -25,8 +25,9 @@ public class SimpleCharacterController : MonoBehaviour
     [SerializeField] private float minVerticalAngle = DefaultMinVerticalAngle;
     [SerializeField] private float maxVerticalAngle = DefaultMaxVerticalAngle;
 
-    [Header("Ссылки")]
+    [Header("Ссылки на компоненты")]
     [SerializeField] private Transform cameraTransform;
+    [SerializeField] private Rigidbody rb;
 
     [Header("Настройки земли")]
     [SerializeField] private float groundCheckDistance = DefaultGroundCheckDistance;
@@ -38,7 +39,6 @@ public class SimpleCharacterController : MonoBehaviour
     [SerializeField] private float stepInterval = DefaultStepInterval;
     [SerializeField] private float soundStopDelay = DefaultSoundStopDelay;
 
-    private Rigidbody rb;
     private bool isGrounded;
     private Vector2 moveInput;
     private Vector2 lookInput;
@@ -53,29 +53,77 @@ public class SimpleCharacterController : MonoBehaviour
     private string currentSurfaceType = "";
     private RaycastHit groundHit;
     
+    private bool wasControllerEnabled = false;
+    
     void Awake()
     {
         inputActions = new InputSystem_Actions();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
     
     void OnEnable()
     {
-        inputActions.Player.Enable();
-        inputActions.Player.Jump.performed += OnJump;
+        EnableController();
     }
     
     void OnDisable()
     {
-        inputActions.Player.Jump.performed -= OnJump;
-        inputActions.Player.Disable();
+        DisableController();
+    }
+    
+    /// <summary>
+    /// Включить контроллер персонажа
+    /// </summary>
+    public void EnableController()
+    {
+        if (wasControllerEnabled) return;
+        
+        if (inputActions != null)
+        {
+            inputActions.Player.Enable();
+            inputActions.Player.Jump.performed += OnJump;
+        }
+        
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        
+        wasControllerEnabled = true;
+    }
+    
+    /// <summary>
+    /// Отключить контроллер персонажа
+    /// </summary>
+    public void DisableController()
+    {
+        if (!wasControllerEnabled) return;
+        
+        if (inputActions != null)
+        {
+            inputActions.Player.Jump.performed -= OnJump;
+            inputActions.Player.Disable();
+        }
+        
+        // Сброс входных данных
+        moveInput = Vector2.zero;
+        lookInput = Vector2.zero;
+        
+        // Остановка звуков
+        StopFootstepSound();
+        isWalking = false;
+        stepTimer = 0f;
+        stopTimer = 0f;
+        
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        
+        wasControllerEnabled = false;
     }
     
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true;
+        if (rb != null)
+        {
+            rb.freezeRotation = true;
+        }
     }
     
     void Update()
@@ -87,18 +135,22 @@ public class SimpleCharacterController : MonoBehaviour
     
     void CheckGround()
     {
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, out groundHit,
-                                     transform.localScale.y + groundCheckDistance,
+        if (rb == null) return;
+        
+        isGrounded = Physics.Raycast(rb.position, Vector3.down, out groundHit,
+                                     rb.transform.localScale.y + groundCheckDistance,
                                      groundLayer);
     }
     
     void HandleLook()
     {
+        if (rb == null) return;
+        
         lookInput = inputActions.Player.Look.ReadValue<Vector2>();
         
         // Поворот персонажа по горизонтали
         yRotation += lookInput.x * mouseSensitivity;
-        transform.rotation = Quaternion.Euler(0f, yRotation, 0f);
+        rb.MoveRotation(Quaternion.Euler(0f, yRotation, 0f));
         
         // Поворот камеры по вертикали
         if (cameraTransform != null)
@@ -111,14 +163,17 @@ public class SimpleCharacterController : MonoBehaviour
     
     void HandleMovement()
     {
+        if (rb == null) return;
+        
         moveInput = inputActions.Player.Move.ReadValue<Vector2>();
 
         // Движение относительно направления взгляда персонажа
-        Vector3 moveDirection = transform.right * moveInput.x + transform.forward * moveInput.y;
+        Transform rbTransform = rb.transform;
+        Vector3 moveDirection = rbTransform.right * moveInput.x + rbTransform.forward * moveInput.y;
         moveDirection.y = 0f;
         moveDirection = moveDirection.normalized * moveSpeed * Time.deltaTime;
 
-        rb.MovePosition(transform.position + moveDirection);
+        rb.MovePosition(rb.position + moveDirection);
 
         // Обработка звуков шагов
         if (isGrounded && moveInput.magnitude > DefaultMovementThreshold)
@@ -151,7 +206,7 @@ public class SimpleCharacterController : MonoBehaviour
     
     void OnJump(InputAction.CallbackContext context)
     {
-        if (isGrounded)
+        if (isGrounded && rb != null)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
