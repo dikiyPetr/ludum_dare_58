@@ -19,3 +19,4 @@ MonoBehaviour:
   cluePrefab: {fileID: 7827794876885937444, guid: 0a78265a7277fa542892045f780e8e5d, type: 3}
   referencesToClues:
   - SecondExample
+  cabinetSlotIndex: 3

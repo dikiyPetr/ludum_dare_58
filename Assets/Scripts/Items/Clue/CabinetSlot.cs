@@ -4,6 +4,7 @@ public class CabinetSlot : MonoBehaviour
 {
     private GameObject currentClueObject;
     private ClueData currentClue;
+    public ClueData GetClue() => currentClue;
 
     // Поместить улику в ячейку - инстанцирует префаб
     public void PlaceClue(ClueData clueData)
@@ -30,9 +31,9 @@ public class CabinetSlot : MonoBehaviour
     {
         if (currentClueObject != null)
         {
+            currentClue = null;
             Destroy(currentClueObject);
             currentClueObject = null;
-            currentClue = null;
         }
     }
 }

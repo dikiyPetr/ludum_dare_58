@@ -5,7 +5,7 @@ public class OutlineRaycast : MonoBehaviour
 {
     [SerializeField] private Camera mainCamera;
     [SerializeField] private float rayDistance = 100f;
-
+    [SerializeField] private OverlayInfoManager overlayInfo;
     private Outline currentOutline;
 
     void Update()
@@ -25,23 +25,46 @@ public class OutlineRaycast : MonoBehaviour
 
             if (outline != null)
             {
-                // Если это новый объект, отключаем обводку у предыдущего
-                if (currentOutline != null && currentOutline != outline)
-                {
-                    currentOutline.OutlineMode = Outline.Mode.OutlineHidden;
-                }
-
-                // Включаем обводку у текущего объекта
-                outline.OutlineMode = Outline.Mode.OutlineVisible;
-                currentOutline = outline;
+                Select( outline);
                 return;
             }
         }
+
         // Если луч ничего не попал, отключаем обводку у предыдущего объекта
+        Unselect();
+    }
+
+    void Select( Outline outline)
+    {
+        if (currentOutline != outline)
+        {
+            if (currentOutline != null)
+            {
+                currentOutline.enabled = false;
+            }
+
+            outline.enabled = true;
+            currentOutline = outline;
+
+            CabinetSlot slot = outline.GetComponentInParent<CabinetSlot>();
+            if (slot != null)
+            {
+                overlayInfo.ShowOverlay(slot.GetClue());
+            }
+            else
+            {
+                overlayInfo.ShowOverlay(null);
+            }
+        }
+    }
+
+    void Unselect()
+    {
         if (currentOutline != null)
         {
-            currentOutline.OutlineMode = Outline.Mode.OutlineHidden;
+            currentOutline.enabled = false;
             currentOutline = null;
+            overlayInfo.ShowOverlay(null);
         }
     }
 }
