@@ -16,10 +16,10 @@ public class LevelTransition : MonoBehaviour
         if (targetTransform != null)
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
-            if (player != null)
+            if (player != null) 
             {
-                player.transform.position = targetTransform.position;
-                player.transform.rotation = targetTransform.rotation;
+                SimpleCharacterController controller = player.GetComponentInChildren<SimpleCharacterController>();
+                controller.Teleport(targetTransform.position, targetTransform.rotation);
             }
         }
     }

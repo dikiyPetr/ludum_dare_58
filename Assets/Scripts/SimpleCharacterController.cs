@@ -263,4 +263,40 @@ public class SimpleCharacterController : MonoBehaviour
 
         return DefaultSurfaceTypeName;
     }
+
+    /// <summary>
+    /// Устанавливает rotation игрока и синхронизирует внутреннее состояние
+    /// </summary>
+    public void SetRotation(Quaternion rotation)
+    {
+        if (rb != null)
+        {
+            rb.MoveRotation(rotation);
+            yRotation = rotation.eulerAngles.y;
+        }
+    }
+
+    /// <summary>
+    /// Устанавливает позицию игрока через Rigidbody
+    /// </summary>
+    public void SetPosition(Vector3 position)
+    {
+        if (rb != null)
+        {
+            rb.MovePosition(position);
+        }
+    }
+
+    /// <summary>
+    /// Телепортирует игрока в указанную позицию и rotation
+    /// </summary>
+    public void Teleport(Vector3 position, Quaternion rotation)
+    {
+        if (rb != null)
+        {
+            rb.position = position;
+            rb.rotation = rotation;
+            yRotation = rotation.eulerAngles.y;
+        }
+    }
 }
