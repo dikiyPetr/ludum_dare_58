@@ -3,28 +3,26 @@ using UnityEngine;
 
 public class ClueDebugger : MonoBehaviour
 {
-    [Header("Стартовые улики")]
-    [Tooltip("Улики, которые будут выданы при старте игры")]
-    [SerializeField] private List<ClueData> startingClues = new List<ClueData>();
-    
-    [Header("Настройки")]
-    [SerializeField] private bool giveCluesOnStart = true;
+    [Header("Стартовые улики")] [Tooltip("Улики, которые будут выданы при старте игры")] [SerializeField]
+    private List<ClueData> startingClues = new List<ClueData>();
+
+    [Header("Настройки")] [SerializeField] private bool giveCluesOnStart = true;
     [SerializeField] private float delayBetweenClues = 0.1f; // Задержка между выдачей улик
-    
-    [Header("Горячие клавиши")]
-    [SerializeField] private KeyCode giveAllCluesKey = KeyCode.F1;
+
+    [Header("Горячие клавиши")] [SerializeField]
+    private KeyCode giveAllCluesKey = KeyCode.F1;
+
     [SerializeField] private KeyCode clearAllCluesKey = KeyCode.F2;
     [SerializeField] private KeyCode printCluesKey = KeyCode.F3;
     [SerializeField] private KeyCode checkConnectionKey = KeyCode.F4;
 
-    [Header("Быстрая выдача улик (для теста)")]
-    [SerializeField] private List<QuickClue> quickClues = new List<QuickClue>();
+    [Header("Быстрая выдача улик (для теста)")] [SerializeField]
+    private List<QuickClue> quickClues = new List<QuickClue>();
 
-    [Header("Тест связей")]
-    [Tooltip("ID первой улики для проверки связи")]
-    [SerializeField] private string testClueId1 = "";
-    [Tooltip("ID второй улики для проверки связи")]
-    [SerializeField] private string testClueId2 = "";
+    [Header("Автоматическое добавление связей")]
+    [Tooltip("ClueReferencesData для автоматического добавления всех связей")]
+    [SerializeField]
+    private ClueReferencesData clueReferencesData;
 
     private void Start()
     {
@@ -57,7 +55,7 @@ public class ClueDebugger : MonoBehaviour
         // F4 - проверить связь между тестовыми уликами
         if (Input.GetKeyDown(checkConnectionKey))
         {
-            TestConnection();
+            DiscoverAllConnectionsFromReferences();
         }
 
         // Быстрая выдача улик по кнопкам
@@ -74,7 +72,7 @@ public class ClueDebugger : MonoBehaviour
     private System.Collections.IEnumerator GiveStartingClues()
     {
         Debug.Log($"<color=cyan>[ClueDebugger]</color> Выдача {startingClues.Count} стартовых улик...");
-        
+
         foreach (ClueData clue in startingClues)
         {
             if (clue != null)
@@ -83,7 +81,7 @@ public class ClueDebugger : MonoBehaviour
                 yield return new WaitForSeconds(delayBetweenClues);
             }
         }
-        
+
         Debug.Log($"<color=green>[ClueDebugger]</color> Стартовые улики выданы!");
     }
 
@@ -91,7 +89,7 @@ public class ClueDebugger : MonoBehaviour
     public void GiveAllStartingClues()
     {
         Debug.Log($"<color=cyan>[ClueDebugger]</color> Выдача всех стартовых улик...");
-        
+
         foreach (ClueData clue in startingClues)
         {
             if (clue != null)
@@ -99,7 +97,7 @@ public class ClueDebugger : MonoBehaviour
                 ClueManager.Instance.AddClue(clue.id);
             }
         }
-        
+
         Debug.Log($"<color=green>[ClueDebugger]</color> Выдано {startingClues.Count} улик!");
     }
 
@@ -124,13 +122,13 @@ public class ClueDebugger : MonoBehaviour
     public void ClearAllClues()
     {
         Debug.Log($"<color=yellow>[ClueDebugger]</color> Очистка всех улик и обновление шкафа...");
-        
+
         // Очистить шкаф
         if (ClueCabinet.Instance != null)
         {
             ClueCabinet.Instance.ClearAllSlots();
         }
-        
+
         // Для полной очистки нужно добавить метод в ClueManager
         Debug.Log($"<color=yellow>[ClueDebugger]</color> Шкаф очищен. Для полного сброса перезагрузите сцену.");
     }
@@ -139,9 +137,9 @@ public class ClueDebugger : MonoBehaviour
     public void PrintCollectedClues()
     {
         List<ClueState> collected = ClueManager.Instance.GetCollectedClues();
-        
+
         Debug.Log($"<color=cyan>[ClueDebugger]</color> === Собранные улики ({collected.Count}) ===");
-        
+
         foreach (ClueState clue in collected)
         {
             Debug.Log($"<color=white>• {clue.id}</color> - {clue.info}");
@@ -165,22 +163,7 @@ public class ClueDebugger : MonoBehaviour
         string status = hasClue ? "<color=green>✓ ЕСТЬ</color>" : "<color=red>✗ НЕТ</color>";
         Debug.Log($"<color=cyan>[ClueDebugger]</color> Улика '{clueId}': {status}");
     }
-
-    // ============ ФУНКЦИИ ДЛЯ РАБОТЫ СО СВЯЗЯМИ ============
-
-    // Проверить связь между двумя уликами (для теста через F4)
-    public void TestConnection()
-    {
-        if (string.IsNullOrEmpty(testClueId1) || string.IsNullOrEmpty(testClueId2))
-        {
-            Debug.LogWarning($"<color=yellow>[ClueDebugger]</color> Укажите ID улик для проверки связи!");
-            return;
-        }
-
-        Debug.Log($"<color=cyan>[ClueDebugger]</color> Проверка связи между '{testClueId1}' и '{testClueId2}'...");
-        DiscoverConnection(testClueId1, testClueId2);
-    }
-
+    
     // Попытка обнаружить связь между двумя уликами
     public void DiscoverConnection(string clueId1, string clueId2)
     {
@@ -221,8 +204,46 @@ public class ClueDebugger : MonoBehaviour
         {
             bool isDiscovered = ClueManager.Instance.IsConnectionDiscovered(connection.clueId1, connection.clueId2);
             string marker = isDiscovered ? "✓" : "○";
-            Debug.Log($"<color=white>{marker} {connection.clueId1}</color> <-> <color=white>{connection.clueId2}</color>");
+            Debug.Log(
+                $"<color=white>{marker} {connection.clueId1}</color> <-> <color=white>{connection.clueId2}</color>");
         }
+    }
+
+    // Добавить все связи из ClueReferencesData
+    public void DiscoverAllConnectionsFromReferences()
+    {
+        if (clueReferencesData == null)
+        {
+            Debug.LogWarning($"<color=yellow>[ClueDebugger]</color> ClueReferencesData не назначен!");
+            return;
+        }
+
+        if (clueReferencesData.allConnections == null || clueReferencesData.allConnections.Count == 0)
+        {
+            Debug.LogWarning($"<color=yellow>[ClueDebugger]</color> В ClueReferencesData нет связей!");
+            return;
+        }
+
+        Debug.Log(
+            $"<color=cyan>[ClueDebugger]</color> Добавление {clueReferencesData.allConnections.Count} связей из ClueReferencesData...");
+
+        int successCount = 0;
+        int failCount = 0;
+
+        foreach (var connection in clueReferencesData.allConnections)
+        {
+            bool success = ClueManager.Instance.TryDiscoverConnection(connection.clueId1, connection.clueId2);
+            if (success)
+            {
+                successCount++;
+            }
+            else
+            {
+                failCount++;
+            }
+        }
+
+        Debug.Log($"<color=green>[ClueDebugger]</color> Связи добавлены: {successCount} успешно, {failCount} неудачно");
     }
 }
 

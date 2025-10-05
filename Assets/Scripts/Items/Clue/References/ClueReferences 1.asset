@@ -13,5 +13,17 @@ MonoBehaviour:
   m_Name: ClueReferences 1
   m_EditorClassIdentifier: Assembly-CSharp::ClueReferencesData
   allConnections:
-  - clueId1: example
-    clueId2: SecondExample
+  - clueId1: example0
+    clueId2: example1
+  - clueId1: example1
+    clueId2: example9
+  - clueId1: example4
+    clueId2: example8
+  - clueId1: example8
+    clueId2: example9
+  - clueId1: example4
+    clueId2: example6
+  - clueId1: example2
+    clueId2: example6
+  - clueId1: example3
+    clueId2: example5
