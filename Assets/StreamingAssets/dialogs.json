@@ -1,0 +1,330 @@
+{
+  "dialogs": [
+    {
+      "id": "interview_witness",
+      "startNodeId": "n1",
+      "speaker": "witness",
+      "nodes": [
+        {
+          "id": "n1",
+          "text": "Я видел нож на месте преступления.",
+          "notebookEntries": [
+            {
+              "text": "Свидетель утверждает, что видел нож на месте преступления"
+            }
+          ],
+          "highlights": [
+            {
+              "word": "нож",
+              "tooltips": [
+                {
+                  "condition": {
+                    "type": "HasEvidence",
+                    "id": "f"
+                  },
+                  "text": "Я действительно нашел нож на месте преступления"
+                },
+                {
+                  "condition": {
+                    "type": "MultiCondition",
+                    "logicType": "AND",
+                    "conditions": [
+                      {
+                        "type": "HasEvidence",
+                        "id": "npc1_no_knife"
+                      }
+                    ]
+                  },
+                  "text": "NPC1 говорил, что не видел ножа"
+                },
+                {
+                  "condition": {
+                    "type": "MultiCondition",
+                    "logicType": "AND",
+                    "conditions": [
+                      {
+                        "type": "Not",
+                        "condition": {
+                          "type": "HasEvidence",
+                          "id": "f"
+                        }
+                      },
+                      {
+                        "type": "Not",
+                        "condition": {
+                          "type": "HasEvidence",
+                          "id": "npc1_no_knife"
+                        }
+                      }
+                    ]
+                  },
+                  "text": "Нож... Интересно, где он сейчас?"
+                }
+              ]
+            },
+            {
+              "word": "месте преступления",
+              "tooltips": [
+                {
+                  "condition": {
+                    "type": "HasEvidence",
+                    "id": "crime_scene_visited"
+                  },
+                  "text": "Я уже осматривал место преступления"
+                }
+              ]
+            }
+          ],
+          "options": [
+            {
+              "text": "Расскажите подробнее.",
+              "nextNodeId": "n2"
+            },
+            {
+              "text": "Вы уверены?",
+              "nextNodeId": "n3"
+            },
+            {
+              "text": "А что насчёт отпечатков?",
+              "nextNodeId": "n4",
+              "condition": {
+                "type": "HasEvidence",
+                "id": "fingerprints"
+              }
+            }
+          ]
+        },
+        {
+          "id": "n2",
+          "text": "Нож лежал рядом с телом. Он был весь в крови.",
+          "notebookEntries": [
+            {
+              "text": "Нож был найден рядом с телом и был в крови"
+            }
+          ],
+          "highlights": [
+            {
+              "word": "телом",
+              "tooltips": [
+                {
+                  "condition": {
+                    "type": "HasEvidence",
+                    "id": "victim_identified"
+                  },
+                  "text": "Жертва была опознана как Джон Смит"
+                }
+              ]
+            },
+            {
+              "word": "крови",
+              "tooltips": [
+                {
+                  "condition": {
+                    "type": "HasEvidence",
+                    "id": "blood_analysis"
+                  },
+                  "text": "Анализ крови подтвердил, что это кровь жертвы"
+                }
+              ]
+            }
+          ],
+          "options": [
+            {
+              "text": "Вы видели, кто его оставил?",
+              "nextNodeId": "n5"
+            },
+            {
+              "text": "Спасибо за информацию.",
+              "nextNodeId": null
+            }
+          ]
+        },
+        {
+          "id": "n3",
+          "text": "Да, я уверен. Я был первым на месте происшествия.",
+          "notebookEntries": [
+            {
+              "text": "Свидетель был первым на месте происшествия"
+            }
+          ],
+          "options": [
+            {
+              "text": "Расскажите подробнее.",
+              "nextNodeId": "n2"
+            },
+            {
+              "text": "Спасибо за информацию.",
+              "nextNodeId": null
+            }
+          ]
+        },
+        {
+          "id": "n4",
+          "text": "Отпечатки? Да, я заметил, что на ноже были отпечатки пальцев.",
+          "notebookEntries": [
+            {
+              "text": "На ноже были обнаружены отпечатки пальцев"
+            }
+          ],
+          "options": [
+            {
+              "text": "Вы видели, кто их оставил?",
+              "nextNodeId": "n5"
+            },
+            {
+              "text": "Спасибо за информацию.",
+              "nextNodeId": null
+            }
+          ]
+        },
+        {
+          "id": "n5",
+          "text": "Нет, я не видел, кто оставил нож. Я пришёл уже после того, как всё произошло.",
+          "notebookEntries": [
+            {
+              "text": "Свидетель не видел, кто оставил нож на месте преступления"
+            }
+          ],
+          "options": [
+            {
+              "text": "Спасибо за информацию.",
+              "nextNodeId": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "suspect_interrogation",
+      "startNodeId": "s1",
+      "speaker": "suspect",
+      "nodes": [
+        {
+          "id": "s1",
+          "text": "Я невиновен! Я не убивал этого человека!",
+          "notebookEntries": [
+            {
+              "text": "Подозреваемый заявляет о своей невиновности"
+            }
+          ],
+          "highlights": [
+            {
+              "word": "невиновен",
+              "tooltips": [
+                {
+                  "condition": {
+                    "type": "HasEvidence",
+                    "id": "suspect_alibi"
+                  },
+                  "text": "У него есть алиби, подтверждающее невиновность"
+                }
+              ]
+            },
+            {
+              "word": "человека",
+              "tooltips": [
+                {
+                  "condition": {
+                    "type": "HasEvidence",
+                    "id": "victim_identified"
+                  },
+                  "text": "Жертва была опознана"
+                }
+              ]
+            }
+          ],
+          "options": [
+            {
+              "text": "Где вы были вчера вечером?",
+              "nextNodeId": "s2"
+            },
+            {
+              "text": "У вас есть алиби?",
+              "nextNodeId": "s3"
+            },
+            {
+              "text": "Мы нашли ваши отпечатки на ноже.",
+              "nextNodeId": "s4",
+              "condition": {
+                "type": "HasEvidence",
+                "id": "fingerprints"
+              }
+            }
+          ]
+        },
+        {
+          "id": "s2",
+          "text": "Я был дома один. Никто не может это подтвердить.",
+          "notebookEntries": [
+            {
+              "text": "Подозреваемый утверждает, что был дома один без свидетелей"
+            }
+          ],
+          "options": [
+            {
+              "text": "У вас есть алиби?",
+              "nextNodeId": "s3"
+            },
+            {
+              "text": "Спасибо за информацию.",
+              "nextNodeId": null
+            }
+          ]
+        },
+        {
+          "id": "s3",
+          "text": "Нет, у меня нет алиби. Но это не значит, что я виновен!",
+          "notebookEntries": [
+            {
+              "text": "У подозреваемого нет алиби"
+            }
+          ],
+          "options": [
+            {
+              "text": "Где вы были вчера вечером?",
+              "nextNodeId": "s2"
+            },
+            {
+              "text": "Спасибо за информацию.",
+              "nextNodeId": null
+            }
+          ]
+        },
+        {
+          "id": "s4",
+          "text": "Отпечатки? Это невозможно! Я не трогал никакого ножа!",
+          "notebookEntries": [
+            {
+              "text": "Подозреваемый отрицает причастность к ножу, несмотря на отпечатки"
+            }
+          ],
+          "options": [
+            {
+              "text": "Тогда как объяснить отпечатки?",
+              "nextNodeId": "s5"
+            },
+            {
+              "text": "Спасибо за информацию.",
+              "nextNodeId": null
+            }
+          ]
+        },
+        {
+          "id": "s5",
+          "text": "Я не знаю! Возможно, кто-то подбросил нож с моими отпечатками!",
+          "notebookEntries": [
+            {
+              "text": "Подозреваемый предполагает, что нож с его отпечатками был подброшен"
+            }
+          ],
+          "options": [
+            {
+              "text": "Спасибо за информацию.",
+              "nextNodeId": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
