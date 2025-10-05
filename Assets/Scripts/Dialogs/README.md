@@ -89,6 +89,7 @@ OnDialogStarted(Dialog)
 OnDialogEnded(Dialog)
 OnNodePlayed(DialogNode)
 OnHighlightsUpdated(DialogNode)
+OnOptionSelected(Dialog, DialogNode, DialogOption)
 ```
 
 ### HighlightManager
@@ -204,6 +205,15 @@ DialogManager.OnNodePlayed += (node) => {
 
 DialogManager.OnDialogStarted += (dialog) => {
     Debug.Log($"Начат: {dialog.id}");
+};
+
+DialogManager.OnOptionSelected += (dialog, node, option) => {
+    Debug.Log($"Выбрана опция: '{option.text}' в диалоге {dialog.id}");
+    
+    // Пример: выполнить действие в зависимости от выбора
+    if (dialog.id == "exit_basement" && option.text == "Да") {
+        SceneManager.LoadScene("MainLevel");
+    }
 };
 
 HighlightManager.OnTooltipRequested += (word, tooltips) => {

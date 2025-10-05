@@ -21,6 +21,7 @@ namespace Dialogs
         public static event Action<Dialog> OnDialogStarted;
         public static event Action<Dialog> OnDialogEnded;
         public static event Action<DialogNode> OnHighlightsUpdated;
+        public static event Action<Dialog, DialogNode, DialogOption> OnOptionSelected;
 
         // Данные
         private Dictionary<string, Dialog> dialogs = new Dictionary<string, Dialog>();
@@ -154,6 +155,9 @@ namespace Dialogs
                 Debug.LogWarning($"Вариант '{option.text}' недоступен из-за невыполненного условия");
                 return false;
             }
+
+            // Уведомить о выборе опции
+            OnOptionSelected?.Invoke(currentDialog, currentNode, option);
 
             // Перейти к следующему узлу
             if (string.IsNullOrEmpty(option.nextNodeId))

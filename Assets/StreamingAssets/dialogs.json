@@ -259,6 +259,27 @@
           ]
         }
       ]
+    },
+    {
+      "id": "exit_basement",
+      "startNodeId": "eb1",
+      "speaker": "Мысли",
+      "nodes": [
+        {
+          "id": "eb1",
+          "text": "Покинуть подвал?",
+          "options": [
+            {
+              "text": "Да",
+              "nextNodeId": null
+            },
+            {
+              "text": "Нет",
+              "nextNodeId": null
+            }
+          ]
+        }
+      ]
     }
   ]
 }
