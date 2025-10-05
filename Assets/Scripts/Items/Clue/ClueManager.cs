@@ -26,7 +26,6 @@ public class ClueManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
             InitializeClues();
         }
         else
