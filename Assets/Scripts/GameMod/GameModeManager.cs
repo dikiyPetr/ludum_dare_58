@@ -5,7 +5,7 @@ public enum GameMode
 {
     Play,
     Dialogue,
-    Animation
+    Cutscene
 }
 
 [System.Serializable]
