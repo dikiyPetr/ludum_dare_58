@@ -14,6 +14,7 @@ public class SuspectManager : MonoBehaviour
 
     // События
     public System.Action<string> OnSuspectRevealed;
+    public System.Action<string> OnSuspectCaught;
 
     private void Awake()
     {
@@ -26,26 +27,6 @@ public class SuspectManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
-        }
-    }
-
-    private void Start()
-    {
-        // Подписываемся на события ClueManager
-        if (ClueManager.Instance != null)
-        {
-            ClueManager.Instance.OnClueCollected += OnClueCollected;
-            ClueManager.Instance.OnConnectionDiscovered += OnConnectionDiscovered;
-        }
-    }
-
-    private void OnDestroy()
-    {
-        // Отписываемся от событий
-        if (ClueManager.Instance != null)
-        {
-            ClueManager.Instance.OnClueCollected -= OnClueCollected;
-            ClueManager.Instance.OnConnectionDiscovered -= OnConnectionDiscovered;
         }
     }
 
@@ -158,20 +139,8 @@ public class SuspectManager : MonoBehaviour
         return revealed;
     }
 
-    // Обработка сбора улики
-    private void OnClueCollected(string clueId)
-    {
-        CheckAllSuspectsForUnlock();
-    }
-
-    // Обработка обнаружения связи
-    private void OnConnectionDiscovered(string clueId1, string clueId2)
-    {
-        CheckAllSuspectsForUnlock();
-    }
-
     // Проверить всех подозреваемых на возможность открытия
-    private void CheckAllSuspectsForUnlock()
+    public void CheckAllSuspectsForUnlock()
     {
         foreach (var suspect in suspects.Values)
         {
@@ -203,12 +172,64 @@ public class SuspectManager : MonoBehaviour
         OnSuspectRevealed?.Invoke(suspectId);
     }
 
+    // Поймать подозреваемого
+    public bool CatchSuspect(string suspectId)
+    {
+        if (!suspects.ContainsKey(suspectId))
+        {
+            Debug.LogWarning($"Подозреваемый с ID '{suspectId}' не найден!");
+            return false;
+        }
+
+        SuspectState state = suspects[suspectId];
+
+        // Если уже пойман
+        if (state.isCaught)
+        {
+            return false;
+        }
+
+        // Ловим подозреваемого
+        state.isCaught = true;
+        Debug.Log($"<color=red>★ Подозреваемый '{state.data.suspectName}' пойман!</color>");
+
+        // Вызываем событие
+        OnSuspectCaught?.Invoke(suspectId);
+
+        return true;
+    }
+
+    // Проверить, пойман ли подозреваемый
+    public bool IsSuspectCaught(string suspectId)
+    {
+        if (suspects.ContainsKey(suspectId))
+        {
+            return suspects[suspectId].isCaught;
+        }
+        return false;
+    }
+
+    // Получить всех пойманных подозреваемых
+    public List<SuspectState> GetCaughtSuspects()
+    {
+        List<SuspectState> caught = new List<SuspectState>();
+        foreach (var suspect in suspects.Values)
+        {
+            if (suspect.isCaught)
+            {
+                caught.Add(suspect);
+            }
+        }
+        return caught;
+    }
+
     // Сбросить всех подозреваемых (для отладки)
     public void DebugResetAllSuspects()
     {
         foreach (var suspect in suspects.Values)
         {
             suspect.isRevealed = false;
+            suspect.isCaught = false;
         }
         Debug.Log("[SuspectManager] Все подозреваемые сброшены!");
     }

@@ -11,8 +11,6 @@ public class OutlineSelector : MonoBehaviour
     [SerializeField] private InputActionReference clickAction;
 
     private Outline currentOutline;
-    private DialogInteractable currentDialogInteractable;
-    private LevelTransition currentLevelTransition;
 
     void Update()
     {
@@ -40,8 +38,6 @@ public class OutlineSelector : MonoBehaviour
                     dialogInteractable = hit.collider.GetComponentInParent<DialogInteractable>();
                 }
 
-                currentDialogInteractable = dialogInteractable;
-
                 // Проверяем наличие LevelTransition
                 LevelTransition levelTransition = hit.collider.GetComponent<LevelTransition>();
                 if (levelTransition == null)
@@ -49,26 +45,60 @@ public class OutlineSelector : MonoBehaviour
                     levelTransition = hit.collider.GetComponentInParent<LevelTransition>();
                 }
 
-                currentLevelTransition = levelTransition;
+                // Проверяем наличие InteractableSuspect
+                InteractableSuspect suspect = hit.collider.GetComponent<InteractableSuspect>();
+                if (suspect == null)
+                {
+                    suspect = hit.collider.GetComponentInParent<InteractableSuspect>();
+                }
+
+                // Проверяем наличие SuspectVisualDisplay
+                SuspectVisualDisplay suspectDisplay = hit.collider.GetComponent<SuspectVisualDisplay>();
+                if (suspectDisplay == null)
+                {
+                    suspectDisplay = hit.collider.GetComponentInParent<SuspectVisualDisplay>();
+                }
 
                 // Обработка клика
                 if (clickAction != null && clickAction.action.WasPressedThisFrame())
                 {
-                    // Приоритет: сначала LevelTransition, потом DialogInteractable
-                    if (currentLevelTransition != null)
+                    // Приоритет: сначала LevelTransition, потом InteractableSuspect, потом SuspectVisualDisplay, потом DialogInteractable
+                    if (levelTransition != null)
                     {
-                        currentLevelTransition.TransitionToLevel();
+                        levelTransition.TransitionToLevel();
                     }
-                    else if (currentDialogInteractable != null)
+                    else if (suspect != null)
+                    {
+                        SuspectData suspectData = suspect.GetSuspectData();
+                        if (suspectData != null && !string.IsNullOrEmpty(suspectData.suspectDialogNodeId))
+                        {
+                            if (DialogManager.Instance != null && !DialogManager.Instance.IsInDialog)
+                            {
+                                DialogManager.Instance.StartDialog(suspectData.suspectDialogNodeId);
+                            }
+                        }
+                    }
+                    else if (suspectDisplay != null)
+                    {
+                        SuspectData suspectData = suspectDisplay.GetSuspectData();
+                        if (suspectData != null && !string.IsNullOrEmpty(suspectData.mapDialogNodeId))
+                        {
+                            if (DialogManager.Instance != null && !DialogManager.Instance.IsInDialog)
+                            {
+                                DialogManager.Instance.StartDialog(suspectData.mapDialogNodeId);
+                            }
+                        }
+                    }
+                    else if (dialogInteractable != null)
                     {
                         if (DialogManager.Instance != null && !DialogManager.Instance.IsInDialog)
                         {
                             // Используем рефлексию для вызова приватного метода TryStartDialog
-                            var method = currentDialogInteractable.GetType().GetMethod("TryStartDialog",
+                            var method = dialogInteractable.GetType().GetMethod("TryStartDialog",
                                 System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
                             if (method != null)
                             {
-                                method.Invoke(currentDialogInteractable, null);
+                                method.Invoke(dialogInteractable, null);
                             }
                         }
                     }
@@ -80,8 +110,6 @@ public class OutlineSelector : MonoBehaviour
 
         // Если луч ничего не попал, отключаем обводку у предыдущего объекта
         Unselect();
-        currentDialogInteractable = null;
-        currentLevelTransition = null;
     }
 
     void Select(Outline outline)
@@ -110,15 +138,44 @@ public class OutlineSelector : MonoBehaviour
                 currentOutline = null;
             }
 
+            // Проверяем наличие CabinetSlot
             CabinetSlot slot = outline.GetComponentInParent<CabinetSlot>();
             if (slot != null)
             {
-                overlayInfo.ShowOverlay(slot.GetClue());
+                overlayInfo.ShowClueOverlay(slot.GetClue());
+                return;
             }
-            else
+
+            // Проверяем наличие SuspectVisualDisplay
+            SuspectVisualDisplay suspectDisplay = outline.GetComponent<SuspectVisualDisplay>();
+            if (suspectDisplay != null)
             {
-                overlayInfo.ShowOverlay(null);
+                SuspectData suspectData = suspectDisplay.GetSuspectData();
+                if (suspectData != null)
+                {
+                    overlayInfo.ShowSuspectOverlay(suspectData);
+                    return;
+                }
             }
+
+            // Проверяем наличие InteractableSuspect
+            InteractableSuspect interactableSuspect = outline.GetComponent<InteractableSuspect>();
+            if (interactableSuspect == null)
+            {
+                interactableSuspect = outline.GetComponentInParent<InteractableSuspect>();
+            }
+
+            if (interactableSuspect != null)
+            {
+                SuspectData suspectData = interactableSuspect.GetSuspectData();
+                if (suspectData != null)
+                {
+                    overlayInfo.ShowSuspectOverlay(suspectData);
+                    return;
+                }
+            }
+
+            overlayInfo.HideOverlay();
         }
     }
 
@@ -132,7 +189,7 @@ public class OutlineSelector : MonoBehaviour
                 currentOutline.enabled = false;
             }
             currentOutline = null;
-            overlayInfo.ShowOverlay(null);
+            overlayInfo.HideOverlay();
         }
     }
 
