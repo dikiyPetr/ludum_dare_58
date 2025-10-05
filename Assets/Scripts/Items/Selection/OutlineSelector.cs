@@ -9,6 +9,7 @@ public class OutlineSelector : MonoBehaviour
 
     private Outline currentOutline;
     private DialogInteractable currentDialogInteractable;
+    private LevelTransition currentLevelTransition;
 
     void Update()
     {
@@ -38,17 +39,34 @@ public class OutlineSelector : MonoBehaviour
 
                 currentDialogInteractable = dialogInteractable;
 
-                // Обработка клика на DialogInteractable
-                if (currentDialogInteractable != null && Input.GetMouseButtonDown(0))
+                // Проверяем наличие LevelTransition
+                LevelTransition levelTransition = hit.collider.GetComponent<LevelTransition>();
+                if (levelTransition == null)
                 {
-                    if (DialogManager.Instance != null && !DialogManager.Instance.IsInDialog)
+                    levelTransition = hit.collider.GetComponentInParent<LevelTransition>();
+                }
+
+                currentLevelTransition = levelTransition;
+
+                // Обработка клика
+                if (Input.GetMouseButtonDown(0))
+                {
+                    // Приоритет: сначала LevelTransition, потом DialogInteractable
+                    if (currentLevelTransition != null)
                     {
-                        // Используем рефлексию для вызова приватного метода TryStartDialog
-                        var method = currentDialogInteractable.GetType().GetMethod("TryStartDialog",
-                            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                        if (method != null)
+                        currentLevelTransition.TransitionToLevel();
+                    }
+                    else if (currentDialogInteractable != null)
+                    {
+                        if (DialogManager.Instance != null && !DialogManager.Instance.IsInDialog)
                         {
-                            method.Invoke(currentDialogInteractable, null);
+                            // Используем рефлексию для вызова приватного метода TryStartDialog
+                            var method = currentDialogInteractable.GetType().GetMethod("TryStartDialog",
+                                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                            if (method != null)
+                            {
+                                method.Invoke(currentDialogInteractable, null);
+                            }
                         }
                     }
                 }
@@ -60,6 +78,7 @@ public class OutlineSelector : MonoBehaviour
         // Если луч ничего не попал, отключаем обводку у предыдущего объекта
         Unselect();
         currentDialogInteractable = null;
+        currentLevelTransition = null;
     }
 
     void Select(Outline outline)

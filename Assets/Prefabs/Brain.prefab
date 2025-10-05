@@ -1385,7 +1385,9 @@ MonoBehaviour:
   - surfaceTypeName: 2
     footstepSounds:
     - {fileID: 8300000, guid: 1d7ae27d93050f046a1a60a34696d29b, type: 3}
-  - surfaceTypeName: 2
+  - surfaceTypeName: 3
+    footstepSounds: []
+  - surfaceTypeName: 4
     footstepSounds: []
 --- !u!1 &6977806748967470562
 GameObject:
