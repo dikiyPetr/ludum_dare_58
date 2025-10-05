@@ -40,13 +40,28 @@ public class OverlayInfoManager : MonoBehaviour
         overlayInfoObject.SetActive(true);
     }
 
-    public void ShowOverlay(ClueData clue)
+    public void ShowClueOverlay(ClueData clue)
     {
         ToggleOverlay(clue);
         // Обновляем текст
-        if (textComponent != null && clue !=null)
+        if (textComponent != null && clue != null)
         {
             textComponent.text = clue.title + "\n" + clue.description;
         }
+    }
+
+    public void ShowSuspectOverlay(SuspectData suspect)
+    {
+        ToggleOverlay(suspect);
+        // Обновляем текст
+        if (textComponent != null && suspect != null)
+        {
+            textComponent.text = suspect.suspectName + "\n" + suspect.description;
+        }
+    }
+
+    public void HideOverlay()
+    {
+        ToggleOverlay(null);
     }
 }

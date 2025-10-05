@@ -18,6 +18,9 @@ public class ClueManager : MonoBehaviour
     // Ссылка на ClueCabinet для прямой передачи улик и связей
     [SerializeField] private ClueCabinet clueCabinet;
 
+    // Ссылка на SuspectManager для обновления подозреваемых
+    [SerializeField] private SuspectManager suspectManager;
+
     // Обнаруженные игроком связи
     private HashSet<string> discoveredConnections = new HashSet<string>();
 
@@ -61,6 +64,12 @@ public class ClueManager : MonoBehaviour
             if (clueCabinet != null && clues[clueId].data != null)
             {
                 clueCabinet.DisplayClue(clues[clueId].data);
+            }
+
+            // Обновить SuspectManager
+            if (suspectManager != null)
+            {
+                suspectManager.CheckAllSuspectsForUnlock();
             }
 
             OnClueCollected?.Invoke(clueId);
@@ -110,6 +119,12 @@ public class ClueManager : MonoBehaviour
         if (clueCabinet != null)
         {
             clueCabinet.DrawConnection(clueId1, clueId2);
+        }
+
+        // Обновить SuspectManager
+        if (suspectManager != null)
+        {
+            suspectManager.CheckAllSuspectsForUnlock();
         }
 
         OnConnectionDiscovered?.Invoke(clueId1, clueId2);

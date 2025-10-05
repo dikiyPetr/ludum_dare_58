@@ -95,15 +95,27 @@ public class OutlineSelector : MonoBehaviour
             outline.enabled = true;
             currentOutline = outline;
 
+            // Проверяем наличие CabinetSlot
             CabinetSlot slot = outline.GetComponentInParent<CabinetSlot>();
             if (slot != null)
             {
-                overlayInfo.ShowOverlay(slot.GetClue());
+                overlayInfo.ShowClueOverlay(slot.GetClue());
+                return;
             }
-            else
+
+            // Проверяем наличие SuspectVisualDisplay
+            SuspectVisualDisplay suspectDisplay = outline.GetComponent<SuspectVisualDisplay>();
+            if (suspectDisplay != null)
             {
-                overlayInfo.ShowOverlay(null);
+                SuspectData suspectData = suspectDisplay.GetSuspectData();
+                if (suspectData != null)
+                {
+                    overlayInfo.ShowSuspectOverlay(suspectData);
+                    return;
+                }
             }
+
+            overlayInfo.HideOverlay();
         }
     }
 
@@ -113,7 +125,7 @@ public class OutlineSelector : MonoBehaviour
         {
             currentOutline.enabled = false;
             currentOutline = null;
-            overlayInfo.ShowOverlay(null);
+            overlayInfo.HideOverlay();
         }
     }
 

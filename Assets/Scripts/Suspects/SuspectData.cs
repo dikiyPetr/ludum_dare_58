@@ -9,6 +9,8 @@ public class SuspectData : ScriptableObject
     public string id;
     public string suspectName;
     [TextArea(3, 10)] public string description;
+    public string dialogNodeId;
+    public bool isMale;
 
     [Header("Unlock Conditions")]
     [Tooltip("Улики, необходимые для открытия подозреваемого")]

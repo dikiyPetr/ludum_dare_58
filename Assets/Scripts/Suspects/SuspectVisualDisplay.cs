@@ -3,14 +3,14 @@ using UnityEngine;
 // Компонент для отображения визуальных элементов подозреваемого
 public class SuspectVisualDisplay : MonoBehaviour
 {
-    [Header("Suspect Configuration")]
-    [SerializeField] private string suspectId; // ID подозреваемого, с которым связан этот визуальный компонент
+    [Header("Suspect Configuration")] [SerializeField]
+    private SuspectData suspectState;
 
-    [Header("Visual Components")]
-    [SerializeField] private GameObject[] objectsToToggle; // Объекты для показа/скрытия
+    [Header("Visual Components")] [SerializeField]
+    private GameObject[] objectsToToggle; // Объекты для показа/скрытия
 
-    [Header("Display Settings")]
-    [SerializeField] private bool hideWhenLocked = true; // Скрывать компоненты, когда подозреваемый закрыт
+    [Header("Display Settings")] [SerializeField]
+    private bool hideWhenLocked = true; // Скрывать компоненты, когда подозреваемый закрыт
 
     private bool isRevealed = false;
 
@@ -26,7 +26,7 @@ public class SuspectVisualDisplay : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"[SuspectVisualDisplay] SuspectManager не найден для подозреваемого '{suspectId}'");
+            Debug.LogWarning($"[SuspectVisualDisplay] SuspectManager не найден для подозреваемого");
         }
     }
 
@@ -42,7 +42,7 @@ public class SuspectVisualDisplay : MonoBehaviour
     // Обработка открытия подозреваемого
     private void OnSuspectRevealed(string revealedSuspectId)
     {
-        if (revealedSuspectId == suspectId)
+        if (suspectState != null && revealedSuspectId == suspectState.id)
         {
             UpdateVisualState();
         }
@@ -51,10 +51,10 @@ public class SuspectVisualDisplay : MonoBehaviour
     // Обновить визуальное состояние всех компонентов
     private void UpdateVisualState()
     {
-        if (SuspectManager.Instance == null)
+        if (suspectState == null || SuspectManager.Instance == null)
             return;
 
-        isRevealed = SuspectManager.Instance.IsSuspectRevealed(suspectId);
+        isRevealed = SuspectManager.Instance.IsSuspectRevealed(suspectState.id);
         bool shouldShow = isRevealed || !hideWhenLocked;
 
         // Переключение GameObjects
@@ -71,10 +71,10 @@ public class SuspectVisualDisplay : MonoBehaviour
         UpdateVisualState();
     }
 
-    // Получить ID подозреваемого
-    public string GetSuspectId()
+    // Получить данные подозреваемого
+    public SuspectData GetSuspectData()
     {
-        return suspectId;
+        return suspectState;
     }
 
     // Проверить, открыт ли подозреваемый

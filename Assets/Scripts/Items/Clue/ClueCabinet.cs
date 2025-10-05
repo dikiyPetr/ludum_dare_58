@@ -20,14 +20,6 @@ public class ClueCabinet : MonoBehaviour
         else
         {
             Destroy(gameObject);
-            return;
-        }
-        
-        // Подписка на события системы улик
-        if (ClueManager.Instance != null)
-        {
-            ClueManager.Instance.OnClueCollected += OnClueCollected;
-            ClueManager.Instance.OnConnectionDiscovered += OnConnectionDiscovered;
         }
     }
 
@@ -39,16 +31,7 @@ public class ClueCabinet : MonoBehaviour
         // Отобразить уже обнаруженные связи
         RefreshAllConnections();
     }
-
-    private void OnDestroy()
-    {
-        if (ClueManager.Instance != null)
-        {
-            ClueManager.Instance.OnClueCollected -= OnClueCollected;
-            ClueManager.Instance.OnConnectionDiscovered -= OnConnectionDiscovered;
-        }
-    }
-
+    
     // Обработка сбора новой улики
     private void OnClueCollected(string clueId)
     {

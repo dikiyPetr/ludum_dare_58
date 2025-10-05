@@ -29,26 +29,6 @@ public class SuspectManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        // Подписываемся на события ClueManager
-        if (ClueManager.Instance != null)
-        {
-            ClueManager.Instance.OnClueCollected += OnClueCollected;
-            ClueManager.Instance.OnConnectionDiscovered += OnConnectionDiscovered;
-        }
-    }
-
-    private void OnDestroy()
-    {
-        // Отписываемся от событий
-        if (ClueManager.Instance != null)
-        {
-            ClueManager.Instance.OnClueCollected -= OnClueCollected;
-            ClueManager.Instance.OnConnectionDiscovered -= OnConnectionDiscovered;
-        }
-    }
-
     // Инициализация всех подозреваемых
     private void InitializeSuspects()
     {
@@ -158,20 +138,8 @@ public class SuspectManager : MonoBehaviour
         return revealed;
     }
 
-    // Обработка сбора улики
-    private void OnClueCollected(string clueId)
-    {
-        CheckAllSuspectsForUnlock();
-    }
-
-    // Обработка обнаружения связи
-    private void OnConnectionDiscovered(string clueId1, string clueId2)
-    {
-        CheckAllSuspectsForUnlock();
-    }
-
     // Проверить всех подозреваемых на возможность открытия
-    private void CheckAllSuspectsForUnlock()
+    public void CheckAllSuspectsForUnlock()
     {
         foreach (var suspect in suspects.Values)
         {
