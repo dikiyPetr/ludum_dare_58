@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: ClueReferences 1
   m_EditorClassIdentifier: Assembly-CSharp::ClueReferencesData
   allConnections:
-  - id: connection_example0_example1
-    description: "\u0421\u0432\u044F\u0437\u044C \u043C\u0435\u0436\u0434\u0443
-      \u0443\u0441\u0430\u043C\u0438 \u0438 \u043C\u0443\u0436\u0438\u043A\u0430\u043C\u0438"
-    clueId1: example0
-    clueId2: example1
+  - id: 0_1
+    description: "\u042D\u0442\u043E \u043D\u0435 \u043F\u0435\u0440\u0432\u044B\u0439
+      \u0441\u043B\u0443\u0447\u0430\u0439 \u0438 \u044F \u043D\u0435 \u0431\u0443\u0434\u0443
+      \u0441\u0438\u0434\u0435\u0442\u044C \u0441\u043B\u043E\u0436\u0430 \u0440\u0443\u043A\u0438"
+    clueId1: 0
+    clueId2: 1
   - id: connection_example1_example9
     description: "\u0421\u0432\u044F\u0437\u044C 1-9"
     clueId1: example1

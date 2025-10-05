@@ -9,6 +9,7 @@ namespace Dialogs
     public class DialogUIActivator : MonoBehaviour
     {
         [SerializeField] private GameObject dialogPanel; // UI панель (например, Overlay/DialogPanel)
+        [SerializeField] private GameModeManager gameModeManager;
 
         void Awake()
         {
@@ -33,18 +34,13 @@ namespace Dialogs
         private void HandleStarted(Dialog dialog)
         {
             if (dialogPanel != null) dialogPanel.SetActive(true);
-            // Блокируем управление персонажем на время диалога (если есть контроллер)
-            var controller = FindObjectOfType<SimpleCharacterController>();
-            if (controller != null) controller.DisableController();
+            gameModeManager.SwitchMode(GameMode.Dialogue);
         }
 
         private void HandleEnded(Dialog dialog)
         {
             if (dialogPanel != null) dialogPanel.SetActive(false);
-            var controller = FindObjectOfType<SimpleCharacterController>();
-            if (controller != null) controller.EnableController();
+            gameModeManager.SwitchMode(GameMode.Play);
         }
     }
 }
-
-

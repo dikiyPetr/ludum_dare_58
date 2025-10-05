@@ -128,7 +128,7 @@ namespace Dialogs
             textComponent.fontSize = fontSize;
             textComponent.color = textColor;
             textComponent.alignment = TextAlignmentOptions.TopLeft;
-            textComponent.enableWordWrapping = true;
+            textComponent.textWrappingMode = TextWrappingModes.Normal;
             
             // LayoutElement для контроля размера
             var layoutElement = textObj.AddComponent<LayoutElement>();

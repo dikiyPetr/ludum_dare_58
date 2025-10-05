@@ -46,18 +46,12 @@ public class SoundCondition : MonoBehaviour
     [Tooltip("Случайная вариация высоты тона")] [Range(0f, 0.5f)]
     public float pitchVariation = 0f;
 
-    [Header("📊 Отладка (только для чтения)")] [SerializeField]
-    private bool isTriggered = false;
-
-    [SerializeField] private bool isInCooldown = false;
     [SerializeField] private int triggerCount = 0;
 
     // Приватные переменные
     private bool hasPlayedOnce = false;
     private float lastPlayTime = -999f;
     private float targetVolume = 1f;
-    private float currentFadeVolume = 1f;
-    private bool isFading = false;
     private Coroutine fadeCoroutine;
 
     public enum PlaybackMode
@@ -108,7 +102,6 @@ public class SoundCondition : MonoBehaviour
     // Вызывается триггером при входе
     public void OnTriggerEntered(GameObject enteringObject)
     {
-        isTriggered = true;
         triggerCount++;
 
         if (playbackMode == PlaybackMode.OnEnter || playbackMode == PlaybackMode.OnEnterAndExit)
@@ -134,8 +127,6 @@ public class SoundCondition : MonoBehaviour
     // Вызывается триггером при выходе
     public void OnTriggerExited(GameObject exitingObject)
     {
-        isTriggered = false;
-
         if (playbackMode == PlaybackMode.OnExit || playbackMode == PlaybackMode.OnEnterAndExit)
         {
             TryPlaySound();
@@ -167,11 +158,8 @@ public class SoundCondition : MonoBehaviour
         // Проверка cooldown
         if (Time.time - lastPlayTime < cooldownTime)
         {
-            isInCooldown = true;
             return;
         }
-
-        isInCooldown = false;
 
         // Проверка шанса воспроизведения
         if (Random.Range(0f, 100f) > playChance)
@@ -200,7 +188,6 @@ public class SoundCondition : MonoBehaviour
         // Fade in эффект
         if (fadeIn)
         {
-            currentFadeVolume = 0f;
             audioSource.volume = 0f;
             StartFade(targetVolume);
         }
@@ -244,7 +231,6 @@ public class SoundCondition : MonoBehaviour
 
     private System.Collections.IEnumerator FadeVolume(float targetVol)
     {
-        isFading = true;
         float startVolume = audioSource.volume;
         float elapsed = 0f;
 
@@ -262,8 +248,6 @@ public class SoundCondition : MonoBehaviour
         {
             audioSource.Stop();
         }
-
-        isFading = false;
     }
 
     // Публичные методы для внешнего управления

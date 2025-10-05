@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e32c33bd6b5f436a9c04645008512e2b, type: 3}
   m_Name: Example 1
   m_EditorClassIdentifier: 
-  id: example1
-  title: "\u041C\u0443\u0436\u0438\u043A\u0438"
-  description: "\u041F\u043E\u0442\u043D\u044B\u0435. \u0411\u0435\u0437 \u0443\u0441\u043E\u0432"
+  id: 1
+  title: "\u041E\u043F\u043E\u0432\u0435\u0449\u0435\u043D\u0438\u0435 \u043E \u043F\u0440\u043E\u043F\u0430\u0436\u0435
+    \u0442\u0435\u043B\u0430 \u0432 \u043C\u043E\u0440\u0433\u0435"
+  description: "\u041A\u0430\u043A \u0443 \u043D\u0438\u0445 \u0445\u0432\u0430\u0442\u0438\u043B\u043E
+    \u043D\u0430\u0433\u043B\u043E\u0441\u0442\u0438 \u0441\u043E\u043E\u0431\u0449\u0438\u0442\u044C
+    \u043E \u0442\u0430\u043A\u043E\u043C"
   cluePrefab: {fileID: 7827794876885937444, guid: 0a78265a7277fa542892045f780e8e5d, type: 3}
   cabinetSlotIndex: 1

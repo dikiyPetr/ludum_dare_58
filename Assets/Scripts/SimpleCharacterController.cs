@@ -50,7 +50,6 @@ public class SimpleCharacterController : MonoBehaviour
     private float stepTimer = 0f;
     private float stopTimer = 0f;
     private bool isWalking = false;
-    private string currentSurfaceType = "";
     private RaycastHit groundHit;
     
     private bool wasControllerEnabled = false;
