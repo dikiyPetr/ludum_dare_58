@@ -1,11 +1,11 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class OutlineRaycast : MonoBehaviour
+public class OutlineSelector : MonoBehaviour
 {
     [SerializeField] private Camera mainCamera;
     [SerializeField] private float rayDistance = 100f;
     [SerializeField] private OverlayInfoManager overlayInfo;
+
     private Outline currentOutline;
 
     void Update()
@@ -25,7 +25,7 @@ public class OutlineRaycast : MonoBehaviour
 
             if (outline != null)
             {
-                Select( outline);
+                Select(outline);
                 return;
             }
         }
@@ -34,7 +34,7 @@ public class OutlineRaycast : MonoBehaviour
         Unselect();
     }
 
-    void Select( Outline outline)
+    void Select(Outline outline)
     {
         if (currentOutline != outline)
         {
@@ -66,5 +66,10 @@ public class OutlineRaycast : MonoBehaviour
             currentOutline = null;
             overlayInfo.ShowOverlay(null);
         }
+    }
+
+    public Outline GetCurrentOutline()
+    {
+        return currentOutline;
     }
 }
