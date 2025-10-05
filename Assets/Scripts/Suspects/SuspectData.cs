@@ -9,7 +9,8 @@ public class SuspectData : ScriptableObject
     public string id;
     public string suspectName;
     [TextArea(3, 10)] public string description;
-    public string dialogNodeId;
+    public string mapDialogNodeId;
+    public string suspectDialogNodeId;
     public bool isMale;
 
     [Header("Unlock Conditions")]
@@ -26,12 +27,14 @@ public class SuspectState
 {
     public string id;
     public bool isRevealed; // Открыт ли подозреваемый
+    public bool isCaught; // Пойман ли подозреваемый
     public SuspectData data; // Ссылка на ScriptableObject
 
     public SuspectState(string id, SuspectData data)
     {
         this.id = id;
         this.isRevealed = false;
+        this.isCaught = false;
         this.data = data;
     }
 }

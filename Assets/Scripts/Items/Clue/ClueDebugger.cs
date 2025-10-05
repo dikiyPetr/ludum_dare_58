@@ -15,6 +15,7 @@ public class ClueDebugger : MonoBehaviour
     [SerializeField] private KeyCode clearAllCluesKey = KeyCode.F2;
     [SerializeField] private KeyCode printCluesKey = KeyCode.F3;
     [SerializeField] private KeyCode checkConnectionKey = KeyCode.F4;
+    [SerializeField] private KeyCode catchFirstSuspectKey = KeyCode.F5;
 
     [Header("Быстрая выдача улик (для теста)")] [SerializeField]
     private List<QuickClue> quickClues = new List<QuickClue>();
@@ -56,6 +57,12 @@ public class ClueDebugger : MonoBehaviour
         if (Input.GetKeyDown(checkConnectionKey))
         {
             DiscoverAllConnectionsFromReferences();
+        }
+
+        // F5 - поймать первого подозреваемого
+        if (Input.GetKeyDown(catchFirstSuspectKey))
+        {
+            CatchFirstSuspect();
         }
 
         // Быстрая выдача улик по кнопкам
@@ -267,6 +274,36 @@ public class ClueDebugger : MonoBehaviour
         }
 
         Debug.Log($"<color=green>[ClueDebugger]</color> Связи добавлены: {successCount} успешно, {failCount} неудачно");
+    }
+
+    // Поймать первого подозреваемого
+    public void CatchFirstSuspect()
+    {
+        if (SuspectManager.Instance == null)
+        {
+            Debug.LogWarning($"<color=yellow>[ClueDebugger]</color> SuspectManager не найден!");
+            return;
+        }
+
+        var revealedSuspects = SuspectManager.Instance.GetRevealedSuspects();
+
+        if (revealedSuspects == null || revealedSuspects.Count == 0)
+        {
+            Debug.LogWarning($"<color=yellow>[ClueDebugger]</color> Нет открытых подозреваемых для поимки!");
+            return;
+        }
+
+        SuspectState firstSuspect = revealedSuspects[0];
+        bool success = SuspectManager.Instance.CatchSuspect(firstSuspect.id);
+
+        if (success)
+        {
+            Debug.Log($"<color=green>[ClueDebugger]</color> ✓ Подозреваемый '{firstSuspect.data.suspectName}' (ID: {firstSuspect.id}) пойман!");
+        }
+        else
+        {
+            Debug.Log($"<color=yellow>[ClueDebugger]</color> Подозреваемый '{firstSuspect.data.suspectName}' уже был пойман");
+        }
     }
 }
 
