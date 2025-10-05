@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Dialogs;
+using Tutorial;
 
 public class OutlineSelector : MonoBehaviour
 {
@@ -89,11 +90,25 @@ public class OutlineSelector : MonoBehaviour
         {
             if (currentOutline != null)
             {
-                currentOutline.enabled = false;
+                // Проверяем, не является ли текущий объект активным объектом обучения
+                if (!IsGuidanceObject(currentOutline))
+                {
+                    currentOutline.enabled = false;
+                }
             }
 
-            outline.enabled = true;
-            currentOutline = outline;
+            // Проверяем, не является ли новый объект активным объектом обучения
+            if (!IsGuidanceObject(outline))
+            {
+                outline.enabled = true;
+                currentOutline = outline;
+            }
+            else
+            {
+                // Если это объект обучения, не меняем currentOutline
+                // но показываем overlay если нужно
+                currentOutline = null;
+            }
 
             CabinetSlot slot = outline.GetComponentInParent<CabinetSlot>();
             if (slot != null)
@@ -111,7 +126,11 @@ public class OutlineSelector : MonoBehaviour
     {
         if (currentOutline != null)
         {
-            currentOutline.enabled = false;
+            // Проверяем, не является ли объект активным объектом обучения
+            if (!IsGuidanceObject(currentOutline))
+            {
+                currentOutline.enabled = false;
+            }
             currentOutline = null;
             overlayInfo.ShowOverlay(null);
         }
@@ -120,5 +139,30 @@ public class OutlineSelector : MonoBehaviour
     public Outline GetCurrentOutline()
     {
         return currentOutline;
+    }
+
+    /// <summary>
+    /// Проверяет, является ли объект активным объектом обучения
+    /// </summary>
+    private bool IsGuidanceObject(Outline outline)
+    {
+        if (outline == null) return false;
+
+        // Проверяем, есть ли компонент GuidanceHighlight
+        GuidanceHighlight guidanceHighlight = outline.GetComponent<GuidanceHighlight>();
+        if (guidanceHighlight == null)
+        {
+            guidanceHighlight = outline.GetComponentInParent<GuidanceHighlight>();
+        }
+
+        if (guidanceHighlight == null) return false;
+
+        // Проверяем, активна ли система обучения и является ли этот объект текущим
+        if (GuidanceManager.Instance != null && GuidanceManager.Instance.IsGuidanceActive())
+        {
+            return GuidanceManager.Instance.IsCurrentGuidanceObject(guidanceHighlight) && guidanceHighlight.IsHighlighted();
+        }
+
+        return false;
     }
 }
