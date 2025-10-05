@@ -1,23 +1,26 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Компонент для перехода между уровнями при клике на объект с Outline
+/// Компонент для телепортации игрока в указанную позицию
 /// </summary>
 public class LevelTransition : MonoBehaviour
 {
-    [Header("Настройки перехода")] [SerializeField]
-    private int targetSceneIndex = -1;
+    [Header("Настройки телепортации")] [SerializeField]
+    private Transform targetTransform;
 
     /// <summary>
-    /// Выполняет переход на указанный уровень
+    /// Телепортирует игрока в указанную позицию
     /// </summary>
     public void TransitionToLevel()
     {
-        if (targetSceneIndex >= 0)
+        if (targetTransform != null)
         {
-            SceneManager.LoadScene(targetSceneIndex);
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                player.transform.position = targetTransform.position;
+                player.transform.rotation = targetTransform.rotation;
+            }
         }
     }
-    
 }
