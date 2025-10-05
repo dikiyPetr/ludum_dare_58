@@ -4,7 +4,9 @@ public enum SurfaceTypeEnum
 {
     Default,
     Wood,
-    Metal
+    Metal,
+    Paper,
+    Rug
 }
 
 public class SurfaceType : MonoBehaviour
