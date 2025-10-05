@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 629c5bb4bb2c6214cb4cb437aee510f7
+guid: c2657c697e82bad45bb299992869389d
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,22 +7,7 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: MI_Brick_01
-    second: {fileID: 2100000, guid: 1997de89e4d9833419308282f935c809, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: MI_Brick_01.001
-    second: {fileID: 2100000, guid: 1997de89e4d9833419308282f935c809, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: MI_PolygonHorrorAsylum_01_A
-    second: {fileID: 2100000, guid: c0c60e99e4e01e34eac3be396b5aea8e, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: MI_PolygonHorrorAsylum_01_A.001
+      name: Mat_PolygonTown_01_A.027
     second: {fileID: 2100000, guid: c0c60e99e4e01e34eac3be396b5aea8e, type: 2}
   materials:
     materialImportMode: 2
@@ -66,7 +51,7 @@ ModelImporter:
     nodeNameCollisionStrategy: 1
     fileIdsGeneration: 2
     swapUVChannels: 0
-    generateSecondaryUV: 1
+    generateSecondaryUV: 0
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1
@@ -79,10 +64,10 @@ ModelImporter:
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
-    secondaryUVAreaDistortion: 15
+    secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVMarginMethod: 1
-    secondaryUVMinLightmapResolution: 15
+    secondaryUVMinLightmapResolution: 40
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
