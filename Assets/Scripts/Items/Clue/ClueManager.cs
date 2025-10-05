@@ -12,6 +12,12 @@ public class ClueManager : MonoBehaviour
     // Все доступные улики в игре
     [SerializeField] private List<ClueData> allClues = new List<ClueData>();
 
+    // Ссылка на данные связей между уликами
+    [SerializeField] private ClueReferencesData clueReferences;
+
+    // Обнаруженные игроком связи
+    private HashSet<string> discoveredConnections = new HashSet<string>();
+
     private void Awake()
     {
         if (Instance == null)
@@ -36,7 +42,6 @@ public class ClueManager : MonoBehaviour
                 id = clueData.id,
                 hasClue = false,
                 info = clueData.description,
-                references = clueData.referencesToClues,
                 data = clueData
             };
         }
@@ -55,6 +60,78 @@ public class ClueManager : MonoBehaviour
         {
             Debug.LogWarning($"Улика с ID '{clueId}' не найдена!");
         }
+    }
+
+    // Проверить связь между двумя уликами (вызывается игроком)
+    public bool TryDiscoverConnection(string clueId1, string clueId2)
+    {
+        if (clueReferences == null)
+        {
+            Debug.LogWarning("ClueReferencesData не назначен!");
+            return false;
+        }
+
+        // Проверить, что обе улики собраны
+        if (!HasClue(clueId1) || !HasClue(clueId2))
+        {
+            Debug.Log($"Обе улики должны быть собраны для проверки связи!");
+            return false;
+        }
+
+        // Проверить, есть ли связь в данных
+        if (!clueReferences.HasConnection(clueId1, clueId2))
+        {
+            Debug.Log($"Связи между '{clueId1}' и '{clueId2}' не существует.");
+            return false;
+        }
+
+        // Проверить, не была ли связь уже обнаружена
+        string connectionKey = GetConnectionKey(clueId1, clueId2);
+        if (discoveredConnections.Contains(connectionKey))
+        {
+            Debug.Log($"Связь между '{clueId1}' и '{clueId2}' уже обнаружена!");
+            return false;
+        }
+
+        // Обнаружить связь
+        discoveredConnections.Add(connectionKey);
+        Debug.Log($"<color=green>✓ Обнаружена связь между '{clueId1}' и '{clueId2}'!</color>");
+        OnConnectionDiscovered?.Invoke(clueId1, clueId2);
+        return true;
+    }
+
+    // Получить уникальный ключ для связи (сортированный)
+    private string GetConnectionKey(string id1, string id2)
+    {
+        if (string.Compare(id1, id2) < 0)
+            return $"{id1}_{id2}";
+        return $"{id2}_{id1}";
+    }
+
+    // Получить все обнаруженные связи
+    public List<ClueConnection> GetDiscoveredConnections()
+    {
+        if (clueReferences == null) return new List<ClueConnection>();
+
+        List<ClueConnection> discovered = new List<ClueConnection>();
+
+        foreach (var connection in clueReferences.allConnections)
+        {
+            // Проверить, что обе улики собраны
+            if (HasClue(connection.clueId1) && HasClue(connection.clueId2))
+            {
+                discovered.Add(connection);
+            }
+        }
+
+        return discovered;
+    }
+
+    // Проверить, открыта ли связь между уликами
+    public bool IsConnectionDiscovered(string clueId1, string clueId2)
+    {
+        string key = GetConnectionKey(clueId1, clueId2);
+        return discoveredConnections.Contains(key);
     }
 
     // Проверить наличие улики
@@ -112,18 +189,7 @@ public class ClueManager : MonoBehaviour
 
         return false;
     }
-
-    // Получить связанные улики
-    public List<string> GetRelatedClues(string clueId)
-    {
-        if (clues.ContainsKey(clueId))
-        {
-            return clues[clueId].references;
-        }
-
-        return new List<string>();
-    }
-
+    
     public void DebugClearAllClues()
     {
         foreach (var clue in clues.Values)
@@ -136,6 +202,7 @@ public class ClueManager : MonoBehaviour
 
     // События
     public System.Action<string> OnClueCollected;
+    public System.Action<string, string> OnConnectionDiscovered;
 }
 
 // Класс состояния улики
@@ -145,6 +212,5 @@ public class ClueState
     public string id;
     public bool hasClue;
     public string info;
-    public List<string> references;
     public ClueData data; // Ссылка на ScriptableObject
 }

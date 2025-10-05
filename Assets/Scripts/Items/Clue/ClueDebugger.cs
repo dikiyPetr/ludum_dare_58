@@ -15,9 +15,16 @@ public class ClueDebugger : MonoBehaviour
     [SerializeField] private KeyCode giveAllCluesKey = KeyCode.F1;
     [SerializeField] private KeyCode clearAllCluesKey = KeyCode.F2;
     [SerializeField] private KeyCode printCluesKey = KeyCode.F3;
+    [SerializeField] private KeyCode checkConnectionKey = KeyCode.F4;
 
     [Header("Быстрая выдача улик (для теста)")]
     [SerializeField] private List<QuickClue> quickClues = new List<QuickClue>();
+
+    [Header("Тест связей")]
+    [Tooltip("ID первой улики для проверки связи")]
+    [SerializeField] private string testClueId1 = "";
+    [Tooltip("ID второй улики для проверки связи")]
+    [SerializeField] private string testClueId2 = "";
 
     private void Start()
     {
@@ -45,6 +52,12 @@ public class ClueDebugger : MonoBehaviour
         if (Input.GetKeyDown(printCluesKey))
         {
             PrintCollectedClues();
+        }
+
+        // F4 - проверить связь между тестовыми уликами
+        if (Input.GetKeyDown(checkConnectionKey))
+        {
+            TestConnection();
         }
 
         // Быстрая выдача улик по кнопкам
@@ -131,11 +144,7 @@ public class ClueDebugger : MonoBehaviour
         
         foreach (ClueState clue in collected)
         {
-            string references = clue.references.Count > 0 
-                ? $" → [{string.Join(", ", clue.references)}]" 
-                : "";
-            
-            Debug.Log($"<color=white>• {clue.id}</color> - {clue.info}{references}");
+            Debug.Log($"<color=white>• {clue.id}</color> - {clue.info}");
         }
     }
 
@@ -155,6 +164,65 @@ public class ClueDebugger : MonoBehaviour
         bool hasClue = ClueManager.Instance.HasClue(clueId);
         string status = hasClue ? "<color=green>✓ ЕСТЬ</color>" : "<color=red>✗ НЕТ</color>";
         Debug.Log($"<color=cyan>[ClueDebugger]</color> Улика '{clueId}': {status}");
+    }
+
+    // ============ ФУНКЦИИ ДЛЯ РАБОТЫ СО СВЯЗЯМИ ============
+
+    // Проверить связь между двумя уликами (для теста через F4)
+    public void TestConnection()
+    {
+        if (string.IsNullOrEmpty(testClueId1) || string.IsNullOrEmpty(testClueId2))
+        {
+            Debug.LogWarning($"<color=yellow>[ClueDebugger]</color> Укажите ID улик для проверки связи!");
+            return;
+        }
+
+        Debug.Log($"<color=cyan>[ClueDebugger]</color> Проверка связи между '{testClueId1}' и '{testClueId2}'...");
+        DiscoverConnection(testClueId1, testClueId2);
+    }
+
+    // Попытка обнаружить связь между двумя уликами
+    public void DiscoverConnection(string clueId1, string clueId2)
+    {
+        bool success = ClueManager.Instance.TryDiscoverConnection(clueId1, clueId2);
+
+        if (success)
+        {
+            Debug.Log($"<color=green>[ClueDebugger]</color> ✓ Связь успешно обнаружена!");
+        }
+        else
+        {
+            Debug.Log($"<color=red>[ClueDebugger]</color> ✗ Связь не обнаружена (проверьте условия)");
+        }
+    }
+
+    // Проверить, обнаружена ли связь
+    public void CheckConnectionStatus(string clueId1, string clueId2)
+    {
+        bool discovered = ClueManager.Instance.IsConnectionDiscovered(clueId1, clueId2);
+        string status = discovered ? "<color=green>✓ ОБНАРУЖЕНА</color>" : "<color=yellow>○ НЕ ОБНАРУЖЕНА</color>";
+        Debug.Log($"<color=cyan>[ClueDebugger]</color> Связь '{clueId1}' <-> '{clueId2}': {status}");
+    }
+
+    // Вывести все обнаруженные связи
+    public void PrintDiscoveredConnections()
+    {
+        List<ClueConnection> connections = ClueManager.Instance.GetDiscoveredConnections();
+
+        Debug.Log($"<color=cyan>[ClueDebugger]</color> === Обнаруженные связи ({connections.Count}) ===");
+
+        if (connections.Count == 0)
+        {
+            Debug.Log($"<color=yellow>[ClueDebugger]</color> Нет обнаруженных связей");
+            return;
+        }
+
+        foreach (var connection in connections)
+        {
+            bool isDiscovered = ClueManager.Instance.IsConnectionDiscovered(connection.clueId1, connection.clueId2);
+            string marker = isDiscovered ? "✓" : "○";
+            Debug.Log($"<color=white>{marker} {connection.clueId1}</color> <-> <color=white>{connection.clueId2}</color>");
+        }
     }
 }
 

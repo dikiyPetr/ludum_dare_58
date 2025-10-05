@@ -68,7 +68,7 @@ MonoBehaviour:
   m_Active: 1
   settings:
     pixelSize: 5
-    colorDepth: 10
+    colorDepth: 256
     ditherStrength: 0.2
   shader: {fileID: 4800000, guid: a064f66e2c9b4ef5a16f9fdea226e3f5, type: 3}
 --- !u!114 &7833122117494664109
