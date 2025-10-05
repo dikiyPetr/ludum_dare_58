@@ -249,7 +249,8 @@ namespace Dialogs
             }
         }
 
-        private void Update()
+        // Отключено для релиза
+        /*private void Update()
         {
             // Горячие клавиши для отладки
             if (Input.GetKeyDown(KeyCode.F1))
@@ -284,6 +285,6 @@ namespace Dialogs
             {
                 TestHideTooltips();
             }
-        }
+        }*/
     }
 }
