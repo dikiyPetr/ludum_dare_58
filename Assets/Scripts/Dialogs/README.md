@@ -28,7 +28,8 @@
 **DialogNode:** `id`, `text`, `options[]`, `notebookEntries[]`, `highlights[]`  
 **DialogOption:** `text`, `nextNodeId`, `condition`  
 **DialogHighlight:** `word`, `tooltips[]`  
-**Tooltip:** `condition`, `text`
+**Tooltip:** `condition`, `text`  
+**ClueConnection:** `id`, `description`, `clueId1`, `clueId2` - связь между уликами
 
 ## Условия
 
@@ -36,6 +37,12 @@
 Проверяет `ClueManager.Instance.HasClue(id)`
 ```json
 { "type": "HasEvidence", "id": "fingerprints" }
+```
+
+### HasConnection
+Проверяет `ClueManager.Instance.IsConnectionDiscoveredById(id)` - обнаружена ли связь между уликами
+```json
+{ "type": "HasConnection", "id": "knife_fingerprints_link" }
 ```
 
 ### MultiCondition
@@ -206,10 +213,51 @@ HighlightManager.OnTooltipRequested += (word, tooltips) => {
 
 ## Интеграция
 
-- **ClueManager** - `HasEvidence` условия
+- **ClueManager** - `HasEvidence` и `HasConnection` условия
 - **SimpleCharacterController** - блокировка управления через `DialogUIActivator`
 - **Input System** - поддержка в `DialogInteractable`
 - **Notebook System** - добавление записей через `OnNodePlayed`
+
+## Примеры использования HasConnection
+
+### Tooltip с условием связи
+```json
+{
+  "word": "нож",
+  "tooltips": [
+    {
+      "condition": { "type": "HasEvidence", "id": "knife" },
+      "text": "Нож был найден на месте преступления"
+    },
+    {
+      "condition": { "type": "HasConnection", "id": "knife_fingerprints_link" },
+      "text": "На ноже обнаружены отпечатки подозреваемого!"
+    }
+  ]
+}
+```
+
+### Вариант ответа с условием связи
+```json
+{
+  "text": "А что насчёт отпечатков на ноже?",
+  "nextNodeId": "n5",
+  "condition": { "type": "HasConnection", "id": "knife_fingerprints_link" }
+}
+```
+
+### Составное условие с HasConnection
+```json
+{
+  "type": "MultiCondition",
+  "logicType": "AND",
+  "conditions": [
+    { "type": "HasEvidence", "id": "knife" },
+    { "type": "HasEvidence", "id": "fingerprints" },
+    { "type": "HasConnection", "id": "knife_fingerprints_link" }
+  ]
+}
+```
 
 ## Отладка (DialogDebugger)
 

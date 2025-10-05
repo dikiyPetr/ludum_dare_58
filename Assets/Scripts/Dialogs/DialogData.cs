@@ -46,7 +46,8 @@ namespace Dialogs
     [Serializable]
     public class NotebookEntry
     {
-        public string text;
+        public string clueId;
+        public string description;
     }
 
     /// <summary>
@@ -71,6 +72,24 @@ namespace Dialogs
             if (ClueManager.Instance != null)
             {
                 return ClueManager.Instance.HasClue(id);
+            }
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Условие обнаруженной связи между уликами
+    /// </summary>
+    [Serializable]
+    public class HasConnection : Condition
+    {
+        public string id;
+
+        public override bool Evaluate()
+        {
+            if (ClueManager.Instance != null)
+            {
+                return ClueManager.Instance.IsConnectionDiscoveredById(id);
             }
             return false;
         }

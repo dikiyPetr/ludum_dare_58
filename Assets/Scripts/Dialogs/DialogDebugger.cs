@@ -64,7 +64,7 @@ namespace Dialogs
                     Debug.Log($"   📝 Записи в блокнот: {node.notebookEntries.Count}");
                     foreach (var entry in node.notebookEntries)
                     {
-                        Debug.Log($"      - {entry.text}");
+                        Debug.Log($"      - Улика '{entry.clueId}': {entry.description}");
                     }
                 }
 

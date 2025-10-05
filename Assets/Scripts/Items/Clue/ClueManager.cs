@@ -134,6 +134,32 @@ public class ClueManager : MonoBehaviour
         return discoveredConnections.Contains(key);
     }
 
+    // Проверить, открыта ли связь по ID
+    public bool IsConnectionDiscoveredById(string connectionId)
+    {
+        if (clueReferences == null) return false;
+
+        var connection = clueReferences.GetConnectionById(connectionId);
+        if (connection == null) return false;
+
+        return IsConnectionDiscovered(connection.clueId1, connection.clueId2);
+    }
+
+    // Обнаружить связь по ID
+    public bool TryDiscoverConnectionById(string connectionId)
+    {
+        if (clueReferences == null) return false;
+
+        var connection = clueReferences.GetConnectionById(connectionId);
+        if (connection == null)
+        {
+            Debug.LogWarning($"Связь с ID '{connectionId}' не найдена!");
+            return false;
+        }
+
+        return TryDiscoverConnection(connection.clueId1, connection.clueId2);
+    }
+
     // Проверить наличие улики
     public bool HasClue(string clueId)
     {

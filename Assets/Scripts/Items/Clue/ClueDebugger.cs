@@ -187,6 +187,29 @@ public class ClueDebugger : MonoBehaviour
         Debug.Log($"<color=cyan>[ClueDebugger]</color> Связь '{clueId1}' <-> '{clueId2}': {status}");
     }
 
+    // Проверить, обнаружена ли связь по ID
+    public void CheckConnectionStatusById(string connectionId)
+    {
+        bool discovered = ClueManager.Instance.IsConnectionDiscoveredById(connectionId);
+        string status = discovered ? "<color=green>✓ ОБНАРУЖЕНА</color>" : "<color=yellow>○ НЕ ОБНАРУЖЕНА</color>";
+        Debug.Log($"<color=cyan>[ClueDebugger]</color> Связь с ID '{connectionId}': {status}");
+    }
+
+    // Обнаружить связь по ID
+    public void DiscoverConnectionById(string connectionId)
+    {
+        bool success = ClueManager.Instance.TryDiscoverConnectionById(connectionId);
+
+        if (success)
+        {
+            Debug.Log($"<color=green>[ClueDebugger]</color> ✓ Связь '{connectionId}' успешно обнаружена!");
+        }
+        else
+        {
+            Debug.Log($"<color=red>[ClueDebugger]</color> ✗ Связь '{connectionId}' не обнаружена (проверьте условия)");
+        }
+    }
+
     // Вывести все обнаруженные связи
     public void PrintDiscoveredConnections()
     {

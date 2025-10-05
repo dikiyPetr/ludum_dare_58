@@ -103,7 +103,8 @@ namespace Dialogs
                 {
                     dialogNode.notebookEntries.Add(new NotebookEntry
                     {
-                        text = entryJson["text"]
+                        clueId = entryJson["clueId"],
+                        description = entryJson["description"]
                     });
                 }
             }
@@ -184,6 +185,12 @@ namespace Dialogs
                         id = node["id"]
                     };
                     
+                case "HasConnection":
+                    return new HasConnection
+                    {
+                        id = node["id"]
+                    };
+                    
                 case "MultiCondition":
                     var multiCondition = new MultiCondition
                     {
@@ -207,6 +214,12 @@ namespace Dialogs
                     }
                     
                     return multiCondition;
+                    
+                case "NotCondition":
+                    return new NotCondition
+                    {
+                        condition = ParseCondition(node["condition"])
+                    };
                     
                 default:
                     Debug.LogWarning($"Неизвестный тип условия: {type}");

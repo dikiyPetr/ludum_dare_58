@@ -13,17 +13,33 @@ MonoBehaviour:
   m_Name: ClueReferences 1
   m_EditorClassIdentifier: Assembly-CSharp::ClueReferencesData
   allConnections:
-  - clueId1: example0
+  - id: connection_example0_example1
+    description: "\u0421\u0432\u044F\u0437\u044C \u043C\u0435\u0436\u0434\u0443
+      \u0443\u0441\u0430\u043C\u0438 \u0438 \u043C\u0443\u0436\u0438\u043A\u0430\u043C\u0438"
+    clueId1: example0
     clueId2: example1
-  - clueId1: example1
+  - id: connection_example1_example9
+    description: "\u0421\u0432\u044F\u0437\u044C 1-9"
+    clueId1: example1
     clueId2: example9
-  - clueId1: example4
+  - id: connection_example4_example8
+    description: "\u0421\u0432\u044F\u0437\u044C 4-8"
+    clueId1: example4
     clueId2: example8
-  - clueId1: example8
+  - id: connection_example8_example9
+    description: "\u0421\u0432\u044F\u0437\u044C 8-9"
+    clueId1: example8
     clueId2: example9
-  - clueId1: example4
+  - id: connection_example4_example6
+    description: "\u0421\u0432\u044F\u0437\u044C 4-6"
+    clueId1: example4
     clueId2: example6
-  - clueId1: example2
+  - id: connection_example2_example6
+    description: "\u0421\u0432\u044F\u0437\u044C \u0442\u0440\u0443\u0441\u043E\u0432
+      \u0438 \u0443\u0441\u043E\u0432"
+    clueId1: example2
     clueId2: example6
-  - clueId1: example3
+  - id: connection_example3_example5
+    description: "\u0421\u0432\u044F\u0437\u044C 3-5"
+    clueId1: example3
     clueId2: example5

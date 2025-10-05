@@ -201,6 +201,9 @@ namespace Dialogs
         {
             if (currentNode == null) return;
 
+            // Обработать записи в блокнот (добавление улик)
+            ProcessNotebookEntries();
+
             // Уведомить внешние системы о проигрывании узла
             OnNodePlayed?.Invoke(currentNode);
 
@@ -208,6 +211,33 @@ namespace Dialogs
             OnHighlightsUpdated?.Invoke(currentNode);
 
             Debug.Log($"[{currentDialog.speaker}]: {currentNode.text}");
+        }
+
+        /// <summary>
+        /// Обработать записи в блокнот - добавить улики
+        /// </summary>
+        private void ProcessNotebookEntries()
+        {
+            if (currentNode?.notebookEntries == null || currentNode.notebookEntries.Count == 0)
+                return;
+
+            if (ClueManager.Instance == null)
+            {
+                Debug.LogWarning("ClueManager не найден, невозможно добавить улики из notebookEntries");
+                return;
+            }
+
+            foreach (var entry in currentNode.notebookEntries)
+            {
+                if (string.IsNullOrEmpty(entry.clueId))
+                {
+                    Debug.LogWarning($"NotebookEntry имеет пустой clueId в узле '{currentNode.id}'");
+                    continue;
+                }
+
+                // Добавить улику через ClueManager
+                ClueManager.Instance.AddClue(entry.clueId);
+            }
         }
 
         /// <summary>

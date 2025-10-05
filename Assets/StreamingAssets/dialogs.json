@@ -10,7 +10,8 @@
           "text": "Я видел нож на месте преступления.",
           "notebookEntries": [
             {
-              "text": "Свидетель утверждает, что видел нож на месте преступления"
+              "clueId": "witness_saw_knife",
+              "description": "Свидетель утверждает, что видел нож на месте преступления"
             }
           ],
           "highlights": [
@@ -23,6 +24,13 @@
                     "id": "f"
                   },
                   "text": "Я действительно нашел нож на месте преступления"
+                },
+                {
+                  "condition": {
+                    "type": "HasConnection",
+                    "id": "connection_example0_example1"
+                  },
+                  "text": "На ноже обнаружены отпечатки, связанные с другими уликами!"
                 },
                 {
                   "condition": {
@@ -91,6 +99,14 @@
                 "type": "HasEvidence",
                 "id": "fingerprints"
               }
+            },
+            {
+              "text": "Я обнаружил связь между уликами!",
+              "nextNodeId": "n6",
+              "condition": {
+                "type": "HasConnection",
+                "id": "connection_example0_example1"
+              }
             }
           ]
         },
@@ -99,7 +115,8 @@
           "text": "Нож лежал рядом с телом. Он был весь в крови.",
           "notebookEntries": [
             {
-              "text": "Нож был найден рядом с телом и был в крови"
+              "clueId": "knife_near_body",
+              "description": "Нож был найден рядом с телом и был в крови"
             }
           ],
           "highlights": [
@@ -144,7 +161,8 @@
           "text": "Да, я уверен. Я был первым на месте происшествия.",
           "notebookEntries": [
             {
-              "text": "Свидетель был первым на месте происшествия"
+              "clueId": "witness_first_on_scene",
+              "description": "Свидетель был первым на месте происшествия"
             }
           ],
           "options": [
@@ -163,7 +181,8 @@
           "text": "Отпечатки? Да, я заметил, что на ноже были отпечатки пальцев.",
           "notebookEntries": [
             {
-              "text": "На ноже были обнаружены отпечатки пальцев"
+              "clueId": "knife_fingerprints",
+              "description": "На ноже были обнаружены отпечатки пальцев"
             }
           ],
           "options": [
@@ -182,12 +201,59 @@
           "text": "Нет, я не видел, кто оставил нож. Я пришёл уже после того, как всё произошло.",
           "notebookEntries": [
             {
-              "text": "Свидетель не видел, кто оставил нож на месте преступления"
+              "clueId": "witness_no_suspect",
+              "description": "Свидетель не видел, кто оставил нож на месте преступления"
             }
           ],
           "options": [
             {
               "text": "Спасибо за информацию.",
+              "nextNodeId": null
+            }
+          ]
+        },
+        {
+          "id": "n6",
+          "text": "Отлично! Расскажите мне об этой связи. Что вы обнаружили?",
+          "notebookEntries": [
+            {
+              "clueId": "witness_interested_connection",
+              "description": "Свидетель заинтересован в обнаруженной связи между уликами"
+            }
+          ],
+          "highlights": [
+            {
+              "word": "связи",
+              "tooltips": [
+                {
+                  "condition": {
+                    "type": "HasConnection",
+                    "id": "connection_example0_example1"
+                  },
+                  "text": "Связь между уликами example0 и example1 подтверждена"
+                }
+              ]
+            }
+          ],
+          "options": [
+            {
+              "text": "Это может изменить ход расследования!",
+              "nextNodeId": null
+            }
+          ]
+        },
+        {
+          "id": "n7",
+          "text": "Интересно... Расскажите подробнее о ваших подозрениях.",
+          "notebookEntries": [
+            {
+              "clueId": "witness_interested_suspicions",
+              "description": "Свидетель интересуется подозрениями о связях между уликами"
+            }
+          ],
+          "options": [
+            {
+              "text": "Нужно проверить эту связь",
               "nextNodeId": null
             }
           ]
@@ -204,7 +270,8 @@
           "text": "Я невиновен! Я не убивал этого человека!",
           "notebookEntries": [
             {
-              "text": "Подозреваемый заявляет о своей невиновности"
+              "clueId": "suspect_claims_innocent",
+              "description": "Подозреваемый заявляет о своей невиновности"
             }
           ],
           "highlights": [
@@ -249,6 +316,14 @@
                 "type": "HasEvidence",
                 "id": "fingerprints"
               }
+            },
+            {
+              "text": "Мы обнаружили связь между уликами!",
+              "nextNodeId": "s6",
+              "condition": {
+                "type": "HasConnection",
+                "id": "connection_example2_example6"
+              }
             }
           ]
         },
@@ -257,7 +332,8 @@
           "text": "Я был дома один. Никто не может это подтвердить.",
           "notebookEntries": [
             {
-              "text": "Подозреваемый утверждает, что был дома один без свидетелей"
+              "clueId": "suspect_home_alone",
+              "description": "Подозреваемый утверждает, что был дома один без свидетелей"
             }
           ],
           "options": [
@@ -276,7 +352,8 @@
           "text": "Нет, у меня нет алиби. Но это не значит, что я виновен!",
           "notebookEntries": [
             {
-              "text": "У подозреваемого нет алиби"
+              "clueId": "suspect_no_alibi",
+              "description": "У подозреваемого нет алиби"
             }
           ],
           "options": [
@@ -295,7 +372,8 @@
           "text": "Отпечатки? Это невозможно! Я не трогал никакого ножа!",
           "notebookEntries": [
             {
-              "text": "Подозреваемый отрицает причастность к ножу, несмотря на отпечатки"
+              "clueId": "suspect_denies_knife",
+              "description": "Подозреваемый отрицает причастность к ножу, несмотря на отпечатки"
             }
           ],
           "options": [
@@ -314,7 +392,74 @@
           "text": "Я не знаю! Возможно, кто-то подбросил нож с моими отпечатками!",
           "notebookEntries": [
             {
-              "text": "Подозреваемый предполагает, что нож с его отпечатками был подброшен"
+              "clueId": "suspect_claims_planted",
+              "description": "Подозреваемый предполагает, что нож с его отпечатками был подброшен"
+            }
+          ],
+          "options": [
+            {
+              "text": "Спасибо за информацию.",
+              "nextNodeId": null
+            }
+          ]
+        },
+        {
+          "id": "s6",
+          "text": "Что?! Какую связь?! Я ничего не знаю о каких-то связях!",
+          "notebookEntries": [
+            {
+              "clueId": "suspect_denies_connection",
+              "description": "Подозреваемый отрицает знание о связях между уликами"
+            }
+          ],
+          "highlights": [
+            {
+              "word": "связь",
+              "tooltips": [
+                {
+                  "condition": {
+                    "type": "HasConnection",
+                    "id": "connection_example2_example6"
+                  },
+                  "text": "Обнаружена связь между трусами и усами - улики example2 и example6"
+                }
+              ]
+            }
+          ],
+          "options": [
+            {
+              "text": "Эта связь доказывает вашу вину!",
+              "nextNodeId": "s7"
+            },
+            {
+              "text": "Объясните эту связь.",
+              "nextNodeId": "s8"
+            }
+          ]
+        },
+        {
+          "id": "s7",
+          "text": "Нет! Это не я! Вы ошибаетесь!",
+          "notebookEntries": [
+            {
+              "clueId": "suspect_denies_guilt",
+              "description": "Подозреваемый продолжает отрицать вину несмотря на связь улик"
+            }
+          ],
+          "options": [
+            {
+              "text": "Спасибо за информацию.",
+              "nextNodeId": null
+            }
+          ]
+        },
+        {
+          "id": "s8",
+          "text": "Я не могу объяснить то, чего не делал! Это подстава!",
+          "notebookEntries": [
+            {
+              "clueId": "suspect_claims_framed",
+              "description": "Подозреваемый утверждает, что улики подброшены"
             }
           ],
           "options": [

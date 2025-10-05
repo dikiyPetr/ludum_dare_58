@@ -17,8 +17,14 @@ public class ClueData : ScriptableObject
 [System.Serializable]
 public class ClueConnection
 {
+    public string id; // Уникальный идентификатор связи для проверки в диалогах
+    [TextArea(2, 5)] public string description; // Описание связи
     public string clueId1;
     public string clueId2;
+
+    public ClueConnection()
+    {
+    }
 
     public ClueConnection(string id1, string id2)
     {
@@ -57,6 +63,18 @@ public class ClueReferencesData : ScriptableObject
             }
         }
         return false;
+    }
+
+    public ClueConnection GetConnectionById(string connectionId)
+    {
+        foreach (var connection in allConnections)
+        {
+            if (connection.id == connectionId)
+            {
+                return connection;
+            }
+        }
+        return null;
     }
 
     public List<string> GetConnectedClues(string clueId)
