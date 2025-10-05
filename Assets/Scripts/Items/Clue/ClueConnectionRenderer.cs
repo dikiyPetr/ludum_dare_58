@@ -13,6 +13,11 @@ public class ClueConnectionRenderer : MonoBehaviour
     [Tooltip("Смещение линии от центра объекта (для видимости в 3D)")]
     [SerializeField] private Vector3 positionOffset = new Vector3(0, 0.1f, 0);
 
+    [Header("Axis Lock Settings")]
+    [SerializeField] private bool lockX = false;
+    [SerializeField] private bool lockY = false;
+    [SerializeField] private bool lockZ = false;
+
     private Dictionary<string, LineRenderer> activeLines = new Dictionary<string, LineRenderer>();
 
     // Создать линию между двумя точками
@@ -23,6 +28,10 @@ public class ClueConnectionRenderer : MonoBehaviour
         {
             RemoveConnectionLine(connectionKey);
         }
+
+        // Применяем блокировку осей
+        Vector3 fixedStartPos = ApplyAxisLock(startPos);
+        Vector3 fixedEndPos = ApplyAxisLock(endPos);
 
         // Создать новый GameObject для LineRenderer
         GameObject lineObj = new GameObject($"Connection_{connectionKey}");
@@ -40,8 +49,8 @@ public class ClueConnectionRenderer : MonoBehaviour
         line.useWorldSpace = true;
 
         // Установить позиции с учётом offset
-        line.SetPosition(0, startPos + positionOffset);
-        line.SetPosition(1, endPos + positionOffset);
+        line.SetPosition(0, fixedStartPos + positionOffset);
+        line.SetPosition(1, fixedEndPos + positionOffset);
 
         // Сохранить ссылку
         activeLines[connectionKey] = line;
@@ -65,9 +74,13 @@ public class ClueConnectionRenderer : MonoBehaviour
     {
         if (activeLines.ContainsKey(connectionKey))
         {
+            // Применяем блокировку осей
+            Vector3 fixedStartPos = ApplyAxisLock(startPos);
+            Vector3 fixedEndPos = ApplyAxisLock(endPos);
+
             LineRenderer line = activeLines[connectionKey];
-            line.SetPosition(0, startPos + positionOffset);
-            line.SetPosition(1, endPos + positionOffset);
+            line.SetPosition(0, fixedStartPos + positionOffset);
+            line.SetPosition(1, fixedEndPos + positionOffset);
         }
     }
 
@@ -88,5 +101,17 @@ public class ClueConnectionRenderer : MonoBehaviour
     public bool HasLine(string connectionKey)
     {
         return activeLines.ContainsKey(connectionKey);
+    }
+
+    // Применить блокировку осей на основе transform ClueConnectionRenderer
+    private Vector3 ApplyAxisLock(Vector3 position)
+    {
+        Vector3 rendererPos = transform.position;
+
+        return new Vector3(
+            lockX ? rendererPos.x : position.x,
+            lockY ? rendererPos.y : position.y,
+            lockZ ? rendererPos.z : position.z
+        );
     }
 }

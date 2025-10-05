@@ -8,11 +8,6 @@ public class ClueConnectionDragger : MonoBehaviour
     [SerializeField] private InputActionReference clickAction;
     [SerializeField] private ClueConnectionRenderer connectionRenderer;
 
-    [Header("Axis Lock Settings")]
-    [SerializeField] private bool lockX = false;
-    [SerializeField] private bool lockY = false;
-    [SerializeField] private bool lockZ = false;
-
     private CabinetSlot firstSelectedSlot = null;
     private Outline currentOutline = null;
     private bool isDragging = false;
@@ -161,21 +156,14 @@ public class ClueConnectionDragger : MonoBehaviour
 
         Vector3 startPos = firstSelectedSlot.transform.position;
 
-        // Применяем фиксацию осей на основе полей lockX, lockY, lockZ
-        Vector3 fixedEndPos = new Vector3(
-            lockX ? startPos.x : targetPoint.x,
-            lockY ? startPos.y : targetPoint.y,
-            lockZ ? startPos.z : targetPoint.z
-        );
-
         // Создаем или обновляем временную линию
         if (connectionRenderer.HasLine(TEMP_LINE_KEY))
         {
-            connectionRenderer.UpdateConnectionLine(TEMP_LINE_KEY, startPos, fixedEndPos);
+            connectionRenderer.UpdateConnectionLine(TEMP_LINE_KEY, startPos, targetPoint);
         }
         else
         {
-            connectionRenderer.CreateConnectionLine(TEMP_LINE_KEY, startPos, fixedEndPos);
+            connectionRenderer.CreateConnectionLine(TEMP_LINE_KEY, startPos, targetPoint);
         }
     }
 }

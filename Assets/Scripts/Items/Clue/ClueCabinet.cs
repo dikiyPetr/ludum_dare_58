@@ -59,8 +59,14 @@ public class ClueCabinet : MonoBehaviour
         }
     }
 
-    // Обработка обнаружения новой связи
+    // Обработка обнаружения новой связи (через события, для обратной совместимости)
     private void OnConnectionDiscovered(string clueId1, string clueId2)
+    {
+        DrawConnection(clueId1, clueId2);
+    }
+
+    // Нарисовать связь между двумя уликами (вызывается напрямую из ClueManager)
+    public void DrawConnection(string clueId1, string clueId2)
     {
         if (connectionRenderer == null)
         {

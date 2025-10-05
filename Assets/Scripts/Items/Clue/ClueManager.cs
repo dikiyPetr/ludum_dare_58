@@ -15,6 +15,9 @@ public class ClueManager : MonoBehaviour
     // Ссылка на данные связей между уликами
     [SerializeField] private ClueReferencesData clueReferences;
 
+    // Ссылка на ClueCabinet для прямой передачи улик и связей
+    [SerializeField] private ClueCabinet clueCabinet;
+
     // Обнаруженные игроком связи
     private HashSet<string> discoveredConnections = new HashSet<string>();
 
@@ -54,6 +57,13 @@ public class ClueManager : MonoBehaviour
         {
             clues[clueId].hasClue = true;
             Debug.Log($"Улика '{clueId}' добавлена!");
+
+            // Передать улику напрямую в ClueCabinet
+            if (clueCabinet != null && clues[clueId].data != null)
+            {
+                clueCabinet.DisplayClue(clues[clueId].data);
+            }
+
             OnClueCollected?.Invoke(clueId);
         }
         else
@@ -96,6 +106,13 @@ public class ClueManager : MonoBehaviour
         // Обнаружить связь
         discoveredConnections.Add(connectionKey);
         Debug.Log($"<color=green>✓ Обнаружена связь между '{clueId1}' и '{clueId2}'!</color>");
+
+        // Передать связь напрямую в ClueCabinet
+        if (clueCabinet != null)
+        {
+            clueCabinet.DrawConnection(clueId1, clueId2);
+        }
+
         OnConnectionDiscovered?.Invoke(clueId1, clueId2);
         return true;
     }
