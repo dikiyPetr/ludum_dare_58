@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Dialogs;
 
 public class OutlineSelector : MonoBehaviour
@@ -6,6 +7,7 @@ public class OutlineSelector : MonoBehaviour
     [SerializeField] private Camera mainCamera;
     [SerializeField] private float rayDistance = 100f;
     [SerializeField] private OverlayInfoManager overlayInfo;
+    [SerializeField] private InputActionReference clickAction;
 
     private Outline currentOutline;
     private DialogInteractable currentDialogInteractable;
@@ -49,7 +51,7 @@ public class OutlineSelector : MonoBehaviour
                 currentLevelTransition = levelTransition;
 
                 // Обработка клика
-                if (Input.GetMouseButtonDown(0))
+                if (clickAction != null && clickAction.action.WasPressedThisFrame())
                 {
                     // Приоритет: сначала LevelTransition, потом DialogInteractable
                     if (currentLevelTransition != null)
