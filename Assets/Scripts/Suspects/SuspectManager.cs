@@ -13,9 +13,7 @@ public class SuspectManager : MonoBehaviour
     private Dictionary<string, SuspectState> suspects = new Dictionary<string, SuspectState>();
 
     // События
-    public System.Action<string> OnSuspectRevealed;
-    public System.Action<string> OnSuspectCaught;
-    public System.Action<string> OnSuspectEliminated;
+    public System.Action<string> OnSuspectUpdate;
 
     private void Awake()
     {
@@ -100,7 +98,7 @@ public class SuspectManager : MonoBehaviour
         Debug.Log($"<color=yellow>★ Подозреваемый '{state.data.suspectName}' открыт!</color>");
 
         // Вызываем событие
-        OnSuspectRevealed?.Invoke(suspectId);
+        OnSuspectUpdate?.Invoke(suspectId);
 
         return true;
     }
@@ -169,7 +167,7 @@ public class SuspectManager : MonoBehaviour
         state.isRevealed = true;
         Debug.Log($"<color=yellow>★ Подозреваемый '{state.data.suspectName}' принудительно открыт!</color>");
 
-        OnSuspectRevealed?.Invoke(suspectId);
+        OnSuspectUpdate?.Invoke(suspectId);
     }
 
     // Поймать подозреваемого
@@ -194,7 +192,7 @@ public class SuspectManager : MonoBehaviour
         Debug.Log($"<color=red>★ Подозреваемый '{state.data.suspectName}' пойман!</color>");
 
         // Вызываем событие
-        OnSuspectCaught?.Invoke(suspectId);
+        OnSuspectUpdate?.Invoke(suspectId);
 
         return true;
     }
@@ -254,8 +252,7 @@ public class SuspectManager : MonoBehaviour
         Debug.Log($"<color=red>★ Подозреваемый '{state.data.suspectName}' устранён!</color>");
 
         // Вызываем событие
-        OnSuspectCaught.Invoke(suspectId);
-        OnSuspectEliminated?.Invoke(suspectId);
+        OnSuspectUpdate?.Invoke(suspectId);
 
         return true;
     }
@@ -283,6 +280,52 @@ public class SuspectManager : MonoBehaviour
         return null;
     }
 
+    // Отпустить подозреваемого
+    public bool ReleaseSuspect(string suspectId)
+    {
+        if (!suspects.ContainsKey(suspectId))
+        {
+            Debug.LogWarning($"Подозреваемый с ID '{suspectId}' не найден!");
+            return false;
+        }
+
+        SuspectState state = suspects[suspectId];
+
+        // Проверяем, что подозреваемый пойман
+        if (!state.isCaught)
+        {
+            Debug.LogWarning($"Подозреваемый '{state.data.suspectName}' не пойман!");
+            return false;
+        }
+
+        // Проверяем, что еще не отпущен
+        if (state.isReleased)
+        {
+            Debug.LogWarning($"Подозреваемый '{state.data.suspectName}' уже отпущен!");
+            return false;
+        }
+
+        // Отпускаем подозреваемого
+        state.isReleased = true;
+        state.isCaught = false; // Больше не пойманный
+        Debug.Log($"<color=green>★ Подозреваемый '{state.data.suspectName}' отпущен!</color>");
+
+        // Вызываем событие
+        OnSuspectUpdate?.Invoke(suspectId);
+
+        return true;
+    }
+
+    // Проверить, отпущен ли подозреваемый
+    public bool IsSuspectReleased(string suspectId)
+    {
+        if (suspects.ContainsKey(suspectId))
+        {
+            return suspects[suspectId].isReleased;
+        }
+        return false;
+    }
+
     // Сбросить всех подозреваемых (для отладки)
     public void DebugResetAllSuspects()
     {
@@ -291,6 +334,7 @@ public class SuspectManager : MonoBehaviour
             suspect.isRevealed = false;
             suspect.isCaught = false;
             suspect.isEliminated = false;
+            suspect.isReleased = false;
         }
         Debug.Log("[SuspectManager] Все подозреваемые сброшены!");
     }

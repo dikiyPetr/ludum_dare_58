@@ -27,7 +27,7 @@ namespace Dialogs
                 dialogText = GetComponentInChildren<TMP_Text>(true);
             }
 
-            if (optionsContainer == null)
+            if (false && optionsContainer == null)
             {
                 var go = new GameObject("Options", typeof(RectTransform));
                 var rt = go.GetComponent<RectTransform>();

@@ -1,266 +1,6 @@
 {
   "dialogs": [
     {
-      "id": "interview_witness",
-      "startNodeId": "n1",
-      "speaker": "witness",
-      "nodes": [
-        {
-          "id": "n1",
-          "text": "Я видел нож на месте преступления.",
-          "notebookEntries": [
-            {
-              "clueId": "witness_saw_knife",
-              "description": "Свидетель утверждает, что видел нож на месте преступления"
-            }
-          ],
-          "highlights": [
-            {
-              "word": "нож",
-              "tooltips": [
-                {
-                  "condition": {
-                    "type": "HasEvidence",
-                    "id": "f"
-                  },
-                  "text": "Я действительно нашел нож на месте преступления"
-                },
-                {
-                  "condition": {
-                    "type": "HasConnection",
-                    "id": "connection_example0_example1"
-                  },
-                  "text": "На ноже обнаружены отпечатки, связанные с другими уликами!"
-                },
-                {
-                  "condition": {
-                    "type": "MultiCondition",
-                    "logicType": "AND",
-                    "conditions": [
-                      {
-                        "type": "HasEvidence",
-                        "id": "npc1_no_knife"
-                      }
-                    ]
-                  },
-                  "text": "NPC1 говорил, что не видел ножа"
-                },
-                {
-                  "condition": {
-                    "type": "MultiCondition",
-                    "logicType": "AND",
-                    "conditions": [
-                      {
-                        "type": "Not",
-                        "condition": {
-                          "type": "HasEvidence",
-                          "id": "f"
-                        }
-                      },
-                      {
-                        "type": "Not",
-                        "condition": {
-                          "type": "HasEvidence",
-                          "id": "npc1_no_knife"
-                        }
-                      }
-                    ]
-                  },
-                  "text": "Нож... Интересно, где он сейчас?"
-                }
-              ]
-            },
-            {
-              "word": "месте преступления",
-              "tooltips": [
-                {
-                  "condition": {
-                    "type": "HasEvidence",
-                    "id": "crime_scene_visited"
-                  },
-                  "text": "Я уже осматривал место преступления"
-                }
-              ]
-            }
-          ],
-          "options": [
-            {
-              "text": "Расскажите подробнее.",
-              "nextNodeId": "n2"
-            },
-            {
-              "text": "Вы уверены?",
-              "nextNodeId": "n3"
-            },
-            {
-              "text": "А что насчёт отпечатков?",
-              "nextNodeId": "n4",
-              "condition": {
-                "type": "HasEvidence",
-                "id": "fingerprints"
-              }
-            },
-            {
-              "text": "Я обнаружил связь между уликами!",
-              "nextNodeId": "n6",
-              "condition": {
-                "type": "HasConnection",
-                "id": "connection_example0_example1"
-              }
-            }
-          ]
-        },
-        {
-          "id": "n2",
-          "text": "Нож лежал рядом с телом. Он был весь в крови.",
-          "notebookEntries": [
-            {
-              "clueId": "knife_near_body",
-              "description": "Нож был найден рядом с телом и был в крови"
-            }
-          ],
-          "highlights": [
-            {
-              "word": "телом",
-              "tooltips": [
-                {
-                  "condition": {
-                    "type": "HasEvidence",
-                    "id": "victim_identified"
-                  },
-                  "text": "Жертва была опознана как Джон Смит"
-                }
-              ]
-            },
-            {
-              "word": "крови",
-              "tooltips": [
-                {
-                  "condition": {
-                    "type": "HasEvidence",
-                    "id": "blood_analysis"
-                  },
-                  "text": "Анализ крови подтвердил, что это кровь жертвы"
-                }
-              ]
-            }
-          ],
-          "options": [
-            {
-              "text": "Вы видели, кто его оставил?",
-              "nextNodeId": "n5"
-            },
-            {
-              "text": "Спасибо за информацию.",
-              "nextNodeId": null
-            }
-          ]
-        },
-        {
-          "id": "n3",
-          "text": "Да, я уверен. Я был первым на месте происшествия.",
-          "notebookEntries": [
-            {
-              "clueId": "witness_first_on_scene",
-              "description": "Свидетель был первым на месте происшествия"
-            }
-          ],
-          "options": [
-            {
-              "text": "Расскажите подробнее.",
-              "nextNodeId": "n2"
-            },
-            {
-              "text": "Спасибо за информацию.",
-              "nextNodeId": null
-            }
-          ]
-        },
-        {
-          "id": "n4",
-          "text": "Отпечатки? Да, я заметил, что на ноже были отпечатки пальцев.",
-          "notebookEntries": [
-            {
-              "clueId": "knife_fingerprints",
-              "description": "На ноже были обнаружены отпечатки пальцев"
-            }
-          ],
-          "options": [
-            {
-              "text": "Вы видели, кто их оставил?",
-              "nextNodeId": "n5"
-            },
-            {
-              "text": "Спасибо за информацию.",
-              "nextNodeId": null
-            }
-          ]
-        },
-        {
-          "id": "n5",
-          "text": "Нет, я не видел, кто оставил нож. Я пришёл уже после того, как всё произошло.",
-          "notebookEntries": [
-            {
-              "clueId": "witness_no_suspect",
-              "description": "Свидетель не видел, кто оставил нож на месте преступления"
-            }
-          ],
-          "options": [
-            {
-              "text": "Спасибо за информацию.",
-              "nextNodeId": null
-            }
-          ]
-        },
-        {
-          "id": "n6",
-          "text": "Отлично! Расскажите мне об этой связи. Что вы обнаружили?",
-          "notebookEntries": [
-            {
-              "clueId": "witness_interested_connection",
-              "description": "Свидетель заинтересован в обнаруженной связи между уликами"
-            }
-          ],
-          "highlights": [
-            {
-              "word": "связи",
-              "tooltips": [
-                {
-                  "condition": {
-                    "type": "HasConnection",
-                    "id": "connection_example0_example1"
-                  },
-                  "text": "Связь между уликами example0 и example1 подтверждена"
-                }
-              ]
-            }
-          ],
-          "options": [
-            {
-              "text": "Это может изменить ход расследования!",
-              "nextNodeId": null
-            }
-          ]
-        },
-        {
-          "id": "n7",
-          "text": "Интересно... Расскажите подробнее о ваших подозрениях.",
-          "notebookEntries": [
-            {
-              "clueId": "witness_interested_suspicions",
-              "description": "Свидетель интересуется подозрениями о связях между уликами"
-            }
-          ],
-          "options": [
-            {
-              "text": "Нужно проверить эту связь",
-              "nextNodeId": null
-            }
-          ]
-        }
-      ]
-    },
-    {
       "id": "exit_basement",
       "startNodeId": "1",
       "speaker": "Мысли",
@@ -282,7 +22,7 @@
       ]
     },
     {
-      "id": "map_0_0",
+      "id": "map_0",
       "startNodeId": "1",
       "speaker": "Мысли",
       "nodes": [
@@ -373,6 +113,263 @@
             {
               "text": "Сегодня ещё есть дела",
               "nextNodeId": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "news_1",
+      "startNodeId": "1",
+      "speaker": "Новости",
+      "nodes": [
+        {
+          "id": "1",
+          "text": "Больница N отказывается передавать тело родственникам. Врачи отказываются от комментариев",
+          "notebookEntries": [],
+          "highlights": [],
+          "options": [
+            {
+              "text": "...",
+              "nextNodeId": "_news_1_end"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "news_2",
+      "startNodeId": "1",
+      "speaker": "Новости",
+      "nodes": [
+        {
+          "id": "1",
+          "text": "Зам директора компании X посетил город Y для финансирования детского дома. Видимо, компания X решила очистить свою репутацию",
+          "notebookEntries": [],
+          "highlights": [],
+          "options": [
+            {
+              "text": "...",
+              "nextNodeId": "_news_2_end"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "news_3",
+      "startNodeId": "1",
+      "speaker": "Реклама",
+      "nodes": [
+        {
+          "id": "1",
+          "text": "~Инновационные методики лечения, что продлят вашу жизнь~",
+          "notebookEntries": [],
+          "highlights": [],
+          "options": [
+            {
+              "text": "...",
+              "nextNodeId": "2"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "text": "~Здоровье и долголетие будто 2 людей в вашем теле~",
+          "notebookEntries": [],
+          "highlights": [],
+          "options": [
+            {
+              "text": "...Знакомый голос",
+              "nextNodeId": "_news_3_end"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dialogue_0",
+      "startNodeId": "1",
+      "speaker": "Заведующий моргом",
+      "nodes": [
+        {
+          "id": "1",
+          "text": "Какого... что ты хочешь от меня",
+          "notebookEntries": [],
+          "highlights": [],
+          "options": [
+            {
+              "text": "Почему больница отказывается выдавать тела родственникам погибших?",
+              "nextNodeId": "2"
+            },
+            {
+              "text": "Забудь обо всем и я тебя отпущу",
+              "nextNodeId": "4"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "text": "Я то тут при чем, мне сказали я и не выдавал",
+          "notebookEntries": [],
+          "highlights": [],
+          "options": [
+            {
+              "text": "Кто тебе это сказал?",
+              "nextNodeId": "3"
+            }
+          ]
+        },
+        {
+          "id": "3",
+          "text": "Я не знаю... но ко мне приходили родственники покойных и они говорили, что с ними связывалась не больница а частная компания X. Я больше нечего не знаю. Клянусь",
+          "notebookEntries": [],
+          "highlights": [],
+          "options": [
+            {
+              "text": "...",
+              "nextNodeId": "_dialogue_0:clue_3"
+            }
+          ]
+        },
+        {
+          "id": "4",
+          "text": "Да, мамой клянусь, ты обо мне не вспомнишь",
+          "notebookEntries": [],
+          "highlights": [],
+          "options": [
+            {
+              "text": "Но прийдется немного прокатиться",
+              "nextNodeId": "_dialogue_0:release"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dialogue_1",
+      "startNodeId": "1",
+      "speaker": "Зам директора",
+      "nodes": [
+        {
+          "id": "1",
+          "text": "Вам нужен выкуп. Свяжитесь с мои руководством",
+          "notebookEntries": [],
+          "highlights": [],
+          "options": [
+            {
+              "text": "Что происходит в больнице",
+              "nextNodeId": "2"
+            },
+            {
+              "text": "Забудь обо всем и я тебя отпущу",
+              "nextNodeId": "4"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "text": "Меня это не касается. Этим занимается отдел безопасности",
+          "notebookEntries": [],
+          "highlights": [],
+          "options": [
+            {
+              "text": "Мне нужны имена",
+              "nextNodeId": "3"
+            }
+          ]
+        },
+        {
+          "id": "3",
+          "text": "С ним лучше не связываться. Он как то связан с мафией и я понятия не имею, как он попал к нам",
+          "notebookEntries": [],
+          "highlights": [],
+          "options": [
+            {
+              "text": "ИМЯ",
+              "nextNodeId": "4"
+            }
+          ]
+        },
+        {
+          "id": "4",
+          "text": "ПАВЕЛ!. Его зовут Павел Z. Но кроме слухов я о нем нечего не знаю",
+          "notebookEntries": [],
+          "highlights": [],
+          "options": [
+            {
+              "text": "...",
+              "nextNodeId": "_dialogue_1:clue_5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dialogue_1",
+      "startNodeId": "1",
+      "speaker": "Глав врач",
+      "nodes": [
+        {
+          "id": "1",
+          "text": "Тебе нужна информация о погибших?",
+          "notebookEntries": [],
+          "highlights": [],
+          "options": [
+            {
+              "condition": {
+                "type": "NotCondition",
+                "condition": {
+                  "type": "HasEvidence",
+                  "id": "8"
+                }
+              },
+              "text": "?",
+              "nextNodeId": "2"
+            },
+            {
+              "condition": {
+                "type": "HasEvidence",
+                "id": "8"
+              },
+              "text": "Что тебе ещё известно",
+              "nextNodeId": "4"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "text": "Я жалею о своем поступке, но не мог поступить иначе",
+          "notebookEntries": [],
+          "highlights": [],
+          "options": [
+            {
+              "text": "Что...",
+              "nextNodeId": "3"
+            }
+          ]
+        },
+        {
+          "id": "3",
+          "text": "Я позволил выкрасть тела из больницы и... часть из них была жива",
+          "notebookEntries": [],
+          "highlights": [],
+          "options": [
+            {
+              "text": "Где они?",
+              "nextNodeId": "4"
+            }
+          ]
+        },
+        {
+          "id": "4",
+          "text": "Если бы я мог, то помог бы тебе, но тут я беспомощен. Мне нечего тебе сказать. Мне все равно, что будет дальше",
+          "notebookEntries": [],
+          "highlights": [],
+          "options": [
+            {
+              "text": "...",
+              "nextNodeId": "_dialogue_2:clue_8"
             }
           ]
         }

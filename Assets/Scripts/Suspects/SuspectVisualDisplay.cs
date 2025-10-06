@@ -9,23 +9,22 @@ public class SuspectVisualDisplay : MonoBehaviour, IOutlineInteractable
     [Header("Visual Components")] [SerializeField]
     private GameObject[] objectsToToggle; // Объекты для показа/скрытия
 
-    [SerializeField]
-    private GameObject[] objectsToToggleWhenEliminated; // Объекты для показа, когда подозреваемый убит
- // Объекты для скрытия, когда подозреваемый убит
+    [SerializeField] private GameObject[] objectsToToggleWhenEliminated; // Объекты для показа, когда подозреваемый убит
+    // Объекты для скрытия, когда подозреваемый убит
 
     [Header("Display Settings")] [SerializeField]
     private bool hideWhenLocked = true; // Скрывать компоненты, когда подозреваемый закрыт
 
     private bool isRevealed = false;
     private bool isEliminated = false;
+    private bool isReleased = false;
 
     private void Start()
     {
         // Подписываемся на события SuspectManager
         if (SuspectManager.Instance != null)
         {
-            SuspectManager.Instance.OnSuspectRevealed += OnSuspectRevealed;
-            SuspectManager.Instance.OnSuspectEliminated += OnSuspectEliminated;
+            SuspectManager.Instance.OnSuspectUpdate += OnSuspectUpdate;
 
             // Проверяем текущее состояние подозреваемого
             UpdateVisualState();
@@ -41,24 +40,14 @@ public class SuspectVisualDisplay : MonoBehaviour, IOutlineInteractable
         // Отписываемся от событий
         if (SuspectManager.Instance != null)
         {
-            SuspectManager.Instance.OnSuspectRevealed -= OnSuspectRevealed;
-            SuspectManager.Instance.OnSuspectEliminated -= OnSuspectEliminated;
+            SuspectManager.Instance.OnSuspectUpdate -= OnSuspectUpdate;
         }
     }
 
-    // Обработка открытия подозреваемого
-    private void OnSuspectRevealed(string revealedSuspectId)
+    // Обработка обновления подозреваемого
+    private void OnSuspectUpdate(string suspectId)
     {
-        if (suspectState != null && revealedSuspectId == suspectState.id)
-        {
-            UpdateVisualState();
-        }
-    }
-
-    // Обработка устранения подозреваемого
-    private void OnSuspectEliminated(string eliminatedSuspectId)
-    {
-        if (suspectState != null && eliminatedSuspectId == suspectState.id)
+        if (suspectState != null && suspectId == suspectState.id)
         {
             UpdateVisualState();
         }
@@ -72,6 +61,7 @@ public class SuspectVisualDisplay : MonoBehaviour, IOutlineInteractable
 
         isRevealed = SuspectManager.Instance.IsSuspectRevealed(suspectState.id);
         isEliminated = SuspectManager.Instance.IsSuspectEliminated(suspectState.id);
+        isReleased = SuspectManager.Instance.IsSuspectReleased(suspectState.id);
         bool shouldShow = isRevealed || !hideWhenLocked;
 
         // Переключение GameObjects
@@ -82,14 +72,13 @@ public class SuspectVisualDisplay : MonoBehaviour, IOutlineInteractable
         }
 
         // Показать объекты при устранении
-        if (isEliminated)
+        if (isEliminated || isReleased)
         {
             foreach (var obj in objectsToToggleWhenEliminated)
             {
                 if (obj != null)
                     obj.SetActive(true);
             }
-
         }
         else
         {
@@ -138,6 +127,7 @@ public class SuspectVisualDisplay : MonoBehaviour, IOutlineInteractable
                 return true;
             }
         }
+
         return false;
     }
 }

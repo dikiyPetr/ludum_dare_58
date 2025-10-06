@@ -17,7 +17,7 @@ public class SuspectUI : MonoBehaviour
         // Подписываемся на события
         if (SuspectManager.Instance != null)
         {
-            SuspectManager.Instance.OnSuspectCaught += OnSuspectCaught;
+            SuspectManager.Instance.OnSuspectUpdate += OnSuspectUpdate;
         }
     }
 
@@ -26,12 +26,12 @@ public class SuspectUI : MonoBehaviour
         // Отписываемся от событий
         if (SuspectManager.Instance != null)
         {
-            SuspectManager.Instance.OnSuspectCaught -= OnSuspectCaught;
+            SuspectManager.Instance.OnSuspectUpdate -= OnSuspectUpdate;
         }
     }
 
-    // Обработчик события поимки подозреваемого
-    private void OnSuspectCaught(string caughtSuspectId)
+    // Обработчик события обновления подозреваемого
+    private void OnSuspectUpdate(string suspectId)
     {
         UpdateVisibility();
     }
