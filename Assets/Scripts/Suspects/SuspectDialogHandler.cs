@@ -37,16 +37,33 @@ public class SuspectDialogHandler : MonoBehaviour
         if (SuspectManager.Instance == null) return;
         if (option.nextNodeId.StartsWith("_map_result_is_stels"))
         {
-            if (option.nextNodeId == "_map_result_is_stels:false_0")
+            switch (option.nextNodeId)
             {
-                /// поимка охраны
-                OutsideActionManager.Instance.SetPendingCutscene("cutscene_is_stels:false_0");
+                case "_map_result_is_stels:false_0":
+                    /// поимка охраны
+                    OutsideActionManager.Instance.SetPendingCutscene("cutscene_is_stels:false_0");
+                    break;
+                case "_map_result_is_stels:true_0":
+                    /// осмотр морга
+                    OutsideActionManager.Instance.SetPendingCutscene("cutscene_is_stels:true_0");
+                    break;
             }
-            else if (option.nextNodeId == "map_result_is_stels:false_0")
+        }
+
+        if (option.nextNodeId.StartsWith("_outside_result"))
+        {
+            switch (option.nextNodeId)
             {
-                /// осмотр морга
-                OutsideActionManager.Instance.SetPendingCutscene("cutscene_is_stels:true_0");
+                case "_outside_result_is_stels:false_0":
+                    /// поимка охраны
+                    SuspectManager.Instance.CatchSuspect("0");
+                    break;
+                case "_outside_result_is_stels:true_0":
+                    /// осмотр морга
+                    ClueManager.Instance.AddClue("2");
+                    break;
             }
+
         }
     }
 }

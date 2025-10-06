@@ -39,11 +39,12 @@ namespace Cutscenes
                 cutscenePanel.SetActive(true);
             }
 
-            if (backgroundImage != null && cutscene.backgroundImage != null)
+            if (backgroundImage != null)
             {
                 backgroundImage.sprite = cutscene.backgroundImage;
                 backgroundImage.enabled = true;
             }
+            
         }
 
         private void HandleCutsceneEnded(CutsceneData cutscene)

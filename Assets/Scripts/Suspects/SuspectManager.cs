@@ -254,6 +254,7 @@ public class SuspectManager : MonoBehaviour
         Debug.Log($"<color=red>★ Подозреваемый '{state.data.suspectName}' устранён!</color>");
 
         // Вызываем событие
+        OnSuspectCaught.Invoke(suspectId);
         OnSuspectEliminated?.Invoke(suspectId);
 
         return true;

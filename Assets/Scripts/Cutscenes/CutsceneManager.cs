@@ -12,11 +12,12 @@ namespace Cutscenes
     {
         public static CutsceneManager Instance { get; private set; }
 
-        [Header("Настройки катсцен")]
-        [SerializeField] private List<CutsceneData> cutscenes = new List<CutsceneData>();
+        [Header("Настройки катсцен")] [SerializeField]
+        private List<CutsceneData> cutscenes = new List<CutsceneData>();
 
-        [Header("Настройки затемнения")]
-        [SerializeField] private float fadeInDuration = 0.5f;
+        [Header("Настройки затемнения")] [SerializeField]
+        private float fadeInDuration = 0.5f;
+
         [SerializeField] private float fadeOutDuration = 0.5f;
 
         // Текущая катсцена
@@ -71,26 +72,13 @@ namespace Cutscenes
                 return;
             }
 
-            // Проверить наличие ScreenFader
-            if (ScreenFader.Instance == null)
-            {
-                Debug.LogWarning("[CutsceneManager] ScreenFader не найден! Создайте GameObject с компонентом ScreenFader на сцене для затемнения экрана.");
-            }
-
             currentCutscene = cutscene;
             isInCutscene = true;
 
             Debug.Log($"[CutsceneManager] Запуск катсцены: {id}");
 
-            // Затемнить экран -> показать катсцену -> запустить диалог -> осветлить
-            if (ScreenFader.Instance != null)
-            {
-                ScreenFader.Instance.FadeOut(fadeOutDuration, OnFadeOutComplete);
-            }
-            else
-            {
-                OnFadeOutComplete();
-            }
+
+            OnFadeOutComplete();
         }
 
         private void OnFadeOutComplete()
@@ -118,13 +106,6 @@ namespace Cutscenes
                     return;
                 }
             }
-
-            // Осветлить экран
-            if (ScreenFader.Instance != null)
-            {
-                ScreenFader.Instance.FadeIn(fadeInDuration);
-            }
-
         }
 
         /// <summary>
@@ -146,15 +127,8 @@ namespace Cutscenes
         {
             if (!isInCutscene) return;
 
-            // Затемнить -> скрыть катсцену -> осветлить
-            if (ScreenFader.Instance != null)
-            {
-                ScreenFader.Instance.FadeOut(fadeOutDuration, OnEndFadeOutComplete);
-            }
-            else
-            {
-                OnEndFadeOutComplete();
-            }
+
+            OnEndFadeOutComplete();
         }
 
         private void OnEndFadeOutComplete()
@@ -171,12 +145,6 @@ namespace Cutscenes
 
             // Уведомить UI о завершении
             OnCutsceneEnded?.Invoke(cutsceneToEnd);
-
-            // Осветлить экран
-            if (ScreenFader.Instance != null)
-            {
-                ScreenFader.Instance.FadeIn(fadeInDuration);
-            }
         }
 
         /// <summary>
@@ -197,8 +165,8 @@ namespace Cutscenes
                 Debug.LogWarning($"Катсцена с ID '{cutscene.id}' уже существует");
                 return;
             }
+
             cutscenes.Add(cutscene);
         }
     }
 }
-

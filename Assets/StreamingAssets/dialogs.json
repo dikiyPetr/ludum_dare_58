@@ -298,24 +298,7 @@
             },
             {
               "text": "Проникнуть в морг",
-              "nextNodeId": "_cutscene_is_stels:false_0"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "cutscene_is_stels:true_0",
-      "startNodeId": "1",
-      "speaker": "Мысли",
-      "nodes": [
-        {
-          "id": "1",
-          "text": "Я поймал заведующего перед входом в больницу. Задам вопросы уже в подвале",
-          "options": [
-            {
-              "text": "...",
-              "nextNodeId": "finish_cutscene_is_stels:true_0"
+              "nextNodeId": "_map_result_is_stels:true_0"
             }
           ]
         }
@@ -328,13 +311,30 @@
       "nodes": [
         {
           "id": "1",
+          "text": "Я поймал заведующего перед входом в больницу. Задам вопросы уже в подвале",
+          "options": [
+            {
+              "text": "...",
+              "nextNodeId": "_outside_result_is_stels:false_0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cutscene_is_stels:true_0",
+      "startNodeId": "1",
+      "speaker": "Мысли",
+      "nodes": [
+        {
+          "id": "1",
           "text": "Проникнув в морг я обнаружил записку от глав врача оставленную на столе: 'Игнорируй родственников и не трогай тела 957 и 963'",
           "notebookEntries": [],
           "highlights": [],
           "options": [
             {
               "text": "Сбежать, пока меня не обнаружили",
-              "nextNodeId": "finish_cutscene_is_stels:false_0"
+              "nextNodeId": "_outside_result_is_stels:true_0"
             }
           ]
         }
