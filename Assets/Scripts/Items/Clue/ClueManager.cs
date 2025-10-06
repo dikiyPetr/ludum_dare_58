@@ -128,6 +128,9 @@ public class ClueManager : MonoBehaviour
             suspectManager.CheckAllSuspectsForUnlock();
         }
 
+        // Показать диалог с описанием связи
+        ShowConnectionDialog(clueId1, clueId2);
+
         OnConnectionDiscovered?.Invoke(clueId1, clueId2);
         return true;
     }
@@ -256,6 +259,61 @@ public class ClueManager : MonoBehaviour
         }
 
         Debug.Log("[ClueManager] Все улики сброшены!");
+    }
+
+    // Показать диалог с описанием связи между уликами
+    private void ShowConnectionDialog(string clueId1, string clueId2)
+    {
+        if (Dialogs.DialogManager.Instance == null)
+        {
+            Debug.LogWarning("DialogManager не найден, невозможно показать диалог о связи");
+            return;
+        }
+
+        // Получить данные связи
+        ClueConnection connection = null;
+        foreach (var conn in clueReferences.allConnections)
+        {
+            if ((conn.clueId1 == clueId1 && conn.clueId2 == clueId2) ||
+                (conn.clueId1 == clueId2 && conn.clueId2 == clueId1))
+            {
+                connection = conn;
+                break;
+            }
+        }
+
+        if (connection == null || string.IsNullOrEmpty(connection.description))
+        {
+            Debug.LogWarning($"Описание связи между '{clueId1}' и '{clueId2}' не найдено");
+            return;
+        }
+
+        // Создать кастомный диалог
+        var customDialog = new Dialogs.Dialog
+        {
+            id = $"connection_{clueId1}_{clueId2}",
+            startNodeId = "start",
+            speaker = "Детектив",
+            nodes = new List<Dialogs.DialogNode>
+            {
+                new Dialogs.DialogNode
+                {
+                    id = "start",
+                    text = connection.description,
+                    options = new List<Dialogs.DialogOption>
+                    {
+                        new Dialogs.DialogOption
+                        {
+                            text = "ОК",
+                            nextNodeId = null // Завершить диалог
+                        }
+                    }
+                }
+            }
+        };
+
+        // Показать диалог
+        Dialogs.DialogManager.Instance.ShowSimpleDialog(customDialog);
     }
 
     // События
