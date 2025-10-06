@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e32c33bd6b5f436a9c04645008512e2b, type: 3}
+  m_Name: Example 9
+  m_EditorClassIdentifier: 
+  id: 9
+  title: "\u0421\u043B\u043E\u0432\u0430 \u0433\u043B\u0430\u0432 \u0432\u0440\u0430\u0447\u0430"
+  description: "\u042F \u043F\u043E\u0437\u0432\u043E\u043B\u0438\u043B \u0432\u044B\u043A\u0440\u0430\u0441\u0442\u044C
+    \u0442\u0435\u043B\u0430 \u0438\u0437 \u0431\u043E\u043B\u044C\u043D\u0438\u0446\u044B
+    \u0438... \u0447\u0430\u0441\u0442\u044C \u0438\u0437 \u043D\u0438\u0445 \u0431\u044B\u043B\u0430
+    \u0436\u0438\u0432\u0430"
+  cluePrefab: {fileID: 7827794876885937444, guid: 0a78265a7277fa542892045f780e8e5d, type: 3}
+  cabinetSlotIndex: 9
