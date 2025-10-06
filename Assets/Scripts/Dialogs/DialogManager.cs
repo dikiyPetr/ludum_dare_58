@@ -60,15 +60,7 @@ namespace Dialogs
         {
             try
             {
-                string filePath = Path.Combine(Application.streamingAssetsPath, dialogsJsonPath);
-                
-                if (!File.Exists(filePath))
-                {
-                    Debug.LogError($"Файл диалогов не найден: {filePath}");
-                    return;
-                }
-
-                string jsonContent = File.ReadAllText(filePath);
+                string jsonContent = DialogDataKOSTIL.GetJsonText();
                 
                 // Используем кастомный парсер для поддержки полиморфных условий
                 var dialogsList = DialogJsonParser.ParseDialogs(jsonContent);
@@ -131,7 +123,7 @@ namespace Dialogs
 
             // Проиграть стартовый узел
             PlayCurrentNode();
-            
+
             return true;
         }
 
@@ -153,7 +145,7 @@ namespace Dialogs
             }
 
             var option = currentNode.options[optionIndex];
-            
+
             // Проверить условие доступности
             if (!ConditionEvaluator.Evaluate(option.condition))
             {
