@@ -49,25 +49,34 @@ public class SuspectManager : MonoBehaviour
         SuspectState state = suspects[suspectId];
         SuspectData data = state.data;
 
-        // Проверяем, что все необходимые улики собраны
+        // Проверяем, что есть хотя бы одна необходимая улика
+        bool hasAnyRequiredClue = data.requiredClueIds.Count == 0; // Если список пустой, условие выполнено
         foreach (string clueId in data.requiredClueIds)
         {
-            if (!ClueManager.Instance.HasClue(clueId))
+            if (ClueManager.Instance.HasClue(clueId))
             {
-                return false;
+                hasAnyRequiredClue = true;
+                break;
             }
         }
 
-        // Проверяем, что все необходимые связи обнаружены
+        if (!hasAnyRequiredClue)
+        {
+            return false;
+        }
+
+        // Проверяем, что есть хотя бы одна необходимая связь
+        bool hasAnyRequiredConnection = data.requiredConnectionIds.Count == 0; // Если список пустой, условие выполнено
         foreach (string connectionId in data.requiredConnectionIds)
         {
-            if (!ClueManager.Instance.IsConnectionDiscoveredById(connectionId))
+            if (ClueManager.Instance.IsConnectionDiscoveredById(connectionId))
             {
-                return false;
+                hasAnyRequiredConnection = true;
+                break;
             }
         }
 
-        return true;
+        return hasAnyRequiredConnection;
     }
 
     // Попытаться открыть подозреваемого

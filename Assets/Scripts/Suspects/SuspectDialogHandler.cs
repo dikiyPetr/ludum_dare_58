@@ -50,6 +50,26 @@ public class SuspectDialogHandler : MonoBehaviour
                         /// осмотр морга
                         OutsideActionManager.Instance.SetPendingCutscene("cutscene_is_stels:true_0");
                         break;
+                    case "_map_result_is_stels:false_1":
+                        /// поимка охраны
+                        OutsideActionManager.Instance.SetPendingCutscene("cutscene_is_stels:false_1");
+                        break;
+                    case "_map_result_is_stels:true_1":
+                        /// осмотр морга
+                        OutsideActionManager.Instance.SetPendingCutscene("cutscene_is_stels:true_1");
+                        break;
+                    case "_map_result_is_stels:false_2":
+                        /// поимка охраны
+                        OutsideActionManager.Instance.SetPendingCutscene("cutscene_is_stels:false_2");
+                        break;
+                    case "_map_result_is_stels:true_2":
+                        /// осмотр морга
+                        OutsideActionManager.Instance.SetPendingCutscene("cutscene_is_stels:true_2");
+                        break;
+                    case "_map_result_is_stels:true_3":
+                        /// осмотр морга
+                        OutsideActionManager.Instance.SetPendingCutscene("cutscene_is_stels:true_3");
+                        break;
                 }
             }
 
@@ -64,6 +84,22 @@ public class SuspectDialogHandler : MonoBehaviour
                     case "_outside_result_is_stels:true_0":
                         /// осмотр морга
                         ClueManager.Instance.AddClue("2");
+                        break;
+                    case "_outside_result_is_stels:false_1":
+                        /// поимка заведующего моргом
+                        SuspectManager.Instance.CatchSuspect("1");
+                        break;
+                    case "_outside_result_is_stels:true_1":
+                        /// осмотр морга
+                        ClueManager.Instance.AddClue("8");
+                        break;
+                    case "_outside_result_is_stels:false_2":
+                        /// поимка заведующего моргом
+                        SuspectManager.Instance.CatchSuspect("2");
+                        break;
+                    case "_outside_result_is_stels:true_2":
+                        /// осмотр морга
+                        ClueManager.Instance.AddClue("5");
                         break;
                 }
             }
@@ -86,7 +122,7 @@ public class SuspectDialogHandler : MonoBehaviour
                         break;
                     case "_dialogue_1:clue_5":
                         /// павел z
-                        ClueManager.Instance.AddClue("5");
+                        ClueManager.Instance.AddClue("6");
                         break;
                     case "_dialogue_2:release":
                         /// отпустил глав врача
@@ -94,7 +130,7 @@ public class SuspectDialogHandler : MonoBehaviour
                         break;
                     case "_dialogue_2:clue_8":
                         /// тел больше нет
-                        ClueManager.Instance.AddClue("8");
+                        ClueManager.Instance.AddClue("9");
                         break;
                 }
             }

@@ -19,5 +19,7 @@ MonoBehaviour:
   mapDialogNodeId: map_2
   suspectDialogNodeId: dialogue_2
   isMale: 1
-  requiredClueIds: []
+  requiredClueIds:
+  - 2
+  - 8
   requiredConnectionIds: []

@@ -306,7 +306,7 @@
       ]
     },
     {
-      "id": "dialogue_1",
+      "id": "dialogue_2",
       "startNodeId": "1",
       "speaker": "Глав врач",
       "nodes": [
@@ -371,6 +371,196 @@
               "text": "...",
               "nextNodeId": "_dialogue_2:clue_8"
             }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "map_1",
+      "startNodeId": "1",
+      "speaker": "Мысли",
+      "nodes": [
+        {
+          "id": "1",
+          "text": "Зам директора компании X. Её компания связана с больнице и родственниками погибших",
+          "notebookEntries": [],
+          "highlights": [],
+          "options": [
+            {
+              "condition": {
+                "type": "SuspectAliveAndFree",
+                "suspectId": "1"
+              },
+              "text": "Поймать и задать вопросы",
+              "nextNodeId": "_map_result_is_stels:false_1"
+            },
+            {
+              "condition": {
+                "type": "NotCondition",
+                "condition": {
+                  "type": "HasEvidence",
+                  "id": "8"
+                }
+              },
+              "text": "Проследить",
+              "nextNodeId": "_map_result_is_stels:true_1"
+            },
+            {
+              "text": "...",
+              "nextNodeId": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "map_2",
+      "startNodeId": "1",
+      "speaker": "Мысли",
+      "nodes": [
+        {
+          "id": "1",
+          "text": "Глав врач. В его больнице все это происходит",
+          "notebookEntries": [],
+          "highlights": [],
+          "options": [
+            {
+              "condition": {
+                "type": "SuspectAliveAndFree",
+                "suspectId": "2"
+              },
+              "text": "Поймать и задать вопросы",
+              "nextNodeId": "_map_result_is_stels:false_2"
+            },
+            {
+              "condition": {
+                "type": "NotCondition",
+                "condition": {
+                  "type": "HasEvidence",
+                  "id": "5"
+                }
+              },
+              "text": "Посетить его дом",
+              "nextNodeId": "_map_result_is_stels:true_2"
+            },
+            {
+              "text": "...",
+              "nextNodeId": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "map_3",
+      "startNodeId": "1",
+      "speaker": "Мысли",
+      "nodes": [
+        {
+          "id": "1",
+          "text": "Голос из рекламы",
+          "notebookEntries": [],
+          "highlights": [],
+          "options": [
+            {
+              "text": "Он кажется знакомым. Адрес совсем недалеко",
+              "nextNodeId": "_map_result_is_stels:true_3"
+            },
+            {
+              "text": "...",
+              "nextNodeId": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cutscene_is_stels:false_1",
+      "startNodeId": "1",
+      "speaker": "В парке",
+      "nodes": [
+        {
+          "id": "1",
+          "text": "Найти её не было проблемой. У неё нет охраны? Тогда сможем и поговорить, но у меня в подвале",
+          "options": [
+            {
+              "text": "...",
+              "nextNodeId": "_outside_result_is_stels:false_1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cutscene_is_stels:true_1",
+      "startNodeId": "1",
+      "speaker": "На улице",
+      "nodes": [
+        {
+          "id": "1",
+          "text": "После интервью к ней приставал пожилой мужчина. Я узнал в нем глав врача больницы Y. Теперь у меня есть вопросы к нему",
+          "options": [
+            {
+              "text": "...",
+              "nextNodeId": "_outside_result_is_stels:true_1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cutscene_is_stels:true_2",
+      "startNodeId": "1",
+      "speaker": "В доме глав врача",
+      "nodes": [
+        {
+          "id": "1",
+          "text": "Я проник в дом к глав врачу. Он даже не закрыл дверь. По всюду был беспорядок. На его рабочем столе я обнаружил кассету в конверте. Она была уже распакована",
+          "options": [
+            {
+              "text": "...",
+              "nextNodeId": "_outside_result_is_stels:true_2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cutscene_is_stels:false_2",
+      "startNodeId": "1",
+      "speaker": "В парке",
+      "nodes": [
+        {
+          "id": "1",
+          "text": "Глав врач постоянно оборачивался, пока я следовал за ним. Хоть меня он и заметил, но у него не хватило сил убежать",
+          "options": [
+            {
+              "text": "...",
+              "nextNodeId": "_outside_result_is_stels:false_2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cutscene_is_stels:true_3",
+      "startNodeId": "1",
+      "speaker": "По пути",
+      "nodes": [
+        {
+          "id": "1",
+          "text": "Направляясь по адресу из рекламы, я пытался вспомнить, откуда же мне знаком этот голос...",
+          "options": [
+            {
+              "text": "...",
+              "nextNodeId": "2"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "text": "'конец первой главы'",
+          "options": [
           ]
         }
       ]
