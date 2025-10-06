@@ -35,35 +35,46 @@ public class SuspectDialogHandler : MonoBehaviour
     private void HandleSuspectDialogs(Dialog dialog, DialogNode node, DialogOption option)
     {
         if (SuspectManager.Instance == null) return;
-        if (option.nextNodeId.StartsWith("_map_result_is_stels"))
+        if (option.nextNodeId == null) return;
+        if (option.nextNodeId.StartsWith("_"))
         {
-            switch (option.nextNodeId)
+            if (option.nextNodeId.StartsWith("_map_result_is_stels"))
             {
-                case "_map_result_is_stels:false_0":
-                    /// поимка охраны
-                    OutsideActionManager.Instance.SetPendingCutscene("cutscene_is_stels:false_0");
-                    break;
-                case "_map_result_is_stels:true_0":
-                    /// осмотр морга
-                    OutsideActionManager.Instance.SetPendingCutscene("cutscene_is_stels:true_0");
-                    break;
-            }
-        }
-
-        if (option.nextNodeId.StartsWith("_outside_result"))
-        {
-            switch (option.nextNodeId)
-            {
-                case "_outside_result_is_stels:false_0":
-                    /// поимка охраны
-                    SuspectManager.Instance.CatchSuspect("0");
-                    break;
-                case "_outside_result_is_stels:true_0":
-                    /// осмотр морга
-                    ClueManager.Instance.AddClue("2");
-                    break;
+                switch (option.nextNodeId)
+                {
+                    case "_map_result_is_stels:false_0":
+                        /// поимка охраны
+                        OutsideActionManager.Instance.SetPendingCutscene("cutscene_is_stels:false_0");
+                        break;
+                    case "_map_result_is_stels:true_0":
+                        /// осмотр морга
+                        OutsideActionManager.Instance.SetPendingCutscene("cutscene_is_stels:true_0");
+                        break;
+                }
             }
 
+            if (option.nextNodeId.StartsWith("_outside_result"))
+            {
+                switch (option.nextNodeId)
+                {
+                    case "_outside_result_is_stels:false_0":
+                        /// поимка охраны
+                        SuspectManager.Instance.CatchSuspect("0");
+                        break;
+                    case "_outside_result_is_stels:true_0":
+                        /// осмотр морга
+                        ClueManager.Instance.AddClue("2");
+                        break;
+                }
+            }
+            switch (option.nextNodeId)
+            {
+                case "_sleep":
+                    /// поимка охраны
+                    DayManager.Instance.SkipDay();
+                    break;
+            
+            }
         }
     }
 }

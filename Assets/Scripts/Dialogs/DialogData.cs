@@ -152,6 +152,29 @@ namespace Dialogs
     }
 
     /// <summary>
+    /// Условие: подозреваемый жив и не пойман
+    /// </summary>
+    [Serializable]
+    public class SuspectAliveAndFree : Condition
+    {
+        public string suspectId;
+
+        public override bool Evaluate()
+        {
+            if (SuspectManager.Instance == null)
+            {
+                return false;
+            }
+
+            // Проверяем, что подозреваемый не устранён и не пойман
+            bool isEliminated = SuspectManager.Instance.IsSuspectEliminated(suspectId);
+            bool isCaught = SuspectManager.Instance.IsSuspectCaught(suspectId);
+
+            return !isEliminated && !isCaught;
+        }
+    }
+
+    /// <summary>
     /// Подсветка части текста с тултипами
     /// </summary>
     [Serializable]

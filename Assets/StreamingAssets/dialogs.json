@@ -293,12 +293,27 @@
           "highlights": [],
           "options": [
             {
+              "condition": {
+                "type": "SuspectAliveAndFree",
+                "suspectId": "0"
+              },
               "text": "Поймать и задать вопросы",
               "nextNodeId": "_map_result_is_stels:false_0"
             },
             {
+              "condition": {
+                "type": "NotCondition",
+                "condition": {
+                  "type": "HasEvidence",
+                  "id": "2"
+                }
+              },
               "text": "Проникнуть в морг",
               "nextNodeId": "_map_result_is_stels:true_0"
+            },
+            {
+              "text": "...",
+              "nextNodeId": null
             }
           ]
         }
@@ -335,6 +350,29 @@
             {
               "text": "Сбежать, пока меня не обнаружили",
               "nextNodeId": "_outside_result_is_stels:true_0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skip_day",
+      "startNodeId": "1",
+      "speaker": "Мысли",
+      "nodes": [
+        {
+          "id": "1",
+          "text": "Кровать манит забыться во сне'",
+          "notebookEntries": [],
+          "highlights": [],
+          "options": [
+            {
+              "text": "Спать",
+              "nextNodeId": "_sleep"
+            },
+            {
+              "text": "Сегодня ещё есть дела",
+              "nextNodeId": null
             }
           ]
         }

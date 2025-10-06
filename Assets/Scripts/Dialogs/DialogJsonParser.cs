@@ -220,7 +220,13 @@ namespace Dialogs
                     {
                         condition = ParseCondition(node["condition"])
                     };
-                    
+
+                case "SuspectAliveAndFree":
+                    return new SuspectAliveAndFree
+                    {
+                        suspectId = node["suspectId"]
+                    };
+
                 default:
                     Debug.LogWarning($"Неизвестный тип условия: {type}");
                     return null;
