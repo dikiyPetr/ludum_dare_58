@@ -26147,11 +26147,11 @@ PrefabInstance:
     - target: {fileID: 4220130694938657287, guid: 3af6e01b6c72d6a4ca4f44ef9de2d804, type: 3}
       propertyPath: cutscenes.Array.data[0].backgroundImage
       value: 
-      objectReference: {fileID: 21300000, guid: 32d8dcaf02b965b42af0e979024f5eb1, type: 3}
+      objectReference: {fileID: 21300000, guid: 5199611851a211b49959f332533c0d78, type: 3}
     - target: {fileID: 4220130694938657287, guid: 3af6e01b6c72d6a4ca4f44ef9de2d804, type: 3}
       propertyPath: cutscenes.Array.data[1].backgroundImage
       value: 
-      objectReference: {fileID: 21300000, guid: 5199611851a211b49959f332533c0d78, type: 3}
+      objectReference: {fileID: 21300000, guid: 32d8dcaf02b965b42af0e979024f5eb1, type: 3}
     - target: {fileID: 4220130694938657287, guid: 3af6e01b6c72d6a4ca4f44ef9de2d804, type: 3}
       propertyPath: cutscenes.Array.data[2].backgroundImage
       value: 
@@ -26160,6 +26160,22 @@ PrefabInstance:
       propertyPath: cutscenes.Array.data[3].backgroundImage
       value: 
       objectReference: {fileID: 21300000, guid: 0b676328278d27c47b5b9798bb0ea192, type: 3}
+    - target: {fileID: 4220130694938657287, guid: 3af6e01b6c72d6a4ca4f44ef9de2d804, type: 3}
+      propertyPath: cutscenes.Array.data[4].backgroundImage
+      value: 
+      objectReference: {fileID: 21300000, guid: cd306baf0c70dc741ad1b71c57ebb953, type: 3}
+    - target: {fileID: 4220130694938657287, guid: 3af6e01b6c72d6a4ca4f44ef9de2d804, type: 3}
+      propertyPath: cutscenes.Array.data[5].backgroundImage
+      value: 
+      objectReference: {fileID: 21300000, guid: 2cc1dd622b0d0a4498e344666b54271e, type: 3}
+    - target: {fileID: 4220130694938657287, guid: 3af6e01b6c72d6a4ca4f44ef9de2d804, type: 3}
+      propertyPath: cutscenes.Array.data[6].backgroundImage
+      value: 
+      objectReference: {fileID: 21300000, guid: 9618ec622f920374091e6792caa79654, type: 3}
+    - target: {fileID: 4220130694938657287, guid: 3af6e01b6c72d6a4ca4f44ef9de2d804, type: 3}
+      propertyPath: cutscenes.Array.data[7].backgroundImage
+      value: 
+      objectReference: {fileID: 21300000, guid: 2cc1dd622b0d0a4498e344666b54271e, type: 3}
     - target: {fileID: 4264038526091597646, guid: 3af6e01b6c72d6a4ca4f44ef9de2d804, type: 3}
       propertyPath: m_Layer
       value: 0
