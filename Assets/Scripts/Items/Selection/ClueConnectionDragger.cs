@@ -4,14 +4,17 @@ using UnityEngine.InputSystem;
 public class ClueConnectionDragger : MonoBehaviour
 {
     [SerializeField] private Camera mainCamera;
-    [SerializeField] private float rayDistance = 100f;
+    [SerializeField] private ColliderOutlineSelector outlineSelector;
+    [SerializeField] private float rayDistance = 2f;
     [SerializeField] private InputActionReference clickAction;
     [SerializeField] private ClueConnectionRenderer connectionRenderer;
+    [SerializeField] private float updateThrottleInterval = 0.05f; // Интервал между обновлениями линии в секундах
 
-    private CabinetSlot firstSelectedSlot = null;
+    private CabinetSlotInteractable firstSelectedSlot = null;
     private Outline currentOutline = null;
     private bool isDragging = false;
     private const string TEMP_LINE_KEY = "temp_connection";
+    private float lastUpdateTime = 0f;
 
     private void OnEnable()
     {
@@ -40,25 +43,38 @@ public class ClueConnectionDragger : MonoBehaviour
         // Если мы в режиме перетаскивания, обновляем линию
         if (isDragging && firstSelectedSlot != null && connectionRenderer != null)
         {
-            // Получаем центр экрана
-            Vector3 screenCenter = new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
-
-            // Создаем луч из центра экрана
-            Ray ray = mainCamera.ScreenPointToRay(screenCenter);
-            RaycastHit hit;
-
-            Vector3 targetPoint;
-            if (Physics.Raycast(ray, out hit, rayDistance))
+            // Проверяем тротлинг
+            if (Time.time - lastUpdateTime < updateThrottleInterval)
             {
-                targetPoint = hit.point;
+                return;
             }
-            else
-            {
-                // Получаем точку на луче на расстоянии от камеры
-                targetPoint = ray.GetPoint(rayDistance);
-            }
+            lastUpdateTime = Time.time;
 
+            Vector3 targetPoint = GetTargetPoint();
             UpdateDragLine(targetPoint);
+        }
+    }
+
+    private Vector3 GetTargetPoint()
+    {
+        if (outlineSelector == null || mainCamera == null)
+        {
+            // Фоллбэк: точка на луче на расстоянии от камеры
+            Ray ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+            return ray.GetPoint(rayDistance);
+        }
+
+        Outline targetOutline = outlineSelector.GetCurrentOutline();
+
+        if (targetOutline != null)
+        {
+            // Используем позицию объекта из ColliderOutlineSelector
+            return targetOutline.transform.position;
+        }
+        else
+        {
+            // Если outline пустой, используем позицию самого ColliderOutlineSelector
+            return outlineSelector.transform.position;
         }
     }
 
@@ -66,29 +82,20 @@ public class ClueConnectionDragger : MonoBehaviour
     {
         Debug.Log($"OnClickStarted");
 
-        // Получаем центр экрана
-        Vector3 screenCenter = new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
+        if (outlineSelector == null) return;
 
-        // Создаем луч из центра экрана
-        Ray ray = mainCamera.ScreenPointToRay(screenCenter);
-        RaycastHit hit;
+        // Получаем текущий outline из ColliderOutlineSelector
+        currentOutline = outlineSelector.GetCurrentOutline();
 
-        // Выполняем райкаст
-        if (Physics.Raycast(ray, out hit, rayDistance))
-        {
-            // Пытаемся получить компонент Outline
-            currentOutline = hit.collider.GetComponent<Outline>();
+        if (currentOutline == null) return;
 
-            if (currentOutline == null) return;
+        CabinetSlotInteractable slotInteractable = currentOutline.GetComponent<CabinetSlotInteractable>();
+        if (slotInteractable == null || slotInteractable.GetClue() == null) return;
 
-            CabinetSlot slot = currentOutline.GetComponentInParent<CabinetSlot>();
-            if (slot == null || slot.GetClue() == null) return;
-
-            // Выбираем первую улику и начинаем перетаскивание
-            firstSelectedSlot = slot;
-            isDragging = true;
-            Debug.Log($"<color=cyan>[ClueConnectionDragger]</color> Начало перетаскивания от улики: {slot.GetClue().id}");
-        }
+        // Выбираем первую улику и начинаем перетаскивание
+        firstSelectedSlot = slotInteractable;
+        isDragging = true;
+        Debug.Log($"<color=cyan>[ClueConnectionDragger]</color> Начало перетаскивания от улики: {slotInteractable.GetClue().id}");
     }
 
     private void OnClickPerformed(InputAction.CallbackContext context)
@@ -108,25 +115,18 @@ public class ClueConnectionDragger : MonoBehaviour
             connectionRenderer.RemoveConnectionLine(TEMP_LINE_KEY);
         }
 
-        // Получаем центр экрана
-        Vector3 screenCenter = new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
-
-        // Создаем луч из центра экрана
-        Ray ray = mainCamera.ScreenPointToRay(screenCenter);
-        RaycastHit hit;
-
-        // Выполняем райкаст для проверки, на что отпустили
-        if (Physics.Raycast(ray, out hit, rayDistance))
+        // Проверяем, на что отпустили
+        if (outlineSelector != null)
         {
-            Outline endOutline = hit.collider.GetComponent<Outline>();
+            Outline endOutline = outlineSelector.GetCurrentOutline();
 
             if (endOutline != null)
             {
-                CabinetSlot slot = endOutline.GetComponentInParent<CabinetSlot>();
-                if (slot != null && slot.GetClue() != null && firstSelectedSlot != null && slot != firstSelectedSlot)
+                CabinetSlotInteractable slotInteractable = endOutline.GetComponent<CabinetSlotInteractable>();
+                if (slotInteractable != null && slotInteractable.GetClue() != null && firstSelectedSlot != null && slotInteractable != firstSelectedSlot)
                 {
                     string clueId1 = firstSelectedSlot.GetClue().id;
-                    string clueId2 = slot.GetClue().id;
+                    string clueId2 = slotInteractable.GetClue().id;
 
                     Debug.Log($"<color=cyan>[ClueConnectionDragger]</color> Проверка связи между '{clueId1}' и '{clueId2}'...");
 

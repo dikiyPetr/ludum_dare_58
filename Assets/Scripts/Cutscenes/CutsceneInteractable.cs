@@ -73,7 +73,8 @@ namespace Cutscenes
             if (!isPlayerInside) return;
 
             // Поддержка старого и нового ввода - ЛКМ
-            if (Input.GetMouseButtonDown(0) || (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame))
+            // if (Input.GetMouseButtonDown(0) || (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame))
+            if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
             {
                 TryStartCutscene();
             }

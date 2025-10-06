@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 namespace Dialogs
 {
@@ -97,7 +98,8 @@ namespace Dialogs
             Vector2 tooltipSize = tooltipUI.GetSize();
             
             // Позиционирование относительно курсора
-            Vector2 mousePosition = Input.mousePosition;
+            // Vector2 mousePosition = Input.mousePosition;
+            Vector2 mousePosition = Mouse.current != null ? Mouse.current.position.ReadValue() : Vector2.zero;
             Vector2 offset = CalculateOffset(tooltipSize);
             Vector2 screenPosition = mousePosition + offset;
             

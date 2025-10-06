@@ -1236,6 +1236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogPanel: {fileID: 4140319113282158833}
+  gameModeManager: {fileID: 0}
 --- !u!1 &4429155196136467518
 GameObject:
   m_ObjectHideFlags: 0
@@ -1297,8 +1298,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ba741c07d2c43ad40a9a3f95ea514a46, type: 2}
   - {fileID: 11400000, guid: 506aa8aaf91dbcf4ea0edcee41739ad0, type: 2}
   - {fileID: 11400000, guid: cae5f4a624e932747895cb7e97e0fc85, type: 2}
-  clueReferences: {fileID: 11400000, guid: ba20576586ece7f44901b87676a05f44, type: 2}
+  clueReferences: {fileID: 11400000, guid: 8c6a30664ac1cb04291145b89b760e5b, type: 2}
   clueCabinet: {fileID: 0}
+  suspectManager: {fileID: 0}
 --- !u!1 &5052476491730936152
 GameObject:
   m_ObjectHideFlags: 0

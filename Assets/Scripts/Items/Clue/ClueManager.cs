@@ -14,7 +14,7 @@ public class ClueManager : MonoBehaviour
 
     // Ссылка на данные связей между уликами
     [SerializeField] private ClueReferencesData clueReferences;
-
+    
     // Ссылка на ClueCabinet для прямой передачи улик и связей
     [SerializeField] private ClueCabinet clueCabinet;
 
@@ -36,6 +36,7 @@ public class ClueManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    
 
     // Инициализация всех улик
     private void InitializeClues()

@@ -6,7 +6,7 @@ namespace Dialogs
     /// <summary>
     /// Простой интерактор: при нахождении игрока в триггере и нажатии E запускает диалог
     /// </summary>
-    public class DialogInteractable : MonoBehaviour
+    public class DialogInteractable : MonoBehaviour, IOutlineInteractable
     {
         [Header("Диалог")]
         [SerializeField] private string dialogId = "interview_witness";
@@ -69,7 +69,8 @@ namespace Dialogs
             if (!isPlayerInside) return;
 
             // Поддержка старого и нового ввода: KeyCode.E и Keyboard.current.eKey
-            if (Input.GetKeyDown(KeyCode.E) || (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame))
+            // if (Input.GetKeyDown(KeyCode.E) || (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame))
+            if (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)
             {
                 TryStartDialog();
             }
@@ -101,6 +102,26 @@ namespace Dialogs
                 Gizmos.DrawWireCube(collider.center, collider.size);
             }
         }
+
+        public void ShowOverlayInfo(OverlayInfoManager overlayInfo)
+        {
+            overlayInfo.HideOverlay();
+        }
+
+        public bool OnClick()
+        {
+            if (DialogManager.Instance != null && !DialogManager.Instance.IsInDialog)
+            {
+                TryStartDialog();
+                return true;
+            }
+            return false;
+        }
+
+        public void OnHoverEnter() { }
+        public void OnHoverExit() { }
+        public void OnPressEnter() { }
+        public void OnReleaseEnter() { }
     }
 }
 

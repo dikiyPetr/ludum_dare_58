@@ -1,0 +1,7 @@
+﻿<linker>
+    <assembly fullname="Assembly-CSharp">
+        <type fullname="ClueReferencesData" preserve="all"/>
+        <type fullname="ClueConnection" preserve="all"/>
+        <type fullname="ClueData" preserve="all"/>
+    </assembly>
+</linker>

@@ -17,15 +17,15 @@ namespace Cutscenes
 
         private void Update()
         {
-            if (Input.GetKeyDown(testKey1) && !string.IsNullOrEmpty(testCutsceneId1))
-            {
-                StartTestCutscene(testCutsceneId1);
-            }
+            // if (Input.GetKeyDown(testKey1) && !string.IsNullOrEmpty(testCutsceneId1))
+            // {
+            //     StartTestCutscene(testCutsceneId1);
+            // }
 
-            if (Input.GetKeyDown(testKey2) && !string.IsNullOrEmpty(testCutsceneId2))
-            {
-                StartTestCutscene(testCutsceneId2);
-            }
+            // if (Input.GetKeyDown(testKey2) && !string.IsNullOrEmpty(testCutsceneId2))
+            // {
+            //     StartTestCutscene(testCutsceneId2);
+            // }
         }
 
         private void StartTestCutscene(string id)

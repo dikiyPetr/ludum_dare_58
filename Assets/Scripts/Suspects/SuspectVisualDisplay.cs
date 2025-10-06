@@ -1,7 +1,7 @@
 using UnityEngine;
 
 // Компонент для отображения визуальных элементов подозреваемого
-public class SuspectVisualDisplay : MonoBehaviour
+public class SuspectVisualDisplay : MonoBehaviour, IOutlineInteractable
 {
     [Header("Suspect Configuration")] [SerializeField]
     private SuspectData suspectState;
@@ -81,5 +81,26 @@ public class SuspectVisualDisplay : MonoBehaviour
     public bool IsRevealed()
     {
         return isRevealed;
+    }
+
+    public void ShowOverlayInfo(OverlayInfoManager overlayInfo)
+    {
+        if (suspectState != null)
+        {
+            overlayInfo.ShowSuspectOverlay(suspectState);
+        }
+    }
+
+    public bool OnClick()
+    {
+        if (suspectState != null && !string.IsNullOrEmpty(suspectState.mapDialogNodeId))
+        {
+            if (Dialogs.DialogManager.Instance != null && !Dialogs.DialogManager.Instance.IsInDialog)
+            {
+                Dialogs.DialogManager.Instance.StartDialog(suspectState.mapDialogNodeId);
+                return true;
+            }
+        }
+        return false;
     }
 }
