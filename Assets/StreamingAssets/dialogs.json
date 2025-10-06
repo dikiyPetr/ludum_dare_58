@@ -28,7 +28,7 @@
       "nodes": [
         {
           "id": "1",
-          "text": "Заведующий моргом. Ответы могут быть у него или в самом морге",
+          "text": "The answers might be with the head of the morgue... or in the morgue itself",
           "notebookEntries": [],
           "highlights": [],
           "options": [
@@ -37,7 +37,7 @@
                 "type": "SuspectAliveAndFree",
                 "suspectId": "0"
               },
-              "text": "Поймать и задать вопросы",
+              "text": "Find him and make him talk",
               "nextNodeId": "_map_result_is_stels:false_0"
             },
             {
@@ -48,7 +48,7 @@
                   "id": "2"
                 }
               },
-              "text": "Проникнуть в морг",
+              "text": "Get into the morgue",
               "nextNodeId": "_map_result_is_stels:true_0"
             },
             {
@@ -66,7 +66,7 @@
       "nodes": [
         {
           "id": "1",
-          "text": "Я поймал заведующего перед входом в больницу. Задам вопросы уже в подвале",
+          "text": "Caught the head of the morgue outside the hospital. I'll make him talk down in the basement",
           "options": [
             {
               "text": "...",
@@ -83,12 +83,12 @@
       "nodes": [
         {
           "id": "1",
-          "text": "Проникнув в морг я обнаружил записку от глав врача оставленную на столе: 'Игнорируй родственников и не трогай тела 957 и 963'",
+          "text": "Broke into the morgue. Found a note from the head doctor: Ignore the relatives. Don't touch bodies 957 and 963",
           "notebookEntries": [],
           "highlights": [],
           "options": [
             {
-              "text": "Сбежать, пока меня не обнаружили",
+              "text": "Need to get out before the find me",
               "nextNodeId": "_outside_result_is_stels:true_0"
             }
           ]
@@ -102,16 +102,16 @@
       "nodes": [
         {
           "id": "1",
-          "text": "Кровать манит забыться во сне'",
+          "text": "The bed calls for rest... to forget for a while",
           "notebookEntries": [],
           "highlights": [],
           "options": [
             {
-              "text": "Спать",
+              "text": "Sleep",
               "nextNodeId": "_sleep"
             },
             {
-              "text": "Сегодня ещё есть дела",
+              "text": "There's still work to do",
               "nextNodeId": null
             }
           ]
@@ -125,7 +125,7 @@
       "nodes": [
         {
           "id": "1",
-          "text": "Больница N отказывается передавать тело родственникам. Врачи отказываются от комментариев",
+          "text": "Hospital Y refuses to release the body to the relatives. Doctors decline to comment",
           "notebookEntries": [],
           "highlights": [],
           "options": [
@@ -144,7 +144,7 @@
       "nodes": [
         {
           "id": "1",
-          "text": "Зам директора компании X посетил город Y для финансирования детского дома. Видимо, компания X решила очистить свою репутацию",
+          "text": "Company X's deputy director visited city Y to support an orphanage. The move appears to be an attempt to improve the company's image",
           "notebookEntries": [],
           "highlights": [],
           "options": [
@@ -163,7 +163,7 @@
       "nodes": [
         {
           "id": "1",
-          "text": "~Инновационные методики лечения, что продлят вашу жизнь~",
+          "text": "~Cutting-edge therapies methods that will extend your life~",
           "notebookEntries": [],
           "highlights": [],
           "options": [
@@ -175,12 +175,12 @@
         },
         {
           "id": "2",
-          "text": "~Здоровье и долголетие будто 2 людей в вашем теле~",
+          "text": "~Health and longevity, as if two people lived inside your body~",
           "notebookEntries": [],
           "highlights": [],
           "options": [
             {
-              "text": "...Знакомый голос",
+              "text": "... and a familiar voice",
               "nextNodeId": "_news_3_end"
             }
           ]
@@ -194,35 +194,35 @@
       "nodes": [
         {
           "id": "1",
-          "text": "Какого... что ты хочешь от меня",
+          "text": "What the hell? What do you want from me?",
           "notebookEntries": [],
           "highlights": [],
           "options": [
             {
-              "text": "Почему больница отказывается выдавать тела родственникам погибших?",
+              "text": "Why don't the hospital release the bodies to the victims' families?",
               "nextNodeId": "2"
             },
             {
-              "text": "Забудь обо всем и я тебя отпущу",
+              "text": "Forget everything, and I'll let you go",
               "nextNodeId": "4"
             }
           ]
         },
         {
           "id": "2",
-          "text": "Я то тут при чем, мне сказали я и не выдавал",
+          "text": "What do I have to do with this? I was told, I didn't release anything!",
           "notebookEntries": [],
           "highlights": [],
           "options": [
             {
-              "text": "Кто тебе это сказал?",
+              "text": "Who told you that?",
               "nextNodeId": "3"
             }
           ]
         },
         {
           "id": "3",
-          "text": "Я не знаю... но ко мне приходили родственники покойных и они говорили, что с ними связывалась не больница а частная компания X. Я больше нечего не знаю. Клянусь",
+          "text": "I don’t know… but the relatives of the deceased came to me and said it wasn’t the hospital, but a private company, company X, that contacted them. I don’t know anything else. I swear",
           "notebookEntries": [],
           "highlights": [],
           "options": [
@@ -234,12 +234,12 @@
         },
         {
           "id": "4",
-          "text": "Да, мамой клянусь, ты обо мне не вспомнишь",
+          "text": "Yes, I swear on my mother, you won't remember me",
           "notebookEntries": [],
           "highlights": [],
           "options": [
             {
-              "text": "Но прийдется немного прокатиться",
+              "text": "But we'll have to take a little ride.",
               "nextNodeId": "_dialogue_0:release"
             }
           ]
@@ -253,47 +253,47 @@
       "nodes": [
         {
           "id": "1",
-          "text": "Вам нужен выкуп. Свяжитесь с мои руководством",
+          "text": "If you want ransom, talk to my superiors",
           "notebookEntries": [],
           "highlights": [],
           "options": [
             {
-              "text": "Что происходит в больнице",
+              "text": "What's going on at the hospital?",
               "nextNodeId": "2"
             },
             {
-              "text": "Забудь обо всем и я тебя отпущу",
+              "text": "Forget everything, and I'll let you go",
               "nextNodeId": "4"
             }
           ]
         },
         {
           "id": "2",
-          "text": "Меня это не касается. Этим занимается отдел безопасности",
+          "text": "It's not my business. Security's taking care of it",
           "notebookEntries": [],
           "highlights": [],
           "options": [
             {
-              "text": "Мне нужны имена",
+              "text": "I need name",
               "nextNodeId": "3"
             }
           ]
         },
         {
           "id": "3",
-          "text": "С ним лучше не связываться. Он как то связан с мафией и я понятия не имею, как он попал к нам",
+          "text": "You better stay away from him. He's somehow connected with mafia, and I have no idea how he ended up here.",
           "notebookEntries": [],
           "highlights": [],
           "options": [
             {
-              "text": "ИМЯ",
+              "text": "NAME",
               "nextNodeId": "4"
             }
           ]
         },
         {
           "id": "4",
-          "text": "ПАВЕЛ!. Его зовут Павел Z. Но кроме слухов я о нем нечего не знаю",
+          "text": "PAVEl! His name's Pavel Z. But beyond the rumors, I don't know anything about him",
           "notebookEntries": [],
           "highlights": [],
           "options": [
@@ -312,7 +312,7 @@
       "nodes": [
         {
           "id": "1",
-          "text": "Тебе нужна информация о погибших?",
+          "text": "Do you need information about the deceased?",
           "notebookEntries": [],
           "highlights": [],
           "options": [
@@ -332,38 +332,38 @@
                 "type": "HasEvidence",
                 "id": "8"
               },
-              "text": "Что тебе ещё известно",
+              "text": "What else do you know?",
               "nextNodeId": "4"
             }
           ]
         },
         {
           "id": "2",
-          "text": "Я жалею о своем поступке, но не мог поступить иначе",
+          "text": "I regret what I did, but I had no choice",
           "notebookEntries": [],
           "highlights": [],
           "options": [
             {
-              "text": "Что...",
+              "text": "What...",
               "nextNodeId": "3"
             }
           ]
         },
         {
           "id": "3",
-          "text": "Я позволил выкрасть тела из больницы и... часть из них была жива",
+          "text": "I let the bodies be taken from the hospital - and... some of them were alive",
           "notebookEntries": [],
           "highlights": [],
           "options": [
             {
-              "text": "Где они?",
+              "text": "Where are they?",
               "nextNodeId": "4"
             }
           ]
         },
         {
           "id": "4",
-          "text": "Если бы я мог, то помог бы тебе, но тут я беспомощен. Мне нечего тебе сказать. Мне все равно, что будет дальше",
+          "text": "If i could, I'd help you - but I'm helpless here. I have nothing to tell you. I don't care what happens next",
           "notebookEntries": [],
           "highlights": [],
           "options": [
