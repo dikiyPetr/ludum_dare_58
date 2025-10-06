@@ -9,14 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 49919167d7c64b098e5ff1a867b1e052, type: 3}
   m_Name: ClueReferences
-  m_EditorClassIdentifier: Assembly-CSharp::ClueReferencesData
+  m_EditorClassIdentifier: Assembly-CSharp::ClueReferences
   allConnections:
   - id: 0_1
-    description: 'This isn''t the first case and I won''t sit idly by
-
-'
+    description: This isn''t the first case and I won''t sit idly by
     clueId1: 0
     clueId2: 1
   - id: 3_4
@@ -31,7 +29,7 @@ MonoBehaviour:
     description: Payment for debt - corpses?
     clueId1: 2
     clueId2: 5
-  - id: 3_6
-    description: I need this Pavel Z
-    clueId1: 3
-    clueId2: 6
+  - id: 
+    description: 
+    clueId1: 
+    clueId2: 

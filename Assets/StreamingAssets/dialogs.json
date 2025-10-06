@@ -396,11 +396,25 @@
             },
             {
               "condition": {
-                "type": "NotCondition",
-                "condition": {
-                  "type": "HasEvidence",
-                  "id": "8"
-                }
+                "type": "MultiCondition",
+                "logicType": "AND",
+                "conditions": [
+                  {
+                    "type": "NotCondition",
+                    "condition": {
+                      "type": "HasEvidence",
+                      "id": "8"
+                    }
+                  },
+                  {
+                    "type": "SuspectAliveAndFree",
+                    "suspectId": "1"
+                  },
+                  {
+                    "type": "SuspectAliveAndFree",
+                    "suspectId": "2"
+                  }
+                ]
               },
               "text": "Follow her",
               "nextNodeId": "_map_result_is_stels:true_1"
@@ -436,18 +450,8 @@
               "condition": {
                 "type": "NotCondition",
                 "condition": {
-                  "type": "MultiCondition",
-                  "logicType": "OR",
-                  "conditions": [
-                    {
-                      "type": "HasEvidence",
-                      "id": "5"
-                    },
-                    {
-                      "type": "SuspectAliveAndFree",
-                      "suspectId": "2"
-                    }
-                  ]
+                  "type": "HasEvidence",
+                  "id": "5"
                 }
               },
               "text": "Pay him a visit",
