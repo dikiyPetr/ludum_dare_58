@@ -119,13 +119,20 @@ public class SuspectVisualDisplay : MonoBehaviour, IOutlineInteractable
 
     public bool OnClick()
     {
-        if (suspectState != null && !string.IsNullOrEmpty(suspectState.mapDialogNodeId))
+        if (DayManager.Instance.HasEnoughEnergy(1))
         {
-            if (Dialogs.DialogManager.Instance != null && !Dialogs.DialogManager.Instance.IsInDialog)
+            if (suspectState != null && !string.IsNullOrEmpty(suspectState.mapDialogNodeId))
             {
-                Dialogs.DialogManager.Instance.StartDialog(suspectState.mapDialogNodeId);
-                return true;
+                if (Dialogs.DialogManager.Instance != null && !Dialogs.DialogManager.Instance.IsInDialog)
+                {
+                    Dialogs.DialogManager.Instance.StartDialog(suspectState.mapDialogNodeId);
+                    return true;
+                }
             }
+        }
+        else
+        {
+            DayManager.Instance.ShowTiredDialog();
         }
 
         return false;

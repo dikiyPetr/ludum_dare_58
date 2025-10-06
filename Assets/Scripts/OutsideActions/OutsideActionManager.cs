@@ -66,9 +66,13 @@ public class OutsideActionManager : MonoBehaviour, IOutlineInteractable
     {
         if (HasPendingCutscene())
         {
+            if (!DayManager.Instance.SpendEnergy(1))
+            {
+                return;
+            }
+
             string cutsceneToPlay = pendingCutsceneId;
             ClearPendingCutscene();
-
             Debug.Log($"[OutsideActionManager] Выход из дома, запуск катсцены: {cutsceneToPlay}");
 
             // Вызываем событие
