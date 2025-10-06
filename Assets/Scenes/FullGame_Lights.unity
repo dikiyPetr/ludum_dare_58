@@ -26292,6 +26292,22 @@ PrefabInstance:
       propertyPath: cutscenes.Array.data[8].dialogId
       value: cutscene_is_stels:true_3
       objectReference: {fileID: 0}
+    - target: {fileID: 4220130694938657287, guid: 3af6e01b6c72d6a4ca4f44ef9de2d804, type: 3}
+      propertyPath: cutscenes.Array.data[0].backgroundImage
+      value: 
+      objectReference: {fileID: 21300000, guid: 32d8dcaf02b965b42af0e979024f5eb1, type: 3}
+    - target: {fileID: 4220130694938657287, guid: 3af6e01b6c72d6a4ca4f44ef9de2d804, type: 3}
+      propertyPath: cutscenes.Array.data[1].backgroundImage
+      value: 
+      objectReference: {fileID: 21300000, guid: 5199611851a211b49959f332533c0d78, type: 3}
+    - target: {fileID: 4220130694938657287, guid: 3af6e01b6c72d6a4ca4f44ef9de2d804, type: 3}
+      propertyPath: cutscenes.Array.data[2].backgroundImage
+      value: 
+      objectReference: {fileID: 21300000, guid: 0b676328278d27c47b5b9798bb0ea192, type: 3}
+    - target: {fileID: 4220130694938657287, guid: 3af6e01b6c72d6a4ca4f44ef9de2d804, type: 3}
+      propertyPath: cutscenes.Array.data[3].backgroundImage
+      value: 
+      objectReference: {fileID: 21300000, guid: 0b676328278d27c47b5b9798bb0ea192, type: 3}
     - target: {fileID: 4264038526091597646, guid: 3af6e01b6c72d6a4ca4f44ef9de2d804, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -26306,16 +26322,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4844288458340879879, guid: 3af6e01b6c72d6a4ca4f44ef9de2d804, type: 3}
       propertyPath: m_Color.b
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4844288458340879879, guid: 3af6e01b6c72d6a4ca4f44ef9de2d804, type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4844288458340879879, guid: 3af6e01b6c72d6a4ca4f44ef9de2d804, type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4844288458340879879, guid: 3af6e01b6c72d6a4ca4f44ef9de2d804, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 1e0355c1abd5f854cb1001b6eadffa9b, type: 2}
     - target: {fileID: 5052476491730936152, guid: 3af6e01b6c72d6a4ca4f44ef9de2d804, type: 3}
       propertyPath: m_Layer
       value: 0
