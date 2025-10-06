@@ -18,6 +18,8 @@ public class ModeSettings
 
 public class GameModeManager : MonoBehaviour
 {
+    public static GameModeManager Instance { get; private set; }
+
     [Header("Режимы игры")] [SerializeField]
     private List<ModeSettings> modeSettingsList = new List<ModeSettings>();
 
@@ -31,6 +33,18 @@ public class GameModeManager : MonoBehaviour
         {
             _currentMode = value;
             ApplyModeSettings(_currentMode);
+        }
+    }
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 

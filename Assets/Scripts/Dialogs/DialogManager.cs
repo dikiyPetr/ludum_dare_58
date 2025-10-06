@@ -120,9 +120,15 @@ namespace Dialogs
                 return false;
             }
 
+            // Переключить режим на диалог
+            if (GameModeManager.Instance != null)
+            {
+                GameModeManager.Instance.SwitchMode(GameMode.Dialogue);
+            }
+
             Debug.Log($"Начат диалог: {dialogId}");
             OnDialogStarted?.Invoke(currentDialog);
-            
+
             // Проиграть стартовый узел
             PlayCurrentNode();
             
@@ -192,6 +198,12 @@ namespace Dialogs
             var dialogToEnd = currentDialog;
             currentDialog = null;
             currentNode = null;
+
+            // Переключить режим обратно на play
+            if (GameModeManager.Instance != null)
+            {
+                GameModeManager.Instance.SwitchMode(GameMode.Play);
+            }
 
             Debug.Log($"Диалог завершен: {dialogToEnd.id}");
             OnDialogEnded?.Invoke(dialogToEnd);

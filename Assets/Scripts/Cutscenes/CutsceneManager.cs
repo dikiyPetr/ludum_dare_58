@@ -95,6 +95,12 @@ namespace Cutscenes
 
         private void OnFadeOutComplete()
         {
+            // Переключаем режим на Cutscene
+            if (GameModeManager.Instance != null)
+            {
+                GameModeManager.Instance.SwitchMode(GameMode.Cutscene);
+            }
+
             // Уведомить UI о начале катсцены
             OnCutsceneStarted?.Invoke(currentCutscene);
 
@@ -118,6 +124,7 @@ namespace Cutscenes
             {
                 ScreenFader.Instance.FadeIn(fadeInDuration);
             }
+
         }
 
         /// <summary>
@@ -155,6 +162,12 @@ namespace Cutscenes
             var cutsceneToEnd = currentCutscene;
             currentCutscene = null;
             isInCutscene = false;
+
+            // Переключаем режим обратно на Play
+            if (GameModeManager.Instance != null)
+            {
+                GameModeManager.Instance.SwitchMode(GameMode.Play);
+            }
 
             // Уведомить UI о завершении
             OnCutsceneEnded?.Invoke(cutsceneToEnd);

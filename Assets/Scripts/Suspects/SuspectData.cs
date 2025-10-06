@@ -28,6 +28,7 @@ public class SuspectState
     public string id;
     public bool isRevealed; // Открыт ли подозреваемый
     public bool isCaught; // Пойман ли подозреваемый
+    public bool isEliminated; // Устранён ли подозреваемый
     public SuspectData data; // Ссылка на ScriptableObject
 
     public SuspectState(string id, SuspectData data)
@@ -35,6 +36,7 @@ public class SuspectState
         this.id = id;
         this.isRevealed = false;
         this.isCaught = false;
+        this.isEliminated = false;
         this.data = data;
     }
 }

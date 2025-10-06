@@ -15,6 +15,7 @@ public class SuspectManager : MonoBehaviour
     // События
     public System.Action<string> OnSuspectRevealed;
     public System.Action<string> OnSuspectCaught;
+    public System.Action<string> OnSuspectEliminated;
 
     private void Awake()
     {
@@ -222,6 +223,65 @@ public class SuspectManager : MonoBehaviour
         return caught;
     }
 
+    // Устранить подозреваемого
+    public bool EliminateSuspect(string suspectId)
+    {
+        if (!suspects.ContainsKey(suspectId))
+        {
+            Debug.LogWarning($"Подозреваемый с ID '{suspectId}' не найден!");
+            return false;
+        }
+
+        SuspectState state = suspects[suspectId];
+
+        // Проверяем, что подозреваемый пойман
+        if (!state.isCaught)
+        {
+            Debug.LogWarning($"Подозреваемый '{state.data.suspectName}' не пойман!");
+            return false;
+        }
+
+        // Проверяем, что еще не устранён
+        if (state.isEliminated)
+        {
+            Debug.LogWarning($"Подозреваемый '{state.data.suspectName}' уже устранён!");
+            return false;
+        }
+
+        // Устраняем подозреваемого
+        state.isEliminated = true;
+        state.isCaught = false; // Больше не пойманный
+        Debug.Log($"<color=red>★ Подозреваемый '{state.data.suspectName}' устранён!</color>");
+
+        // Вызываем событие
+        OnSuspectEliminated?.Invoke(suspectId);
+
+        return true;
+    }
+
+    // Проверить, устранён ли подозреваемый
+    public bool IsSuspectEliminated(string suspectId)
+    {
+        if (suspects.ContainsKey(suspectId))
+        {
+            return suspects[suspectId].isEliminated;
+        }
+        return false;
+    }
+
+    // Получить пойманного подозреваемого (только один может быть пойман)
+    public SuspectState GetCaughtSuspect()
+    {
+        foreach (var suspect in suspects.Values)
+        {
+            if (suspect.isCaught)
+            {
+                return suspect;
+            }
+        }
+        return null;
+    }
+
     // Сбросить всех подозреваемых (для отладки)
     public void DebugResetAllSuspects()
     {
@@ -229,6 +289,7 @@ public class SuspectManager : MonoBehaviour
         {
             suspect.isRevealed = false;
             suspect.isCaught = false;
+            suspect.isEliminated = false;
         }
         Debug.Log("[SuspectManager] Все подозреваемые сброшены!");
     }

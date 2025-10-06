@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using TMPro;
 
 public class OverlayInfoManager : MonoBehaviour
@@ -57,6 +58,15 @@ public class OverlayInfoManager : MonoBehaviour
         if (textComponent != null && suspect != null)
         {
             textComponent.text = suspect.suspectName + "\n" + suspect.description;
+        }
+    }
+    public void ShowInfo(String info)
+    {
+        ToggleOverlay(info);
+        // Обновляем текст
+        if (textComponent != null && info != null)
+        {
+            textComponent.text = info;
         }
     }
 
