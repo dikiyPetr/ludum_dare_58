@@ -315,5 +315,40 @@ namespace Dialogs
         {
             return dialogs.ContainsKey(dialogId);
         }
+
+        /// <summary>
+        /// Показать простой диалог с одним текстом и кнопкой "ОК"
+        /// </summary>
+        public void ShowSimpleDialog(Dialog customDialog)
+        {
+            if (IsInDialog)
+            {
+                Debug.LogWarning("Диалог уже активен. Завершите текущий диалог перед началом нового.");
+                return;
+            }
+
+            currentDialog = customDialog;
+
+            // Найти стартовый узел
+            currentNode = FindNodeById(currentDialog.startNodeId);
+            if (currentNode == null)
+            {
+                Debug.LogError($"Стартовый узел '{currentDialog.startNodeId}' не найден!");
+                currentDialog = null;
+                return;
+            }
+
+            // Переключить режим на диалог
+            if (GameModeManager.Instance != null)
+            {
+                GameModeManager.Instance.SwitchMode(GameMode.Dialogue);
+            }
+
+            Debug.Log($"Начат кастомный диалог");
+            OnDialogStarted?.Invoke(currentDialog);
+
+            // Проиграть стартовый узел
+            PlayCurrentNode();
+        }
     }
 }
