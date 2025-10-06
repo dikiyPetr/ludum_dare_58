@@ -26612,6 +26612,18 @@ PrefabInstance:
       propertyPath: suspectManager
       value: 
       objectReference: {fileID: 1769539750}
+    - target: {fileID: 7708023254202060018, guid: 3af6e01b6c72d6a4ca4f44ef9de2d804, type: 3}
+      propertyPath: allClues.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7708023254202060018, guid: 3af6e01b6c72d6a4ca4f44ef9de2d804, type: 3}
+      propertyPath: 'allClues.Array.data[8]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 5cd22fa879f64b54c9dcd10aa407aab0, type: 2}
+    - target: {fileID: 7708023254202060018, guid: 3af6e01b6c72d6a4ca4f44ef9de2d804, type: 3}
+      propertyPath: 'allClues.Array.data[9]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 047dd23e5298dfc49b7e0392f743b930, type: 2}
     - target: {fileID: 7987206684102467418, guid: 3af6e01b6c72d6a4ca4f44ef9de2d804, type: 3}
       propertyPath: modeSettingsList.Array.data[0].objectsToEnable.Array.size
       value: 2
