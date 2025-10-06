@@ -436,8 +436,18 @@
               "condition": {
                 "type": "NotCondition",
                 "condition": {
-                  "type": "HasEvidence",
-                  "id": "5"
+                  "type": "MultiCondition",
+                  "logicType": "OR",
+                  "conditions": [
+                    {
+                      "type": "HasEvidence",
+                      "id": "5"
+                    },
+                    {
+                      "type": "SuspectAliveAndFree",
+                      "suspectId": "2"
+                    }
+                  ]
                 }
               },
               "text": "Pay him a visit",

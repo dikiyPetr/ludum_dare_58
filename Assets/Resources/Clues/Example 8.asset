@@ -13,13 +13,8 @@ MonoBehaviour:
   m_Name: Example 8
   m_EditorClassIdentifier: 
   id: 8
-  title: "\u041D\u0430\u0431\u043B\u044E\u0434\u0435\u043D\u0438\u0435 \u0437\u0430
-    \u0437\u0430\u043C \u0434\u0438\u0440\u0435\u043A\u0442\u043E\u0440\u0430"
-  description: "\u0412\u043E \u0432\u0440\u0435\u043C\u044F \u043C\u043E\u0435\u0433\u043E
-    \u043D\u0430\u0431\u043B\u044E\u0434\u0435\u043D\u0438\u044F, \u0433\u043B\u0430\u0432
-    \u0432\u0440\u0430\u0447 \u0431\u043E\u043B\u044C\u043D\u0438\u0446\u044B \u043F\u044B\u0442\u0430\u043B\u0441\u044F
-    \u0441\u0432\u044F\u0437\u0430\u0442\u044C\u0441\u044F \u0441 \u0437\u0430\u043C
-    \u0434\u0438\u0440\u0435\u043A\u0442\u043E\u0440\u0430. \u0423 \u043D\u0435\u0433\u043E
-    \u044D\u0442\u043E \u043D\u0435 \u0432\u044B\u0448\u043B\u043E "
-  cluePrefab: {fileID: 7827794876885937444, guid: 0a78265a7277fa542892045f780e8e5d, type: 3}
+  title: Deputy director observation
+  description: During my observation, the hospital's head doctor tried to contact
+    the deputy director. He didn't succeed
+  cluePrefab: {fileID: 4971098349077571581, guid: 672ba77a0a1a64f428a13aae80f97121, type: 3}
   cabinetSlotIndex: 8

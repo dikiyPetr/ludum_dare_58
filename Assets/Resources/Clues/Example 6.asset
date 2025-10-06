@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Example 6
   m_EditorClassIdentifier: 
   id: 6
-  title: "\u041F\u043E\u043A\u0430\u0437\u0430\u043D\u0438\u044F"
-  description: "\u041F\u0430\u0432\u0435\u043B Z \u0438\u0437 \u043A\u043E\u043C\u043F\u0430\u043D\u0438\u0438
-    X \u043E\u0442\u0432\u0435\u0447\u0430\u0435\u0442 \u0437\u0430 \u0441\u0432\u044F\u0437\u044C
-    \u0441 \u0431\u043E\u043B\u044C\u043D\u0438\u0446\u0435\u0439 "
-  cluePrefab: {fileID: 7827794876885937444, guid: 0a78265a7277fa542892045f780e8e5d, type: 3}
+  title: 'Testimony '
+  description: 'Pavel Z from company X is responsible for liaison with the hospital
+
+'
+  cluePrefab: {fileID: 5053211508740430390, guid: b0f6df7f7d1b2a6499f598a833d18a06, type: 3}
   cabinetSlotIndex: 6

@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: Example 4
   m_EditorClassIdentifier: 
   id: 4
-  title: "\u0417\u0430\u043C\u0435\u0442\u043A\u0430 \u0438\u0437 \u043D\u043E\u0432\u043E\u0441\u0442\u0435\u0439"
-  description: "\u0417\u0430\u043C\u0434\u0438\u0440\u0435\u043A\u0442\u043E\u0440
-    \u043A\u043E\u043C\u043F\u0430\u043D\u0438\u0438 X \u043F\u0440\u0438\u0431\u044B\u0432\u0430\u0435\u0442
-    \u0432 \u0433\u043E\u0440\u043E\u0434\u0435"
-  cluePrefab: {fileID: 7827794876885937444, guid: 0a78265a7277fa542892045f780e8e5d, type: 3}
+  title: News note
+  description: Company X's deputy director arrives in the city
+  cluePrefab: {fileID: 8063615384582493517, guid: 15162050032e60746b4cd6000d4b75ab, type: 3}
   cabinetSlotIndex: 4

@@ -47,6 +47,17 @@ public class DayManager : MonoBehaviour
     /// </summary>
     public void SkipDay()
     {
+        StartCoroutine(SkipDayCoroutine());
+    }
+
+    /// <summary>
+    /// Корутина пропуска дня с задержкой
+    /// </summary>
+    private IEnumerator SkipDayCoroutine()
+    {
+        // Ждем 100 мс перед выполнением
+        yield return new WaitForSeconds(0.1f);
+
         // Запускаем катсцену пропуска дня
         if (Cutscenes.CutsceneManager.Instance != null && !string.IsNullOrEmpty(skipDayCutsceneId))
         {

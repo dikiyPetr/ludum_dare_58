@@ -7,7 +7,7 @@ using UnityEngine;
 public class BedInteractable : MonoBehaviour, IOutlineInteractable
 {
     [Header("Настройки")]
-    [SerializeField] private string message = "Лечь спать";
+    [SerializeField] private string message = "Go to sleep";
 
     /// <summary>
     /// Показать информацию в overlay при наведении

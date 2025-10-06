@@ -13,12 +13,9 @@ MonoBehaviour:
   m_Name: Suspect1
   m_EditorClassIdentifier: 
   id: 1
-  suspectName: "\u0417\u0430\u043C \u0434\u0438\u0440\u0435\u043A\u0442\u043E\u0440"
-  description: "\u0415\u0451 \u043A\u043E\u043C\u043F\u0430\u043D\u0438\u044F \u0438\u0437\u0432\u0435\u0441\u0442\u043D\u0430
-    \u043F\u043B\u043E\u0445\u043E\u0439 \u0440\u0435\u043F\u0443\u0442\u0430\u0446\u0438\u0435\u0439.
-    \u041A\u0430\u043A \u0436\u0435 \u043E\u043D\u0430 \u0441\u0432\u044F\u0437\u0430\u043D\u0430
-    \u0441 \u043F\u043E\u043A\u043E\u0439\u043D\u044B\u043C\u0438 \u0438 \u0438\u0445
-    \u0442\u0435\u043B\u0430\u043C\u0438?"
+  suspectName: Deputy director
+  description: Her company is known for its bad reputation. How is she connected
+    to the deceased and their bodies?
   mapDialogNodeId: map_1
   suspectDialogNodeId: dialogue_1
   isMale: 0

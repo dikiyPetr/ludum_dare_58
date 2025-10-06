@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using Dialogs;
 
@@ -30,6 +31,15 @@ public class SuspectDialogHandler : MonoBehaviour
     }
 
     /// <summary>
+    /// Корутина для запуска диалога с задержкой
+    /// </summary>
+    private IEnumerator StartDialogWithDelay(string dialogId)
+    {
+        yield return new WaitForSeconds(0.1f);
+        DialogManager.Instance.StartDialog(dialogId);
+    }
+
+    /// <summary>
     /// Обработчик кастомных диалогов, связанных с подозреваемыми
     /// </summary>
     private void HandleSuspectDialogs(Dialog dialog, DialogNode node, DialogOption option)
@@ -56,8 +66,8 @@ public class SuspectDialogHandler : MonoBehaviour
                         SuspectState caughtSuspect = SuspectManager.Instance.GetCaughtSuspect();
                         if (caughtSuspect != null)
                         {
-                            // Если есть пойманный, запускаем его диалог
-                            DialogManager.Instance.StartDialog("need_to_release");
+                            // Если есть пойманный, запускаем его диалог с задержкой
+                            StartCoroutine(StartDialogWithDelay("need_to_release"));
                         }
                         else
                         {
@@ -75,8 +85,8 @@ public class SuspectDialogHandler : MonoBehaviour
                         SuspectState caughtSuspect1 = SuspectManager.Instance.GetCaughtSuspect();
                         if (caughtSuspect1 != null)
                         {
-                            // Если есть пойманный, запускаем его диалог
-                            DialogManager.Instance.StartDialog("need_to_release");
+                            // Если есть пойманный, запускаем его диалог с задержкой
+                            StartCoroutine(StartDialogWithDelay("need_to_release"));
                         }
                         else
                         {
