@@ -103,11 +103,11 @@ public class OutsideActionManager : MonoBehaviour, IOutlineInteractable
     {
         if (HasPendingCutscene())
         {
-            overlayInfo.ShowInfo("Пора выйти");
+            overlayInfo.ShowInfo("Time to go out");
         }
         else
         {
-            overlayInfo.ShowInfo("Сначала нужно выбрать, что делать дальше");
+            overlayInfo.ShowInfo("Need to choose what to do next first");
         }
     }
 

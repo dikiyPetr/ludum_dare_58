@@ -51,11 +51,11 @@ public class SuspectEliminationTrigger : MonoBehaviour, IOutlineInteractable
         SuspectState caughtSuspect = SuspectManager.Instance.GetCaughtSuspect();
         if (caughtSuspect != null)
         {
-            overlayInfo.ShowInfo("Устранить подозреваемого");
+            overlayInfo.ShowInfo("Eliminate the suspect");
         }
         else
         {
-            overlayInfo.ShowInfo("Пока что мне это не нужно");
+            overlayInfo.ShowInfo("I don't need this right now");
         }
     }
 
