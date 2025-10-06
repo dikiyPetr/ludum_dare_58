@@ -13,7 +13,7 @@ public class ClueManager : MonoBehaviour
     [SerializeField] private List<ClueData> allClues = new List<ClueData>();
 
     // Ссылка на данные связей между уликами
-    [SerializeField] private ClueReferencesData clueReferences;
+    [SerializeField] private ClueReferences clueReferences;
     
     // Ссылка на ClueCabinet для прямой передачи улик и связей
     [SerializeField] private ClueCabinet clueCabinet;
