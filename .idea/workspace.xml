@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="a32edbfd-f133-4098-8d9c-dec903e2907e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/S_Basement.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/S_Basement.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/S_House.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/S_House.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/FullGame.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/FullGame.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/FullGame_Lights.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/FullGame_Lights.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -74,6 +73,9 @@
       <workItem from="1759669691982" duration="23000" />
       <workItem from="1759674429870" duration="64000" />
       <workItem from="1759678227332" duration="17000" />
+      <workItem from="1759678612697" duration="5337000" />
+      <workItem from="1759755514782" duration="65000" />
+      <workItem from="1759756431569" duration="3659000" />
     </task>
     <task id="LOCAL-00001" summary="sss">
       <option name="closed" value="true" />
@@ -83,7 +85,23 @@
       <option name="project" value="LOCAL" />
       <updated>1759514527873</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="penis">
+      <option name="closed" value="true" />
+      <created>1759678718407</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1759678718407</updated>
+    </task>
+    <task id="LOCAL-00003" summary="penis 2">
+      <option name="closed" value="true" />
+      <created>1759680842456</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1759680842456</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -97,7 +115,9 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="sss" />
-    <option name="LAST_COMMIT_MESSAGE" value="sss" />
+    <MESSAGE value="penis" />
+    <MESSAGE value="penis 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="penis 2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
