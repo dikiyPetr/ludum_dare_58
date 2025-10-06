@@ -564,6 +564,40 @@
           ]
         }
       ]
+    },
+    {
+      "id": "need_to_release",
+      "startNodeId": "1",
+      "speaker": "Мысли",
+      "nodes": [
+        {
+          "id": "1",
+          "text": "У меня уже есть гость. Нужно сначала решить, что с ним делать, перед тем, как отправляться за вторым",
+          "options": [
+            {
+              "text": "...",
+              "nextNodeId": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "need_to_sleep",
+      "startNodeId": "1",
+      "speaker": "Мысли",
+      "nodes": [
+        {
+          "id": "1",
+          "text": "Глаза слипаются. Пора спать",
+          "options": [
+            {
+              "text": "...",
+              "nextNodeId": null
+            }
+          ]
+        }
+      ]
     }
   ]
 }

@@ -19,11 +19,16 @@ public class DayManager : MonoBehaviour
     [SerializeField] private AudioClip skipDaySound;
     [SerializeField] private AudioSource audioSource;
 
-    // События
-    public static event Action<int> OnDayChanged;
-    public static event Action<int> OnDaySkipped;
+    [Header("Система энергии")]
+    [SerializeField] private int maxEnergy = 1;
+    [SerializeField] private int currentEnergy = 1;
+    [SerializeField] private int minEnergyToAct = 1;
+    [SerializeField] private string tiredDialogId = "need_to_sleep";
+    
 
     public int CurrentDay => currentDay;
+    public int CurrentEnergy => currentEnergy;
+    public int MaxEnergy => maxEnergy;
 
     private void Awake()
     {
@@ -81,10 +86,11 @@ public class DayManager : MonoBehaviour
         int previousDay = currentDay;
         currentDay++;
 
-        Debug.Log($"[DayManager] День пропущен: {previousDay} -> {currentDay}");
+        // Восстанавливаем энергию после сна
+        RestoreEnergy();
 
-        OnDaySkipped?.Invoke(currentDay);
-        OnDayChanged?.Invoke(currentDay);
+        Debug.Log($"[DayManager] День пропущен: {previousDay} -> {currentDay}");
+        
 
         // Завершаем катсцену
         if (Cutscenes.CutsceneManager.Instance != null)
@@ -141,9 +147,119 @@ public class DayManager : MonoBehaviour
         currentDay = day;
 
         Debug.Log($"[DayManager] День установлен: {previousDay} -> {currentDay}");
-
-        OnDayChanged?.Invoke(currentDay);
     }
+
+    #region Система энергии
+
+    /// <summary>
+    /// Восстановить энергию до максимума (после сна)
+    /// </summary>
+    public void RestoreEnergy()
+    {
+        currentEnergy = maxEnergy;
+        Debug.Log($"[DayManager] Энергия восстановлена: {currentEnergy}/{maxEnergy}");
+    }
+
+    /// <summary>
+    /// Потратить энергию
+    /// </summary>
+    /// <param name="amount">Количество энергии для траты</param>
+    /// <returns>True если энергия была потрачена, false если недостаточно энергии</returns>
+    public bool SpendEnergy(int amount)
+    {
+        if (currentEnergy - amount < 0)
+        {
+            Debug.LogWarning($"[DayManager] Недостаточно энергии! Требуется: {amount}, доступно: {currentEnergy}");
+            return false;
+        }
+
+        currentEnergy -= amount;
+        Debug.Log($"[DayManager] Потрачено энергии: {amount}. Осталось: {currentEnergy}/{maxEnergy}");
+
+        return true;
+    }
+
+    /// <summary>
+    /// Добавить энергию (например, после отдыха или использования предмета)
+    /// </summary>
+    /// <param name="amount">Количество энергии для добавления</param>
+    public void AddEnergy(int amount)
+    {
+        currentEnergy = Mathf.Min(currentEnergy + amount, maxEnergy);
+        Debug.Log($"[DayManager] Добавлено энергии: {amount}. Текущая энергия: {currentEnergy}/{maxEnergy}");
+    }
+
+    /// <summary>
+    /// Проверить, достаточно ли энергии для действия
+    /// </summary>
+    /// <returns>True если энергии достаточно</returns>
+    public bool HasEnoughEnergy()
+    {
+        return currentEnergy >= minEnergyToAct;
+    }
+
+    /// <summary>
+    /// Проверить, достаточно ли энергии для действия с определенной стоимостью
+    /// </summary>
+    /// <param name="amount">Необходимое количество энергии</param>
+    /// <returns>True если энергии достаточно</returns>
+    public bool HasEnoughEnergy(int amount)
+    {
+        return currentEnergy >= amount;
+    }
+
+    /// <summary>
+    /// Показать диалог о том, что игрок устал и нужно поспать
+    /// </summary>
+    public void ShowTiredDialog()
+    {
+        if (!string.IsNullOrEmpty(tiredDialogId))
+        {
+            Debug.Log($"[DayManager] Игрок устал! Энергия: {currentEnergy}/{maxEnergy}");
+
+            if (Dialogs.DialogManager.Instance != null)
+            {
+                Dialogs.DialogManager.Instance.StartDialog(tiredDialogId);
+            }
+            else
+            {
+                Debug.LogWarning($"[DayManager] DialogManager не найден! Не могу показать диалог '{tiredDialogId}'");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("[DayManager] ID диалога усталости не задан!");
+        }
+    }
+
+    /// <summary>
+    /// Попытаться выполнить действие, требующее энергии
+    /// Если энергии недостаточно, показывает диалог усталости
+    /// </summary>
+    /// <param name="energyCost">Стоимость действия в энергии</param>
+    /// <returns>True если действие можно выполнить</returns>
+    public bool TrySpendEnergyOrShowTired(int energyCost)
+    {
+        if (!HasEnoughEnergy(energyCost))
+        {
+            ShowTiredDialog();
+            return false;
+        }
+
+        return SpendEnergy(energyCost);
+    }
+
+    /// <summary>
+    /// Установить текущую энергию (для отладки или загрузки сохранения)
+    /// </summary>
+    /// <param name="energy">Новое значение энергии</param>
+    public void SetEnergy(int energy)
+    {
+        currentEnergy = Mathf.Clamp(energy, 0, maxEnergy);
+        Debug.Log($"[DayManager] Энергия установлена: {currentEnergy}/{maxEnergy}");
+    }
+
+    #endregion
 }
 
 /// <summary>

@@ -52,7 +52,19 @@ public class SuspectDialogHandler : MonoBehaviour
                         break;
                     case "_map_result_is_stels:false_1":
                         /// поимка охраны
-                        OutsideActionManager.Instance.SetPendingCutscene("cutscene_is_stels:false_1");
+                        // Проверяем, есть ли уже пойманный подозреваемый
+                        SuspectState caughtSuspect = SuspectManager.Instance.GetCaughtSuspect();
+                        if (caughtSuspect != null)
+                        {
+                            // Если есть пойманный, запускаем его диалог
+                            DialogManager.Instance.StartDialog("need_to_release");
+                        }
+                        else
+                        {
+                            // Иначе запускаем cutscene
+                            OutsideActionManager.Instance.SetPendingCutscene("cutscene_is_stels:false_1");
+                        }
+
                         break;
                     case "_map_result_is_stels:true_1":
                         /// осмотр морга
@@ -60,7 +72,17 @@ public class SuspectDialogHandler : MonoBehaviour
                         break;
                     case "_map_result_is_stels:false_2":
                         /// поимка охраны
-                        OutsideActionManager.Instance.SetPendingCutscene("cutscene_is_stels:false_2");
+                        SuspectState caughtSuspect1 = SuspectManager.Instance.GetCaughtSuspect();
+                        if (caughtSuspect1 != null)
+                        {
+                            // Если есть пойманный, запускаем его диалог
+                            DialogManager.Instance.StartDialog("need_to_release");
+                        }
+                        else
+                        {
+                            OutsideActionManager.Instance.SetPendingCutscene("cutscene_is_stels:false_2");
+                        }
+
                         break;
                     case "_map_result_is_stels:true_2":
                         /// осмотр морга
